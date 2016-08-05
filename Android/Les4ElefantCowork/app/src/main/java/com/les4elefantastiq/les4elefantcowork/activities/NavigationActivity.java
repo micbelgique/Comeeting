@@ -7,9 +7,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import com.les4elefantastiq.les4elefantcowork.R;
+import com.les4elefantastiq.les4elefantcowork.dataaccess.CoworkspaceDataAccess;
+
+import java.io.IOException;
 
 public class NavigationActivity extends BaseActivity {
 
@@ -33,6 +37,17 @@ public class NavigationActivity extends BaseActivity {
 
         manageToolbar(toolbar);
         manageNavigationDrawer(toolbar);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    CoworkspaceDataAccess.doSomeStuff();
+                } catch (IOException e) {
+                    Log.d("Blop", "EXPLOSION ATOMIQUE\n" + e.getMessage());
+                }
+            }
+        }).start();
     }
 
 

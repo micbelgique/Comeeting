@@ -4,13 +4,13 @@ package com.les4elefantastiq.les4elefantcowork.models;
  * Created by Math on 05/08/16.
  */
 public class Coworkspace {
-    String name;
-    String pictureUrl;
-    String description;
-    Double geolocationLongitude; // TODO: Create a Location object ?
-    Double geolocationLatitude;
-    int geofancingRadius;
-    Coworker[] coworkers;
+    public String name;
+    public String pictureUrl;
+    public String description;
+    public Double geolocationLongitude; // TODO: Create a Location object ?
+    public Double geolocationLatitude;
+    public int geofancingRadius;
+    public Coworker[] coworkers;
 
     public Coworkspace(String name, String pictureUrl, String description, Double geolocationLatitude, Double geolocationLongitude, int geofancingRadius, Coworker[] coworkers) {
         this.name = name;
