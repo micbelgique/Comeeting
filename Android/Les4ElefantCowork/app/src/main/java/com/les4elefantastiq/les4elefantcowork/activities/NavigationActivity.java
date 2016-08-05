@@ -1,5 +1,6 @@
 package com.les4elefantastiq.les4elefantcowork.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -10,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.les4elefantastiq.les4elefantcowork.R;
+import com.les4elefantastiq.les4elefantcowork.managers.ProfileManager;
 
 public class NavigationActivity extends BaseActivity {
 
@@ -17,9 +19,9 @@ public class NavigationActivity extends BaseActivity {
 
     // -------------------- Views --------------------- //
 
-    private DrawerLayout drawerLayout;
-    private ActionBarDrawerToggle drawerToggle;
-    private NavigationView navigationView;
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private NavigationView mNavigationView;
 
 
     // ------------------ LifeCycle ------------------- //
@@ -29,10 +31,16 @@ public class NavigationActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_activity);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if(ProfileManager.isLogged()) {
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        manageToolbar(toolbar);
-        manageNavigationDrawer(toolbar);
+            manageToolbar(toolbar);
+            manageNavigationDrawer(toolbar);
+        }
+        else{
+            startActivity(new Intent(NavigationActivity.this, SignInActivity.class));
+            finish();
+        }
     }
 
 
@@ -52,8 +60,8 @@ public class NavigationActivity extends BaseActivity {
 
     private void manageNavigationDrawer(@NonNull Toolbar toolbar) {
         // Manage DrawerLayout and his toggle
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawerToggle = new ActionBarDrawerToggle(NavigationActivity.this, drawerLayout, toolbar, R.string.Open, R.string.Close) {
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerToggle = new ActionBarDrawerToggle(NavigationActivity.this, mDrawerLayout, toolbar, R.string.Open, R.string.Close) {
 
             @Override
             public void onDrawerOpened(View drawerView) {
@@ -66,15 +74,15 @@ public class NavigationActivity extends BaseActivity {
             }
 
         };
-        drawerLayout.addDrawerListener(drawerToggle);
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
 
-        navigationView = ((NavigationView) findViewById(R.id.navigationView));
+        mNavigationView = ((NavigationView) findViewById(R.id.navigationView));
     }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        drawerToggle.syncState();
+        mDrawerToggle.syncState();
     }
 
 
