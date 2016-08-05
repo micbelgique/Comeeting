@@ -26,7 +26,12 @@ namespace Comeeting.Api.Controllers
         {
             return Ok(new CoworkerDto()
             {
-                LinkedInId = "81920_aezan_aza", FirstName = "Mathias", LastName = "Biard", Summary = "The naked one", PictureUrl = "http://www.mathiasbiard.com/images/me.jpg",
+                LinkedInId = "81920_aezan_aza",
+                FirstName = "Mathias",
+                LastName = "Biard",
+                Summary = "The naked one",
+                PictureUrl = "http://www.mathiasbiard.com/images/me.jpg",
+                CurrentCoworkspace = new Guid("6CA3598B-09D3-43A4-A74E-6EC2D9B0BE89"),
                 FavoriteCoworkspaces = new List<Guid>() { new Guid("6CA3598B-09D3-43A4-A74E-6EC2D9B0BE89")}
             });
         }

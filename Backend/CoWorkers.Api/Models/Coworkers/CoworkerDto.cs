@@ -19,6 +19,9 @@ namespace Comeeting.Api.Models.Coworkers
         [JsonProperty("summary")]
         public string Summary { get; set; }
 
+        [JsonProperty("currentCoworkspace")]
+        public Guid CurrentCoworkspace { get; set; }
+
         [JsonProperty("favoriteCoworkspaces")]
         public IEnumerable<Guid> FavoriteCoworkspaces { get; set; }
 

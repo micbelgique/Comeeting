@@ -14,6 +14,9 @@ namespace Comeeting.Api.Models.Livefeed
         [JsonProperty("isBirthday")]
         public bool IsBirthday { get; set; }
 
+        [JsonProperty("pictureUrl")]
+        public string PictureUrl { get; set; }
+
         public ArrivalMessageDto():base(MessageType.Arrival)
         {
         }
