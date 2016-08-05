@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="LuckCheckBoxStyle" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:buttonTint">@color/colorPrimary</item>
+    </style>
+
+    <style name="LuckRadioButtonStyle" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:buttonTint">@color/colorPrimary</item>
+    </style>
+
+    <style name="AppCompatButtonStyle" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:backgroundTint">@color/color_primary_selector</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <!--<style name="AppCompatButtonStyleWhite" parent="Widget.AppCompat.Button.Colored">-->
+        <!--<item name="android:backgroundTint">@color/greyDivider</item>-->
+        <!--<item name="android:textColor">@color/greySecondaryText</item>-->
+    <!--</style>-->
+
+</resources>
