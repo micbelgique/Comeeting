@@ -23,7 +23,7 @@ namespace Comeeting.Api.Controllers
         [HttpGet]
         public IHttpActionResult Get(string linkedInId)
         {
-            return Ok(new CoworkerDto() { FirstName = "Mathias", LastName = "Biard", Summary = "The naked one", PictureUrl = "http://www.mathiasbiard.com/images/me.jpg" });
+            return Ok(new CoworkerDto() { LinkedInId = "81920_aezan_aza", FirstName = "Mathias", LastName = "Biard", Summary = "The naked one", PictureUrl = "http://www.mathiasbiard.com/images/me.jpg" });
         }
 
 
