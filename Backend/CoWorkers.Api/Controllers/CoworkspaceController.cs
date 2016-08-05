@@ -43,5 +43,35 @@ namespace Comeeting.Api.Controllers
                 },
             });
         }
+
+        [Route("api/coworkspace/{id}/coworkers")]
+        [HttpGet]
+        public IHttpActionResult Get(string id)
+        {
+            return Ok(new List<CoworkerDto>()
+                    {
+                        new CoworkerDto() { FirstName = "Laurent", LastName = "Vandenbosch",Summary = "Ninjaaaa", PictureUrl = "https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAdqAAAAJDRmZGU3ZDBhLTNhNTYtNGUyZS04NjgzLWY1MjVhMDUwYWViNg.jpg" },
+                        new CoworkerDto() { FirstName = "Mathias", LastName = "Biard",Summary = "The naked one", PictureUrl = "http://www.mathiasbiard.com/images/me.jpg" }
+                    });
+        }
+
+        [Route("api/coworkspace/{id}/coworker/{linkedInId}")]
+        [HttpPost]
+        public IHttpActionResult Post(string id, string linkedInId)
+        {
+            return Ok();
+        }
+
+        [Route("api/coworkspace/{id}/coworker/{linkedInId}")]
+        [HttpDelete]
+        public IHttpActionResult Delete(string id, string linkedInId)
+        {
+            return Ok();
+        }
+
+
+
+
+
     }
 }
