@@ -4,18 +4,24 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.les4elefantastiq.les4elefantcowork.R;
 import com.les4elefantastiq.les4elefantcowork.managers.ProfileManager;
 
-public class NavigationActivity extends BaseActivity {
+public class NavigationActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     // -------------- Objects, Variables -------------- //
+
+    private Fragment mCurrentFragment;
+
 
     // -------------------- Views --------------------- //
 
@@ -31,20 +37,61 @@ public class NavigationActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_activity);
 
-        if(ProfileManager.isLogged()) {
+        if (ProfileManager.isLogged()) {
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
             manageToolbar(toolbar);
             manageNavigationDrawer(toolbar);
-        }
-        else{
+
+            // Open the choosen fragment
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.layout_Content, new CoworkspacesFragment())
+                    .commit();
+
+        } else {
             startActivity(new Intent(NavigationActivity.this, SignInActivity.class));
             finish();
         }
     }
 
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
+    }
+
 
     // ------------------ Listeners ------------------- //
+
+    @Override
+    public void onBackPressed() {
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START))
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+        else
+            super.onBackPressed();
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem menuItem) {
+        menuItem.setChecked(true);
+
+        getSupportActionBar().setTitle(menuItem.getTitle());
+
+        Fragment fragment = null;
+
+        switch (menuItem.getItemId()) {
+            // case R.id.:
+            //    fragment = new xFragment();
+            //    break;
+        }
+
+        showFragment(fragment);
+
+        return true;
+    }
+
 
     // ------------------- Methods -------------------- //
 
@@ -79,13 +126,18 @@ public class NavigationActivity extends BaseActivity {
         mNavigationView = ((NavigationView) findViewById(R.id.navigationView));
     }
 
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        mDrawerToggle.syncState();
+    private void showFragment(Fragment fragment) {
+        mCurrentFragment = fragment;
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.layout_Content, fragment)
+                .commit();
+
+        mDrawerLayout.closeDrawers();
     }
 
-
+    
     // ------------------ AsyncTasks ------------------ //
 
     // ----------------- GUI Adapter ------------------ //
