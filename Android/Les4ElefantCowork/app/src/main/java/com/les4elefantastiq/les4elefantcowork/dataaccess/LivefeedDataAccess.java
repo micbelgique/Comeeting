@@ -39,6 +39,6 @@ public class LivefeedDataAccess {
 
     public interface LivefeedInterface {
         @GET("/api/coworkspace/{coworkspaceId}/livefeed/messages")
-        Call<List<LiveFeedMessage>> getLivefeedMessages(@Path("coworkspaceId") int coworkspaceId);
+        Call<List<LiveFeedMessage>> getLivefeedMessages(@Path("coworkspaceId") String coworkspaceId);
     }
 }

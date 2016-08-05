@@ -15,7 +15,7 @@ public class LivefeedManager {
 
     // ---------------- Public Methods ---------------- //
 
-    public static List<LiveFeedMessage> getCoworkers(Coworkspace coworkspace){
+    public static List<LiveFeedMessage> getLiveFeedMessages(Coworkspace coworkspace){
         return LivefeedDataAccess.getLivefeedMessages(coworkspace);
     }
 

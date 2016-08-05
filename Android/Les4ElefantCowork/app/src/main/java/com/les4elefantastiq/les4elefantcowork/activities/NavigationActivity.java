@@ -10,14 +10,20 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.les4elefantastiq.les4elefantcowork.R;
 import com.les4elefantastiq.les4elefantcowork.activities.utils.BaseActivity;
+import com.les4elefantastiq.les4elefantcowork.managers.CoworkspacesManager;
+import com.les4elefantastiq.les4elefantcowork.managers.LivefeedManager;
 import com.les4elefantastiq.les4elefantcowork.managers.ProfileManager;
 import com.les4elefantastiq.les4elefantcowork.models.Coworkspace;
+import com.les4elefantastiq.les4elefantcowork.models.LiveFeedMessage;
+
+import java.util.List;
 
 public class NavigationActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
