@@ -11,11 +11,12 @@ public class LiveFeedMessage {
     public String sender;
     public String coworkerLinkedInId;
     public Boolean isBirthday;
+    public String pictureUrl;
 
 
     // ----------------- Constructor ------------------ //
 
-    public LiveFeedMessage(String text, int type, String dateTime, String tweetLink, String sender, String coworkerLinkedInId, Boolean isBirthday) {
+    public LiveFeedMessage(String text, int type, String dateTime, String tweetLink, String sender, String coworkerLinkedInId, Boolean isBirthday, String pictureUrl) {
         this.text = text;
         this.type = type;
         this.dateTime = dateTime;
@@ -23,6 +24,7 @@ public class LiveFeedMessage {
         this.sender = sender;
         this.coworkerLinkedInId = coworkerLinkedInId;
         this.isBirthday = isBirthday;
+        this.pictureUrl = pictureUrl;
     }
 
     // ---------------- Public Methods ---------------- //
