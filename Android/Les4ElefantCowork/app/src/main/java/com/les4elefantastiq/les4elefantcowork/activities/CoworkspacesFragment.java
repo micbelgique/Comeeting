@@ -11,6 +11,10 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 import com.les4elefantastiq.les4elefantcowork.R;
+import com.les4elefantastiq.les4elefantcowork.managers.CoworkspacesManager;
+import com.les4elefantastiq.les4elefantcowork.models.Coworkspace;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -68,6 +72,7 @@ public class CoworkspacesFragment extends Fragment {
 
         @Override
         protected Void doInBackground(Void... voids) {
+            List<Coworkspace> coworkspaceList = CoworkspacesManager.getCoworkspaces();
             return null;
         }
 

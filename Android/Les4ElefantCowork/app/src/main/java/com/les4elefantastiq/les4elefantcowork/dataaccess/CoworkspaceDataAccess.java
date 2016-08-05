@@ -1,7 +1,5 @@
 package com.les4elefantastiq.les4elefantcowork.dataaccess;
 
-import android.util.Log;
-
 import com.les4elefantastiq.les4elefantcowork.models.Coworkspace;
 
 import java.io.IOException;
@@ -18,7 +16,7 @@ import retrofit2.http.GET;
 public class CoworkspaceDataAccess {
     public static final String API_URL = "http://comeetingapi.azurewebsites.net";
 
-    public static List<Coworkspace> getAllCoworkspace() throws IOException {
+    public static List<Coworkspace> getAllCoworkspace() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -27,7 +25,12 @@ public class CoworkspaceDataAccess {
         CoworkspaceInterface coworkspaceInterface = retrofit.create(CoworkspaceInterface.class);
         Call<List<Coworkspace>> coworkspaces = coworkspaceInterface.coworkspaces();
 
-        return coworkspaces.execute().body();
+        try {
+            return coworkspaces.execute().body();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
 
     }
 
