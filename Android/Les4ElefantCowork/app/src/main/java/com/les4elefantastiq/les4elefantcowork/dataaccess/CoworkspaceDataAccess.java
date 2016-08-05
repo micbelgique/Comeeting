@@ -38,14 +38,14 @@ public class CoworkspaceDataAccess {
 
     }
 
-    public static List<Coworker> getCoworkers(int coworkspaceId) {
+    public static List<Coworker> getCoworkers(Coworkspace coworkspace) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         CoworkspaceInterface coworkspaceInterface = retrofit.create(CoworkspaceInterface.class);
-        Call<List<Coworker>> coworkers = coworkspaceInterface.cowokers(coworkspaceId);
+        Call<List<Coworker>> coworkers = coworkspaceInterface.cowokers(coworkspace.id);
 
         try {
             return coworkers.execute().body();
@@ -56,7 +56,7 @@ public class CoworkspaceDataAccess {
 
     }
 
-    public static void setCheckIn(int coworkspaceId, int coworkerId, Boolean checkIn) {
+    public static void setCheckIn(Coworkspace coworkspace, Coworker coworker, Boolean checkIn) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -66,9 +66,9 @@ public class CoworkspaceDataAccess {
 
         Call<Void> checkInRequest;
         if (checkIn) {
-            checkInRequest = checkInInterface.checkin(coworkspaceId, coworkerId);
+            checkInRequest = checkInInterface.checkin(coworkspace.id, coworker.linkedinId);
         } else {
-            checkInRequest = checkInInterface.checkout(coworkspaceId, coworkerId);
+            checkInRequest = checkInInterface.checkout(coworkspace.id, coworker.linkedinId);
         }
 
         try {
@@ -90,11 +90,13 @@ public class CoworkspaceDataAccess {
 
     public interface CoworkspaceCheckInCheckOutInterface {
         @DELETE("/api/coworkspace/{coworkspaceId}/coworker/{coworkerId}")
-        Call<Void> checkout(@Path("coworkspaceId") int coworkspaceId,
-                      @Path("coworkerId") int coworkerId);
+        Call<Void> checkout(
+                @Path("coworkspaceId") int coworkspaceId,
+                @Path("coworkerId") int coworkerId);
 
         @POST("/api/coworkspace/{coworkspaceId}/coworker/{coworkerId}")
-        Call<Void> checkin(@Path("coworkspaceId") int coworkspaceId,
-                     @Path("coworkerId") int coworkerId);
+        Call<Void> checkin(
+                @Path("coworkspaceId") int coworkspaceId,
+                @Path("coworkerId") int coworkerId);
     }
 }

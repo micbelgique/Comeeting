@@ -16,16 +16,16 @@ public class CoworkspacesManager {
         return CoworkspaceDataAccess.getAllCoworkspace();
     }
 
-    public static List<Coworker> getCoworkers(int coworkspaceId){
-        return CoworkspaceDataAccess.getCoworkers(coworkspaceId);
+    public static List<Coworker> getCoworkers(Coworkspace coworkspace){
+        return CoworkspaceDataAccess.getCoworkers(coworkspace);
     }
 
-    public static void checkIn(int coworkspaceId, int coworkerId) {
-            CoworkspaceDataAccess.setCheckIn(coworkspaceId, coworkerId, true);
+    public static void checkIn(Coworkspace coworkspace, Coworker coworker) {
+            CoworkspaceDataAccess.setCheckIn(coworkspace, coworker, true);
     }
 
-    public static void checkOut(int coworkspaceId, int coworkerId) {
-        CoworkspaceDataAccess.setCheckIn(coworkspaceId, coworkerId, false);
+    public static void checkOut(Coworkspace coworkspace, Coworker coworker) {
+        CoworkspaceDataAccess.setCheckIn(coworkspace, coworker, false);
     }
 
     // ---------------- Private Methods --------------- //
