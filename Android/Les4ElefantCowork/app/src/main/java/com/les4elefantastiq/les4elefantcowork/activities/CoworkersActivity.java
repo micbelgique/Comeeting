@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.les4elefantastiq.les4elefantcowork.R;
 import com.les4elefantastiq.les4elefantcowork.activities.utils.BaseActivity;
@@ -82,6 +83,8 @@ public class CoworkersActivity extends BaseActivity {
 
             if (coworkers != null)
                 mListView.setAdapter(new Adapter(coworkers));
+            else
+                Toast.makeText(CoworkersActivity.this, R.string.Whoops_an_error_has_occured__Check_your_internet_connection, Toast.LENGTH_LONG).show();
         }
 
     }

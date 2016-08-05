@@ -7,7 +7,7 @@ public class Coworkspace {
 
     // -------------- Objects, Variables -------------- //
 
-    public int id;
+    public String id;
     public String name;
     public String pictureUrl;
     public String description;
@@ -18,7 +18,7 @@ public class Coworkspace {
 
     // ----------------- Constructor ------------------ //
 
-    public Coworkspace(int id, String name, String pictureUrl, String description, Double geolocationLatitude, Double geolocationLongitude, int geofancingRadius, Coworker[] coworkers) {
+    public Coworkspace(String id, String name, String pictureUrl, String description, Double geolocationLatitude, Double geolocationLongitude, int geofancingRadius, Coworker[] coworkers) {
         this.id = id;
         this.name = name;
         this.pictureUrl = pictureUrl;

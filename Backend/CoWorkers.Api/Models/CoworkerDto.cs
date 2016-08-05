@@ -8,6 +8,8 @@ namespace Comeeting.Api.Models
 {
     public class CoworkerDto
     {
+        [JsonProperty("linkedInId")]
+        public string LinkedInId { get; set; }
         [JsonProperty("firstName")]
         public string FirstName { get; set; }
         [JsonProperty("lastName")]

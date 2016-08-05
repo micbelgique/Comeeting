@@ -4,13 +4,13 @@ public class ProfileManager {
 
     // -------------- Objects, Variables -------------- //
 
-    private static boolean isLogged;
+    private static String linkedInId;
 
 
     // ---------------- Public Methods ---------------- //
 
     public static boolean isLogged() {
-        return isLogged;
+        return linkedInId != null;
     }
 
     public static void signWithLinkedIn() {
@@ -22,7 +22,7 @@ public class ProfileManager {
             e.printStackTrace();
         }
 
-        isLogged = true;
+        linkedInId = "blablabla";
     }
 
 

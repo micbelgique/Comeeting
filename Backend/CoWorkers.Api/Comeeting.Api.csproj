@@ -166,11 +166,15 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CoworkerController.cs" />
     <Compile Include="Controllers\CoworkspaceController.cs" />
+    <Compile Include="Controllers\LivefeedController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CoworkerDto.cs" />
     <Compile Include="Models\CoworkspaceDto.cs" />
+    <Compile Include="Models\Livefeed\ArrivalMessageDto.cs" />
+    <Compile Include="Models\Livefeed\MessageDto.cs" />
+    <Compile Include="Models\Livefeed\TwitterMessageDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

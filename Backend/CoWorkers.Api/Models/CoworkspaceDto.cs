@@ -8,6 +8,8 @@ namespace Comeeting.Api.Models
 {
     public class CoworkspaceDto
     {
+        [JsonProperty("id")]
+        public Guid Id { get; set; }
         [JsonProperty("name")]
         public string Name { get; set; }
         [JsonProperty("pictureUrl")]
