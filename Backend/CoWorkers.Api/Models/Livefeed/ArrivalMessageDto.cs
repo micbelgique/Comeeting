@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using Newtonsoft.Json;
+
+namespace Comeeting.Api.Models.Livefeed
+{
+    public class ArrivalMessageDto:MessageDto
+    {
+        [JsonProperty("coworkerLinkedInId")]
+        public string CoworkerLinkedInId { get; set; }
+
+        [JsonProperty("isBirthday")]
+        public bool IsBirthday { get; set; }
+
+        public ArrivalMessageDto():base(MessageType.Arrival)
+        {
+        }
+    }
+}
