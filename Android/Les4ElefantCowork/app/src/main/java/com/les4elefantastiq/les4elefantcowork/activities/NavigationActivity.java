@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.les4elefantastiq.les4elefantcowork.R;
+import com.les4elefantastiq.les4elefantcowork.activities.utils.BaseActivity;
 import com.les4elefantastiq.les4elefantcowork.managers.ProfileManager;
 
 public class NavigationActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {

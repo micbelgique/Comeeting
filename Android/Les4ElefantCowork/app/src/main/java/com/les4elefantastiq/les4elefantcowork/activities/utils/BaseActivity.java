@@ -1,4 +1,4 @@
-package com.les4elefantastiq.les4elefantcowork.activities;
+package com.les4elefantastiq.les4elefantcowork.activities.utils;
 
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
