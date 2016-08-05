@@ -4,13 +4,14 @@ public class LiveFeedMessage {
 
     // -------------- Objects, Variables -------------- //
 
-    String text;
-    int type;
-    String dateTime; // Date ?
-    String tweetLink;
-    String sender;
-    String coworkerLinkedInId;
-    Boolean isBirthday;
+    public String text;
+    public int type;
+    public String dateTime; // Date ?
+    public String tweetLink;
+    public String sender;
+    public String coworkerLinkedInId;
+    public Boolean isBirthday;
+
 
     // ----------------- Constructor ------------------ //
 

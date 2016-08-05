@@ -19,6 +19,7 @@ public class LivefeedManager {
         return LivefeedDataAccess.getLivefeedMessages(coworkspace);
     }
 
+
     // ---------------- Private Methods --------------- //
 }
 
