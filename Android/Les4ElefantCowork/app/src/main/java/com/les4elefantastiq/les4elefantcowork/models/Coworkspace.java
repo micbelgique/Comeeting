@@ -4,6 +4,7 @@ package com.les4elefantastiq.les4elefantcowork.models;
  * Created by Math on 05/08/16.
  */
 public class Coworkspace {
+    public int id;
     public String name;
     public String pictureUrl;
     public String description;
@@ -12,7 +13,8 @@ public class Coworkspace {
     public int geofancingRadius;
     public Coworker[] coworkers;
 
-    public Coworkspace(String name, String pictureUrl, String description, Double geolocationLatitude, Double geolocationLongitude, int geofancingRadius, Coworker[] coworkers) {
+    public Coworkspace(int id, String name, String pictureUrl, String description, Double geolocationLatitude, Double geolocationLongitude, int geofancingRadius, Coworker[] coworkers) {
+        this.id = id;
         this.name = name;
         this.pictureUrl = pictureUrl;
         this.description = description;
