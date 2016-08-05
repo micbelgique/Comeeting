@@ -18,24 +18,17 @@ import retrofit2.http.GET;
 public class CoworkspaceDataAccess {
     public static final String API_URL = "http://comeetingapi.azurewebsites.net";
 
-    public static void doSomeStuff() throws IOException {
-
-        Log.d("Blop", "Get coworking !");
-
+    public static List<Coworkspace> getAllCoworkspace() throws IOException {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-
         CoworkspaceInterface coworkspaceInterface = retrofit.create(CoworkspaceInterface.class);
         Call<List<Coworkspace>> coworkspaces = coworkspaceInterface.coworkspaces();
 
-        List<Coworkspace> coworkspacesList = coworkspaces.execute().body();
-        Log.d("Blop", "Listing :");
-        for (Coworkspace coworkspace : coworkspacesList) {
-            Log.d("Blop", "Coworking :" + coworkspace.name);
-        }
+        return coworkspaces.execute().body();
+
     }
 
     public interface CoworkspaceInterface {

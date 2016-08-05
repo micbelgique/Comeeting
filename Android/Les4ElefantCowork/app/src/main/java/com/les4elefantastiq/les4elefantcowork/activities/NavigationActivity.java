@@ -12,8 +12,10 @@ import android.view.View;
 
 import com.les4elefantastiq.les4elefantcowork.R;
 import com.les4elefantastiq.les4elefantcowork.dataaccess.CoworkspaceDataAccess;
+import com.les4elefantastiq.les4elefantcowork.models.Coworkspace;
 
 import java.io.IOException;
+import java.util.List;
 
 public class NavigationActivity extends BaseActivity {
 
@@ -42,9 +44,9 @@ public class NavigationActivity extends BaseActivity {
             @Override
             public void run() {
                 try {
-                    CoworkspaceDataAccess.doSomeStuff();
+                    List<Coworkspace> coworkspaceList = CoworkspaceDataAccess.getAllCoworkspace();
                 } catch (IOException e) {
-                    Log.d("Blop", "EXPLOSION ATOMIQUE\n" + e.getMessage());
+                    Log.d("Blop", "EXPLOSION ATOMIQUE\nIOException: " + e.getMessage());
                 }
             }
         }).start();
