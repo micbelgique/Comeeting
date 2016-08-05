@@ -170,8 +170,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\CoworkerDto.cs" />
-    <Compile Include="Models\CoworkspaceDto.cs" />
+    <Compile Include="Models\Coworkers\CoworkerDto.cs" />
+    <Compile Include="Models\Coworkspaces\CoworkerDto.cs" />
+    <Compile Include="Models\Coworkspaces\CoworkspaceDto.cs" />
     <Compile Include="Models\Livefeed\ArrivalMessageDto.cs" />
     <Compile Include="Models\Livefeed\MessageDto.cs" />
     <Compile Include="Models\Livefeed\TwitterMessageDto.cs" />

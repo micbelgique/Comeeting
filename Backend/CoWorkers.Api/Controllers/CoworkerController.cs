@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Comeeting.Api.Models;
+using Comeeting.Api.Models.Coworkers;
 
 namespace Comeeting.Api.Controllers
 {
@@ -23,7 +24,11 @@ namespace Comeeting.Api.Controllers
         [HttpGet]
         public IHttpActionResult Get(string linkedInId)
         {
-            return Ok(new CoworkerDto() { LinkedInId = "81920_aezan_aza", FirstName = "Mathias", LastName = "Biard", Summary = "The naked one", PictureUrl = "http://www.mathiasbiard.com/images/me.jpg" });
+            return Ok(new CoworkerDto()
+            {
+                LinkedInId = "81920_aezan_aza", FirstName = "Mathias", LastName = "Biard", Summary = "The naked one", PictureUrl = "http://www.mathiasbiard.com/images/me.jpg",
+                FavoriteCoworkspaces = new List<Guid>() { new Guid("6CA3598B-09D3-43A4-A74E-6EC2D9B0BE89")}
+            });
         }
 
 
