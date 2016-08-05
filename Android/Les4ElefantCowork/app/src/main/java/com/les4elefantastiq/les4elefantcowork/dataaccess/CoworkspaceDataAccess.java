@@ -19,16 +19,13 @@ import retrofit2.http.Path;
  */
 public class CoworkspaceDataAccess {
 
-    public static final String API_URL = "http://comeetingapi.azurewebsites.net";
+    private static final String API_URL = "http://comeetingapi.azurewebsites.net";
+    private static Retrofit retrofit;
 
     public static List<Coworkspace> getAllCoworkspace() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(API_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        loadRetrofit();
 
-        CoworkspacesInterface coworkspacesInterface = retrofit.create(CoworkspacesInterface.class);
-        Call<List<Coworkspace>> coworkspaces = coworkspacesInterface.coworkspaces();
+        Call<List<Coworkspace>> coworkspaces = retrofit.create(CoworkspacesInterface.class).coworkspaces();
 
         try {
             return coworkspaces.execute().body();
@@ -36,17 +33,12 @@ public class CoworkspaceDataAccess {
             e.printStackTrace();
             return null;
         }
-
     }
 
     public static List<Coworker> getCoworkers(Coworkspace coworkspace) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(API_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        loadRetrofit();
 
-        CoworkspaceInterface coworkspaceInterface = retrofit.create(CoworkspaceInterface.class);
-        Call<List<Coworker>> coworkers = coworkspaceInterface.cowokers(coworkspace.id);
+        Call<List<Coworker>> coworkers = retrofit.create(CoworkspaceInterface.class).cowokers(coworkspace.id);
 
         try {
             return coworkers.execute().body();
@@ -54,14 +46,10 @@ public class CoworkspaceDataAccess {
             e.printStackTrace();
             return null;
         }
-
     }
 
     public static void setCheckIn(Coworkspace coworkspace, Coworker coworker, Boolean checkIn) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(API_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        loadRetrofit();
 
         CoworkspaceCheckInCheckOutInterface checkInInterface = retrofit.create(CoworkspaceCheckInCheckOutInterface.class);
 
@@ -79,17 +67,17 @@ public class CoworkspaceDataAccess {
         }
     }
 
-    public interface CoworkspacesInterface {
+    private interface CoworkspacesInterface {
         @GET("/api/coworkspaces")
         Call<List<Coworkspace>> coworkspaces();
     }
 
-    public interface CoworkspaceInterface {
+    private interface CoworkspaceInterface {
         @GET("/api/coworkspace/{coworkspaceId}/coworkers")
         Call<List<Coworker>> cowokers(@Path("coworkspaceId") String coworkspaceId);
     }
 
-    public interface CoworkspaceCheckInCheckOutInterface {
+    private interface CoworkspaceCheckInCheckOutInterface {
         @DELETE("/api/coworkspace/{coworkspaceId}/coworker/{linkedInId}")
         Call<Void> checkout(
                 @Path("coworkspaceId") String coworkspaceId,
@@ -99,6 +87,13 @@ public class CoworkspaceDataAccess {
         Call<Void> checkin(
                 @Path("coworkspaceId") String coworkspaceId,
                 @Path("linkedInId") String linkedInId);
+    }
+
+    private static void loadRetrofit() {
+        retrofit = new Retrofit.Builder()
+                .baseUrl(API_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
     }
 
 }

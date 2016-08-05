@@ -18,14 +18,14 @@ public class CoworkerDataAccess {
 
     public static final String API_URL = "http://comeetingapi.azurewebsites.net";
 
-    public static Coworker getProfile(Coworker coworker) {
+    public static Coworker getCoworker(String linkedInId) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         CoworkerInterface coworkerInterface = retrofit.create(CoworkerInterface.class);
-        Call<Coworker> coworkerCall = coworkerInterface.getProfile(coworker.linkedInId);
+        Call<Coworker> coworkerCall = coworkerInterface.getProfile(linkedInId);
 
         try {
             return coworkerCall.execute().body();

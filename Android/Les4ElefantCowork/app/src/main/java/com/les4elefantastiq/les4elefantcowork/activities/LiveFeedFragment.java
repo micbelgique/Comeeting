@@ -15,9 +15,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.les4elefantastiq.les4elefantcowork.R;
+import com.les4elefantastiq.les4elefantcowork.managers.LivefeedManager;
+import com.les4elefantastiq.les4elefantcowork.managers.ProfileManager;
 import com.les4elefantastiq.les4elefantcowork.models.LiveFeedMessage;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class LiveFeedFragment extends Fragment {
@@ -30,6 +31,7 @@ public class LiveFeedFragment extends Fragment {
     // -------------------- Views --------------------- //
 
     private ListView listView;
+    private ProgressDialog progressDialog;
 
 
     // ------------------ LifeCycle ------------------- //
@@ -62,9 +64,7 @@ public class LiveFeedFragment extends Fragment {
 
     // ------------------ AsyncTasks ------------------ //
 
-    private class LiveFeedMessagesAsyncTask extends AsyncTask<Void, Void, ArrayList<LiveFeedMessage>> {
-
-        private ProgressDialog progressDialog;
+    private class LiveFeedMessagesAsyncTask extends AsyncTask<Void, Void, List<LiveFeedMessage>> {
 
         @Override
         protected void onPreExecute() {
@@ -73,12 +73,12 @@ public class LiveFeedFragment extends Fragment {
         }
 
         @Override
-        protected ArrayList<LiveFeedMessage> doInBackground(Void... voids) {
-            return new ArrayList<>();
+        protected List<LiveFeedMessage> doInBackground(Void... voids) {
+            return LivefeedManager.getLiveFeedMessages(ProfileManager.getCurrentCowerkspace());
         }
 
         @Override
-        protected void onPostExecute(ArrayList<LiveFeedMessage> liveFeedMessages) {
+        protected void onPostExecute(List<LiveFeedMessage> liveFeedMessages) {
             super.onPostExecute(liveFeedMessages);
 
             progressDialog.dismiss();
