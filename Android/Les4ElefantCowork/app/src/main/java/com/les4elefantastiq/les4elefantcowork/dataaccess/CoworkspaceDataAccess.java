@@ -66,9 +66,9 @@ public class CoworkspaceDataAccess {
 
         Call<Void> checkInRequest;
         if (checkIn) {
-            checkInRequest = checkInInterface.checkin(coworkspace.id, coworker.linkedinId);
+            checkInRequest = checkInInterface.checkin(coworkspace.id, coworker.linkedInId);
         } else {
-            checkInRequest = checkInInterface.checkout(coworkspace.id, coworker.linkedinId);
+            checkInRequest = checkInInterface.checkout(coworkspace.id, coworker.linkedInId);
         }
 
         try {
@@ -89,14 +89,14 @@ public class CoworkspaceDataAccess {
     }
 
     public interface CoworkspaceCheckInCheckOutInterface {
-        @DELETE("/api/coworkspace/{coworkspaceId}/coworker/{coworkerId}")
+        @DELETE("/api/coworkspace/{coworkspaceId}/coworker/{linkedInId}")
         Call<Void> checkout(
                 @Path("coworkspaceId") int coworkspaceId,
-                @Path("coworkerId") int coworkerId);
+                @Path("linkedInId") int linkedInId);
 
-        @POST("/api/coworkspace/{coworkspaceId}/coworker/{coworkerId}")
+        @POST("/api/coworkspace/{coworkspaceId}/coworker/{linkedInId}")
         Call<Void> checkin(
                 @Path("coworkspaceId") int coworkspaceId,
-                @Path("coworkerId") int coworkerId);
+                @Path("linkedInId") int linkedInId);
     }
 }
