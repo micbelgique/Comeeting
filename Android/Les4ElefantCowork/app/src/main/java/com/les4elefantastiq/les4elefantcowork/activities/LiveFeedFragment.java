@@ -12,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.les4elefantastiq.les4elefantcowork.R;
 import com.les4elefantastiq.les4elefantcowork.models.LiveFeedMessage;
@@ -32,7 +33,6 @@ public class LiveFeedFragment extends Fragment {
 
 
     // ------------------ LifeCycle ------------------- //
-
 
     @Nullable
     @Override
@@ -83,7 +83,11 @@ public class LiveFeedFragment extends Fragment {
 
             progressDialog.dismiss();
 
-            listView.setAdapter(new Adapter(liveFeedMessages));
+            if (liveFeedMessages != null)
+                listView.setAdapter(new Adapter(liveFeedMessages));
+            else
+                Toast.makeText(getActivity(), R.string.Whoops_an_error_has_occured__Check_your_internet_connection, Toast.LENGTH_LONG).show();
+
         }
 
     }
