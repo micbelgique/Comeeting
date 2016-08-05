@@ -8,10 +8,16 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import com.les4elefantastiq.les4elefantcowork.R;
 import com.les4elefantastiq.les4elefantcowork.managers.ProfileManager;
+import com.les4elefantastiq.les4elefantcowork.dataaccess.CoworkspaceDataAccess;
+import com.les4elefantastiq.les4elefantcowork.models.Coworkspace;
+
+import java.io.IOException;
+import java.util.List;
 
 public class NavigationActivity extends BaseActivity {
 
@@ -41,6 +47,18 @@ public class NavigationActivity extends BaseActivity {
             startActivity(new Intent(NavigationActivity.this, SignInActivity.class));
             finish();
         }
+
+        // TODO: use to get coworkings
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    List<Coworkspace> coworkspaceList = CoworkspaceDataAccess.getAllCoworkspace();
+                } catch (IOException e) {
+                    Log.d("Blop", "EXPLOSION ATOMIQUE\nIOException: " + e.getMessage());
+                }
+            }
+        }).start();
     }
 
 
