@@ -8,4 +8,11 @@ public class Coworker {
     String lastname;
     String pictureUrl;
     String summary;
+
+    public Coworker(String firstname, String lastname, String pictureUrl, String summary) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.pictureUrl = pictureUrl;
+        this.summary = summary;
+    }
 }
