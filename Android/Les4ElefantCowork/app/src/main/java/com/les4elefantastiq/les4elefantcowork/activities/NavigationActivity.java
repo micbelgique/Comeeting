@@ -10,17 +10,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.les4elefantastiq.les4elefantcowork.R;
 import com.les4elefantastiq.les4elefantcowork.activities.utils.BaseActivity;
-import com.les4elefantastiq.les4elefantcowork.dataaccess.CoworkspaceDataAccess;
 import com.les4elefantastiq.les4elefantcowork.managers.ProfileManager;
-import com.les4elefantastiq.les4elefantcowork.models.Coworker;
-
-import java.util.List;
+import com.les4elefantastiq.les4elefantcowork.models.Coworkspace;
 
 public class NavigationActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -49,11 +46,7 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
             manageToolbar(toolbar);
             manageNavigationDrawer(toolbar);
 
-            // Open the choosen fragment
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.layout_Content, new CoworkspacesFragment())
-                    .commit();
+            showFragment(new CoworkspacesFragment());
 
         } else {
             startActivity(new Intent(NavigationActivity.this, SignInActivity.class));
@@ -130,6 +123,12 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
         mDrawerLayout.addDrawerListener(mDrawerToggle);
 
         mNavigationView = ((NavigationView) findViewById(R.id.navigationView));
+        Menu menu = mNavigationView.getMenu();
+
+
+        menu.addSubMenu("Acutel");
+        menu.add(0,0,0,"blablabla");
+        menu.addSubMenu("Mes coworkings");
     }
 
     private void showFragment(Fragment fragment) {
@@ -143,7 +142,6 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
         mDrawerLayout.closeDrawers();
     }
 
-    
     // ------------------ AsyncTasks ------------------ //
 
     // ----------------- GUI Adapter ------------------ //

@@ -18,6 +18,7 @@ import retrofit2.http.Path;
  * Created by Math on 05/08/16.
  */
 public class CoworkspaceDataAccess {
+
     public static final String API_URL = "http://comeetingapi.azurewebsites.net";
 
     public static List<Coworkspace> getAllCoworkspace() {
@@ -85,18 +86,19 @@ public class CoworkspaceDataAccess {
 
     public interface CoworkspaceInterface {
         @GET("/api/coworkspace/{coworkspaceId}/coworkers")
-        Call<List<Coworker>> cowokers(@Path("coworkspaceId") int coworkspaceId);
+        Call<List<Coworker>> cowokers(@Path("coworkspaceId") String coworkspaceId);
     }
 
     public interface CoworkspaceCheckInCheckOutInterface {
         @DELETE("/api/coworkspace/{coworkspaceId}/coworker/{linkedInId}")
         Call<Void> checkout(
-                @Path("coworkspaceId") int coworkspaceId,
-                @Path("linkedInId") int linkedInId);
+                @Path("coworkspaceId") String coworkspaceId,
+                @Path("linkedInId") String linkedInId);
 
         @POST("/api/coworkspace/{coworkspaceId}/coworker/{linkedInId}")
         Call<Void> checkin(
-                @Path("coworkspaceId") int coworkspaceId,
-                @Path("linkedInId") int linkedInId);
+                @Path("coworkspaceId") String coworkspaceId,
+                @Path("linkedInId") String linkedInId);
     }
+
 }
