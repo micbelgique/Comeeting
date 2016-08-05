@@ -8,16 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.les4elefantastiq.les4elefantcowork.R;
 import com.les4elefantastiq.les4elefantcowork.managers.CoworkspacesManager;
 import com.les4elefantastiq.les4elefantcowork.models.Coworkspace;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class CoworkspacesFragment extends Fragment {
 
@@ -28,8 +28,7 @@ public class CoworkspacesFragment extends Fragment {
 
     // -------------------- Views --------------------- //
 
-    @BindView(R.id.listview)
-    ListView listView;
+    private ListView listView;
 
 
     // ------------------ LifeCycle ------------------- //
@@ -39,7 +38,7 @@ public class CoworkspacesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.coworkspaces_fragment, container, false);
 
-        ButterKnife.bind(this, view);
+        listView = (ListView) view.findViewById(R.id.listview);
 
         mCoworkspacesAsyncTask = new CoworkspacesAsyncTask();
         mCoworkspacesAsyncTask.execute();
@@ -58,12 +57,11 @@ public class CoworkspacesFragment extends Fragment {
 
     // ------------------ Listeners ------------------- //
 
-
     // ------------------- Methods -------------------- //
 
     // ------------------ AsyncTasks ------------------ //
 
-    private class CoworkspacesAsyncTask extends AsyncTask<Void, Void, Void> {
+    private class CoworkspacesAsyncTask extends AsyncTask<Void, Void, List<Coworkspace>> {
 
         @Override
         protected void onPreExecute() {
@@ -71,16 +69,15 @@ public class CoworkspacesFragment extends Fragment {
         }
 
         @Override
-        protected Void doInBackground(Void... voids) {
-            List<Coworkspace> coworkspaceList = CoworkspacesManager.getCoworkspaces();
-            return null;
+        protected List<Coworkspace> doInBackground(Void... voids) {
+            return CoworkspacesManager.getCoworkspaces();
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
+        protected void onPostExecute(List<Coworkspace> coworkspaces) {
+            super.onPostExecute(coworkspaces);
 
-            listView.setAdapter(new Adapter());
+            listView.setAdapter(new Adapter(coworkspaces));
         }
 
     }
@@ -90,14 +87,26 @@ public class CoworkspacesFragment extends Fragment {
 
     private class Adapter extends BaseAdapter {
 
-        @Override
-        public int getCount() {
-            return 0;
+        private List<Coworkspace> coworkspaces;
+
+        private class ObjectsHolder {
+            Coworkspace coworkspace;
+            ImageView imageView;
+            TextView textView_Name, textView_Distance, textView_CowerkersCount;
+        }
+
+        public Adapter(List<Coworkspace> coworkspaces) {
+            this.coworkspaces = coworkspaces;
         }
 
         @Override
-        public Object getItem(int position) {
-            return null;
+        public int getCount() {
+            return coworkspaces.size();
+        }
+
+        @Override
+        public Coworkspace getItem(int position) {
+            return coworkspaces.get(position);
         }
 
         @Override
@@ -107,8 +116,43 @@ public class CoworkspacesFragment extends Fragment {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            return null;
+            Coworkspace coworkspace = getItem(position);
+            ObjectsHolder objectsHolder;
+
+            if (convertView == null) {
+                convertView = getActivity().getLayoutInflater().inflate(R.layout.coworspaces_fragment_item, parent, false);
+                objectsHolder = new ObjectsHolder();
+                objectsHolder.imageView = (ImageView) convertView.findViewById(R.id.imageview);
+                objectsHolder.textView_Name = (TextView) convertView.findViewById(R.id.textview_name);
+                objectsHolder.textView_CowerkersCount = (TextView) convertView.findViewById(R.id.textview_coworkers_count);
+                objectsHolder.textView_Distance = (TextView) convertView.findViewById(R.id.textview_distance);
+                convertView.setTag(objectsHolder);
+
+            } else
+                objectsHolder = (ObjectsHolder) convertView.getTag();
+
+            Picasso.with(getActivity())
+                    .load(coworkspace.pictureUrl)
+                    .into(objectsHolder.imageView);
+
+            objectsHolder.textView_Name.setText(coworkspace.name);
+            objectsHolder.textView_CowerkersCount.setText(coworkspace.coworkers.length + " coworkers actuellement");
+            // objectsHolder.textView_Distance.setText(coworkspace.);
+
+            convertView.setOnClickListener(onCoworkspaceClickListener);
+
+            return convertView;
         }
+
+        private View.OnClickListener onCoworkspaceClickListener = new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Coworkspace coworkspace = ((ObjectsHolder) view.getTag()).coworkspace;
+                // Intent intent = new Intent(getActivity(), .class)
+            }
+
+        };
 
     }
 
