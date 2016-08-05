@@ -18,10 +18,10 @@ namespace Comeeting.Api.Controllers
             {
                 new MessageDto(MessageType.Closure) {DateTime = new DateTime(2016,08,05,17,45,0), Text = "The coworkspace will close in 15 minutes." },
                 new TwitterMessageDto() { DateTime = new DateTime(2016,08,05,17,0,0), Sender = "@ThomasFKN", Text = "Awesome day at the MIC MONS with @Mathias, the naked one #MICCOWORKING",TweetLink = "https://twitter.com/KilopDual/status/571379939611680768" },
-                new ArrivalMessageDto() { DateTime = new DateTime(2016,08,05,14,0,0), Text = "Valentin Taleb arrived at the coworkspace.", IsBirthday = true, CoworkerLinkedInId = "123456789"},
+                new ArrivalMessageDto() { DateTime = new DateTime(2016,08,05,14,0,0), Text = "Valentin Taleb arrived at the coworkspace.", IsBirthday = true, CoworkerLinkedInId = "123456789", PictureUrl = "https://cdn5.f-cdn.com/ppic/11626023/logo/13334637/Wz5KE/profile_logo_.png"},
                 new MessageDto(MessageType.Info) { DateTime = new DateTime(2016,08,05,12,0,0), Text = "The lunch has arrival at the reception." },
-                new ArrivalMessageDto() { DateTime = new DateTime(2016,08,05,9,0,0), Text = "Mathias Biard arrived at the coworkspace.", IsBirthday = false },
-                new ArrivalMessageDto() { DateTime = new DateTime(2016,08,05,8,12,0), Text = "Thomas Fekenne arrived at the coworkspace.", IsBirthday = false }
+                new ArrivalMessageDto() { DateTime = new DateTime(2016,08,05,9,0,0), Text = "Mathias Biard arrived at the coworkspace.", IsBirthday = false, PictureUrl="http://www.mathiasbiard.com/images/me.jpg" },
+                new ArrivalMessageDto() { DateTime = new DateTime(2016,08,05,8,12,0), Text = "Thomas Fekenne arrived at the coworkspace.", IsBirthday = false, PictureUrl="https://pbs.twimg.com/profile_images/1916291478/image.jpg" }
             });
         }
     }
