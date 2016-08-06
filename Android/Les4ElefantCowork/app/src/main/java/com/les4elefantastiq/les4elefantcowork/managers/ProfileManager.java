@@ -11,7 +11,7 @@ public class ProfileManager {
 
     // -------------- Objects, Variables -------------- //
 
-    private static String linkedInId = "ji";
+    private static String linkedInId;
     private static Coworker mCoworker;
 
 
