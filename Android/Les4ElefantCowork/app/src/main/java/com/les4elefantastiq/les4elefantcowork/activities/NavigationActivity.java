@@ -83,7 +83,7 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
 
     // ------------------ Listeners ------------------- //
 
-    private HashMap<Integer, String> coworkspacesIdMap;
+    private HashMap<Integer, String> mMenuIdCoworkspaceIdMap;
 
     @Override
     public void onBackPressed() {
@@ -108,7 +108,7 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
 
                 // Pass the CoworkspaceId to the Fragment
                 Bundle bundle = new Bundle();
-                bundle.putString(CoworkspaceFragment.EXTRA_COWORKSPACE_ID,"" );
+                bundle.putString(CoworkspaceFragment.EXTRA_COWORKSPACE_ID, mMenuIdCoworkspaceIdMap.get(MENU_CURRENT_COWORKSPACE));
                 fragment.setArguments(bundle);
                 break;
 
@@ -150,13 +150,14 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
         mNavigationView.setNavigationItemSelectedListener(this);
     }
 
-    private void manageNavigationDrawerMenu() {
+    private void manageNavigationDrawerMenu(Coworkspace currentCoworkspace) {
+        mMenuIdCoworkspaceIdMap = new HashMap<>();
 
         Menu menu = mNavigationView.getMenu();
 
         // If currently in a coworkspace
         menu.add(0, MENU_CURRENT_COWORKSPACE, 0, "Super coworkspace");
-        //coworkspacesIdMap.put(MENU_CURRENT_COWORKSPACE, ProfileManager.getCurrentCowerkspace())
+        mMenuIdCoworkspaceIdMap.put(MENU_CURRENT_COWORKSPACE, currentCoworkspace.id);
 
         // If favorites cowordspaces
         // SubMenu subMenu2 = menu.addSubMenu("Mes coworkings");
@@ -202,7 +203,7 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
             progressDialog.dismiss();
 
             if (coworkspace != null) {
-                manageNavigationDrawerMenu();
+                manageNavigationDrawerMenu(coworkspace);
 
                 CoworkspaceFragment coworkspaceFragment = new CoworkspaceFragment();
 

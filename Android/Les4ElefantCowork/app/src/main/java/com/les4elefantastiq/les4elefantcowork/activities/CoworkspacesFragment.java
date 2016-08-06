@@ -44,9 +44,11 @@ public class CoworkspacesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.coworkspaces_fragment, container, false);
 
-        ((BaseActivity) getActivity()).getSupportActionBar().setTitle("Les coworkspaces");
+        ((BaseActivity) getActivity()).getSupportActionBar().setTitle("Tous les coworkspaces");
 
         mListView = (ListView) view.findViewById(R.id.listview);
+        mListView.addHeaderView(getActivity().getLayoutInflater().inflate(R.layout.coworkspaces_activity_header, null));
+
         mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
         mCoworkspacesAsyncTask = new CoworkspacesAsyncTask();
