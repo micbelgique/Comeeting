@@ -16,8 +16,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.les4elefantastiq.les4elefantcowork.R;
+import com.les4elefantastiq.les4elefantcowork.activities.utils.BaseActivity;
 import com.les4elefantastiq.les4elefantcowork.managers.LivefeedManager;
 import com.les4elefantastiq.les4elefantcowork.managers.ProfileManager;
+import com.les4elefantastiq.les4elefantcowork.models.Coworkspace;
 import com.les4elefantastiq.les4elefantcowork.models.LiveFeedMessage;
 
 import java.util.List;
@@ -26,26 +28,33 @@ public class CoworkspaceFragment extends Fragment {
 
     // -------------- Objects, Variables -------------- //
 
-    private LiveFeedMessagesAsyncTask liveFeedmessagesAsyncTaks;
+    private LiveFeedMessagesAsyncTask mLiveFeedmessagesAsyncTaks;
+
+    private Coworkspace mCoworkspace;
 
 
     // -------------------- Views --------------------- //
 
-    private ListView listView;
-    private ProgressDialog progressDialog;
+    private ListView mListView;
+    private ProgressDialog mProgressDialog;
 
 
     // ------------------ LifeCycle ------------------- //
 
+    @SuppressWarnings("ConstantConditions")
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.live_feed_fragment, container, false);
 
-        listView = (ListView) view.findViewById(R.id.listview);
+        mCoworkspace = ProfileManager.getCurrentCowerkspace();
 
-        liveFeedmessagesAsyncTaks = new LiveFeedMessagesAsyncTask();
-        liveFeedmessagesAsyncTaks.execute();
+        ((BaseActivity) getActivity()).getSupportActionBar().setTitle(mCoworkspace.name);
+
+        mListView = (ListView) view.findViewById(R.id.listview);
+
+        mLiveFeedmessagesAsyncTaks = new LiveFeedMessagesAsyncTask();
+        mLiveFeedmessagesAsyncTaks.execute();
 
         return view;
     }
@@ -54,8 +63,8 @@ public class CoworkspaceFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        if (liveFeedmessagesAsyncTaks != null)
-            liveFeedmessagesAsyncTaks.cancel(false);
+        if (mLiveFeedmessagesAsyncTaks != null)
+            mLiveFeedmessagesAsyncTaks.cancel(false);
     }
 
 
@@ -70,22 +79,22 @@ public class CoworkspaceFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = ProgressDialog.show(getActivity(), null, "Please wait", true, false);
+            mProgressDialog = ProgressDialog.show(getActivity(), null, "Please wait", true, false);
         }
 
         @Override
         protected List<LiveFeedMessage> doInBackground(Void... voids) {
-            return LivefeedManager.getLiveFeedMessages(ProfileManager.getCurrentCowerkspace());
+            return LivefeedManager.getLiveFeedMessages(mCoworkspace);
         }
 
         @Override
         protected void onPostExecute(List<LiveFeedMessage> liveFeedMessages) {
             super.onPostExecute(liveFeedMessages);
 
-            progressDialog.dismiss();
+            mProgressDialog.dismiss();
 
             if (liveFeedMessages != null)
-                listView.setAdapter(new Adapter(liveFeedMessages));
+                mListView.setAdapter(new Adapter(liveFeedMessages));
             else
                 Toast.makeText(getActivity(), R.string.Whoops_an_error_has_occured__Check_your_internet_connection, Toast.LENGTH_LONG).show();
         }

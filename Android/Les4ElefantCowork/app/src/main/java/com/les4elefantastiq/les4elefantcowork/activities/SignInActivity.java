@@ -3,17 +3,18 @@ package com.les4elefantastiq.les4elefantcowork.activities;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.les4elefantastiq.les4elefantcowork.R;
 import com.les4elefantastiq.les4elefantcowork.activities.utils.BaseActivity;
 import com.les4elefantastiq.les4elefantcowork.managers.ProfileManager;
 
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
-public class SignInActivity extends BaseActivity {
+public class SignInActivity extends BaseActivity implements View.OnClickListener {
 
     // -------------- Objects, Variables -------------- //
 
@@ -29,11 +30,15 @@ public class SignInActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_in_activity);
-        manageToolbar();
 
-        getSupportActionBar().setTitle("Sign in");
+        // Set status bar color
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getResources().getColor(R.color.colorPrimary));
+        }
 
-        ButterKnife.bind(this);
+        findViewById(R.id.button_linked_in).setOnClickListener(this);
     }
 
     @Override
@@ -47,8 +52,8 @@ public class SignInActivity extends BaseActivity {
 
     // ------------------ Listeners ------------------- //
 
-    @OnClick(R.id.button_linked_in)
-    public void signInLinkedIn() {
+    @Override
+    public void onClick(View view) {
         if (mLinkedInAsyncTask != null)
             mLinkedInAsyncTask.cancel(false);
 

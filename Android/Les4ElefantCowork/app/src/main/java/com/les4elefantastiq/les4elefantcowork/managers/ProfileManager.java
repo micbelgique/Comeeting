@@ -25,7 +25,7 @@ public class ProfileManager {
         // TODO : Do request
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -46,6 +46,12 @@ public class ProfileManager {
     private static void loadCoworker() {
         if (mCoworker == null)
             mCoworker = CoworkerDataAccess.getCoworker(linkedInId);
+    }
+
+
+    // TODO : à virer, c'est naz
+    public static void setCurrentCowerkspace(Coworkspace currentCowerkspace) {
+        ProfileManager.mCoworker.currentCoworkspaceId = currentCowerkspace.id;
     }
 
 }

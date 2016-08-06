@@ -15,7 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.les4elefantastiq.les4elefantcowork.R;
+import com.les4elefantastiq.les4elefantcowork.activities.utils.BaseActivity;
 import com.les4elefantastiq.les4elefantcowork.managers.CoworkspacesManager;
+import com.les4elefantastiq.les4elefantcowork.managers.ProfileManager;
 import com.les4elefantastiq.les4elefantcowork.models.Coworkspace;
 import com.squareup.picasso.Picasso;
 
@@ -30,17 +32,20 @@ public class CoworkspacesFragment extends Fragment {
 
     // -------------------- Views --------------------- //
 
-    private ListView listView;
+    private ListView mListView;
 
 
     // ------------------ LifeCycle ------------------- //
 
+    @SuppressWarnings("ConstantConditions")
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.coworkspaces_fragment, container, false);
 
-        listView = (ListView) view.findViewById(R.id.listview);
+        ((BaseActivity) getActivity()).getSupportActionBar().setTitle("Les coworkspaces");
+
+        mListView = (ListView) view.findViewById(R.id.listview);
 
         mCoworkspacesAsyncTask = new CoworkspacesAsyncTask();
         mCoworkspacesAsyncTask.execute();
@@ -80,10 +85,9 @@ public class CoworkspacesFragment extends Fragment {
             super.onPostExecute(coworkspaces);
 
             if (coworkspaces != null)
-                listView.setAdapter(new Adapter(coworkspaces));
+                mListView.setAdapter(new Adapter(coworkspaces));
             else
                 Toast.makeText(getActivity(), R.string.Whoops_an_error_has_occured__Check_your_internet_connection, Toast.LENGTH_LONG).show();
-
         }
 
     }
@@ -154,6 +158,7 @@ public class CoworkspacesFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
+                ProfileManager.setCurrentCowerkspace(((ObjectsHolder) view.getTag()).coworkspace);
                 startActivity(new Intent(getActivity(), CoworkspaceActivity.class));
             }
 
