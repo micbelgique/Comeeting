@@ -30,7 +30,7 @@ public class ProfileManager {
             e.printStackTrace();
         }
 
-        linkedInId = "81920_aezan_aza";
+        linkedInId = "MonSuperId";
     }
 
     @Nullable

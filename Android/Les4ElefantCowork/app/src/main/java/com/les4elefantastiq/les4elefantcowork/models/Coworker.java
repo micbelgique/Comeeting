@@ -18,7 +18,7 @@ public class Coworker {
     public String summary;
 
     @SerializedName(value = "favoriteCoworkspaces")
-    List<String> favoriteCoworkspacesId;
+    public List<String> favoriteCoworkspacesId;
 
     @SerializedName(value = "currentCoworkspace")
     public String currentCoworkspaceId;

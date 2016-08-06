@@ -21,6 +21,7 @@
         <activity android:name=".activities.SignInActivity" android:screenOrientation="nosensor" />
         <activity android:name=".activities.CoworkersActivity" android:screenOrientation="nosensor" />
         <activity android:name=".activities.CoworkspaceActivity" android:screenOrientation="nosensor" />
+        <activity android:name=".activities.CoworkerActivity" android:screenOrientation="nosensor" />
 
     </application>
 

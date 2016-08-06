@@ -20,6 +20,7 @@ import com.les4elefantastiq.les4elefantcowork.R;
 import com.les4elefantastiq.les4elefantcowork.activities.utils.BaseActivity;
 import com.les4elefantastiq.les4elefantcowork.managers.CoworkspacesManager;
 import com.les4elefantastiq.les4elefantcowork.managers.LivefeedManager;
+import com.les4elefantastiq.les4elefantcowork.models.Coworker;
 import com.les4elefantastiq.les4elefantcowork.models.Coworkspace;
 import com.les4elefantastiq.les4elefantcowork.models.LiveFeedMessage;
 import com.squareup.picasso.Picasso;
@@ -210,11 +211,27 @@ public class CoworkspaceFragment extends Fragment {
             imageViews.add((ImageView) convertView.findViewById(R.id.imageview_coworker_3));
             imageViews.add((ImageView) convertView.findViewById(R.id.imageview_coworker_4));
 
-            for (int i = 0; i < 4; i++)
-                if (mCoworkspace.coworkers.size() > i)
+            for (int i = 0; i < 4; i++) {
+                if (mCoworkspace.coworkers.size() > i) {
+                    ImageView imageView = imageViews.get(i);
+                    Coworker coworker = mCoworkspace.coworkers.get(i);
+
                     Picasso.with(getContext())
-                            .load(mCoworkspace.coworkers.get(i).pictureUrl)
-                            .into(imageViews.get(i));
+                            .load(coworker.pictureUrl)
+                            .into(imageView);
+
+                    imageView.setTag(coworker);
+
+                    imageView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Coworker coworker = (Coworker) view.getTag();
+                            startActivity(new Intent(getActivity(), CoworkerActivity.class).putExtra(CoworkerActivity.EXTRA_COWORKER_ID, coworker.linkedInId));
+                        }
+                    });
+
+                }
+            }
 
             convertView.findViewById(R.id.textview_see_more).setOnClickListener(onSeeMoreCowerkerClickListener);
 
