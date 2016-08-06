@@ -16,6 +16,7 @@ import com.les4elefantastiq.les4elefantcowork.R;
 import com.les4elefantastiq.les4elefantcowork.activities.utils.BaseActivity;
 import com.les4elefantastiq.les4elefantcowork.managers.CoworkerManager;
 import com.les4elefantastiq.les4elefantcowork.managers.ProfileManager;
+import com.les4elefantastiq.les4elefantcowork.managers.SharedPreferencesManager;
 import com.les4elefantastiq.les4elefantcowork.models.linkedinmodels.LinkedInCoworker;
 import com.linkedin.platform.APIHelper;
 import com.linkedin.platform.LISessionManager;
@@ -50,6 +51,11 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
         }
 
         findViewById(R.id.button_linked_in).setOnClickListener(this);
+
+        // If already login we just open the next screen
+        if (SharedPreferencesManager.getLinkedInId(this) != null) {
+            showNavigationActivity();
+        }
     }
 
     @Override
@@ -112,6 +118,11 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
         Toast.makeText(this, R.string.Whoops_an_error_has_occured__Check_your_internet_connection, Toast.LENGTH_LONG).show();
     }
 
+    public void showNavigationActivity() {
+        startActivity(new Intent(SignInActivity.this, NavigationActivity.class));
+        finish();
+    }
+
     // ------------------ AsyncTasks ------------------ //
 
     private class LoginAsyncTask extends AsyncTask<ApiResponse, Void, Boolean> {
@@ -125,6 +136,7 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
         protected Boolean doInBackground(ApiResponse... apiResponses) {
             LinkedInCoworker linkedInCoworker = new Gson().fromJson(apiResponses[0].getResponseDataAsString(), LinkedInCoworker.class);
             ProfileManager.linkedInId = linkedInCoworker.linkedInId;
+            SharedPreferencesManager.setLinkedInId(SignInActivity.this, linkedInCoworker.linkedInId);
             Boolean success = CoworkerManager.login(linkedInCoworker.getCoworker());
 
             return success;
@@ -136,8 +148,7 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
             progressDialog.dismiss();
 
             if (success) {
-                startActivity(new Intent(SignInActivity.this, NavigationActivity.class));
-                finish();
+                showNavigationActivity();
             }
         }
     }
