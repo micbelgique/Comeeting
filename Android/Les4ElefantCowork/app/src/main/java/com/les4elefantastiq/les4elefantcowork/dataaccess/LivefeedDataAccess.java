@@ -14,6 +14,7 @@ import retrofit2.http.Path;
  * Created by Math on 05/08/16.
  */
 public class LivefeedDataAccess {
+    public static final String API_URL = "http://comeeting-api.azurewebsites.net";
 
     public static List<LiveFeedMessage> getLivefeedMessages(Coworkspace coworkspace) {
         LivefeedInterface livefeedInterface = CommonDataAccess.getRetrofit().create(LivefeedInterface.class);

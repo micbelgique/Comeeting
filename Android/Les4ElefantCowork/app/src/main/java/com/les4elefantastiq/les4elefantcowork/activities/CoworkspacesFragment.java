@@ -158,6 +158,8 @@ public class CoworkspacesFragment extends Fragment {
                     .into(objectsHolder.imageView);
 
             objectsHolder.textView_Name.setText(coworkspace.name);
+            objectsHolder.textView_CowerkersCount.setText(coworkspace.coworkers.size() + " coworkers actuellement");
+            // objectsHolder.textView_Distance.setText(coworkspace.);
             objectsHolder.textView_Opening.setText("Ouvert de 8h à 17h");
             objectsHolder.textView_CowerkersCount.setText(coworkspace.coworkers.size() + " Coworkers");
             objectsHolder.textView_Distance.setText("3 km");

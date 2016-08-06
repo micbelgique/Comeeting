@@ -9,17 +9,28 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.les4elefantastiq.les4elefantcowork.R;
 import com.les4elefantastiq.les4elefantcowork.activities.utils.BaseActivity;
+import com.les4elefantastiq.les4elefantcowork.managers.CoworkerManager;
 import com.les4elefantastiq.les4elefantcowork.managers.ProfileManager;
+import com.les4elefantastiq.les4elefantcowork.models.linkedinmodels.LinkedInCoworker;
+import com.linkedin.platform.APIHelper;
+import com.linkedin.platform.LISessionManager;
+import com.linkedin.platform.errors.LIApiError;
+import com.linkedin.platform.errors.LIAuthError;
+import com.linkedin.platform.listeners.ApiListener;
+import com.linkedin.platform.listeners.ApiResponse;
+import com.linkedin.platform.listeners.AuthListener;
+import com.linkedin.platform.utils.Scope;
 
-public class SignInActivity extends BaseActivity implements View.OnClickListener {
+public class SignInActivity extends BaseActivity implements View.OnClickListener, ApiListener, AuthListener {
 
     // -------------- Objects, Variables -------------- //
 
-    private LinkedInAsyncTask mLinkedInAsyncTask;
-
+    private ProgressDialog progressDialog;
 
     // -------------------- Views --------------------- //
 
@@ -42,11 +53,14 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Add this line to your existing onActivityResult() method
+        LISessionManager.getInstance(getApplicationContext()).onActivityResult(this, requestCode, resultCode, data);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
-
-        if (mLinkedInAsyncTask != null)
-            mLinkedInAsyncTask.cancel(false);
     }
 
 
@@ -54,48 +68,77 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void onClick(View view) {
-        if (mLinkedInAsyncTask != null)
-            mLinkedInAsyncTask.cancel(false);
-
-        mLinkedInAsyncTask = new LinkedInAsyncTask();
-        mLinkedInAsyncTask.execute();
+        progressDialog = ProgressDialog.show(SignInActivity.this, null, "Please wait ...", true, false);
+        ProfileManager.signWithLinkedIn(SignInActivity.this);
     }
 
+    @Override
+    public void onApiSuccess(ApiResponse apiResponse) {
+        // Login coworker
+        new LoginAsyncTask().execute(apiResponse);
+    }
+
+    @Override
+    public void onApiError(LIApiError LIApiError) {
+        showConnectionErrorAlertDialog();
+    }
+
+    @Override
+    public void onAuthSuccess() {
+        // Authentication was successful.
+        // Now, get profile data
+        String url = "https://api.linkedin.com/v1/people/~:(first-name,last-name,id,picture-urls::(original),positions,summary,headline)?format=json";
+
+        APIHelper apiHelper = APIHelper.getInstance(this);
+        apiHelper.getRequest(getApplicationContext(), url, this);
+    }
+
+    @Override
+    public void onAuthError(LIAuthError error) {
+        showConnectionErrorAlertDialog();
+    }
 
     // ------------------- Methods -------------------- //
 
+    public static Scope buildScope() {
+        return Scope.build(Scope.R_BASICPROFILE, Scope.W_SHARE);
+    }
+
+    public void showConnectionErrorAlertDialog() {
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
+
+        Toast.makeText(this, R.string.Whoops_an_error_has_occured__Check_your_internet_connection, Toast.LENGTH_LONG).show();
+    }
 
     // ------------------ AsyncTasks ------------------ //
 
-    private class LinkedInAsyncTask extends AsyncTask<Void, Void, Void> {
-
-        private ProgressDialog progressDialog;
+    private class LoginAsyncTask extends AsyncTask<ApiResponse, Void, Boolean> {
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = ProgressDialog.show(SignInActivity.this, null, "Please wait ...", true, false);
         }
 
         @Override
-        protected Void doInBackground(Void... voids) {
-            ProfileManager.signWithLinkedIn();
+        protected Boolean doInBackground(ApiResponse... apiResponses) {
+            LinkedInCoworker linkedInCoworker = new Gson().fromJson(apiResponses[0].getResponseDataAsString(), LinkedInCoworker.class);
+            ProfileManager.linkedInId = linkedInCoworker.linkedInId;
+            Boolean success = CoworkerManager.login(linkedInCoworker.getCoworker());
 
-            return null;
+            return success;
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-
+        protected void onPostExecute(Boolean success) {
+            super.onPostExecute(success);
             progressDialog.dismiss();
 
-            // TODO : if (success)
-
-            startActivity(new Intent(SignInActivity.this, NavigationActivity.class));
-            finish();
+            if (success) {
+                startActivity(new Intent(SignInActivity.this, NavigationActivity.class));
+                finish();
+            }
         }
-
     }
-
 }
