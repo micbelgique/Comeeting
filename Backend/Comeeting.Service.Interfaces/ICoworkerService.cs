@@ -9,7 +9,7 @@ namespace Comeeting.Service.Interfaces
 {
     public interface ICoworkerService
     {
-        Coworker GetCoworker(string linkedInId);
+        Task<Coworker> GetCoworkerAsync(string linkedInId);
         void SignUpCoworker(Coworker coworker);
     }
 }

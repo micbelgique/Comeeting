@@ -18,10 +18,9 @@ namespace Comeeting.Services
             _uow = uow;
         }
 
-        public Coworker GetCoworker(string linkedInId)
+        public Task<Coworker> GetCoworkerAsync(string linkedInId)
         {
-            var coworker = _uow.CoworkerRepository.GetCoworker(linkedInId);
-            return coworker;
+            return _uow.CoworkerRepository.GetCoworkerAsync(linkedInId);
         }
 
         public void SignUpCoworker(Coworker coworker)
