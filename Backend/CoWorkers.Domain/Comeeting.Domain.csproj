@@ -42,8 +42,9 @@
   <ItemGroup>
     <Compile Include="Coworker.cs" />
     <Compile Include="Coworkspace.cs" />
-    <Compile Include="Interfaces\ICoworkerRepository.cs" />
-    <Compile Include="Interfaces\ICoworkspaceRepository.cs" />
+    <Compile Include="LivefeedMessage.cs" />
+    <Compile Include="LivefeedMessageType.cs" />
+    <Compile Include="Position.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

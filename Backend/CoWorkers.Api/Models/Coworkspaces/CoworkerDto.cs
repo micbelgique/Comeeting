@@ -18,5 +18,8 @@ namespace Comeeting.Api.Models.Coworkspaces
         public string PictureUrl { get; set; }
         [JsonProperty("summary")]
         public string Summary { get; set; }
+        [JsonProperty("isPresent")]
+        public bool IsPresent { get; set; }
+
     }
 }

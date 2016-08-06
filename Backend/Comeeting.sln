@@ -7,6 +7,24 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comeeting.Api", "CoWorkers.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comeeting.Domain", "CoWorkers.Domain\Comeeting.Domain.csproj", "{3CB5B1D0-D636-4433-B4BE-52DB49409E0B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comeeting.Services", "Comeeting.Services\Comeeting.Services.csproj", "{4EAF78F9-867A-4AD5-A83E-D6156073397F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 - Domain", "01 - Domain", "{302BFC0D-ADA8-486B-9C3E-92957485707F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 - Service Interfaces", "02 - Service Interfaces", "{0306D7E8-F07B-45E8-977B-AA9181BAF7B4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03 - Services", "03 - Services", "{2F0138E5-4F5F-4B3A-ACD4-AA8DB32EBC56}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04 - Infrastructure", "04 - Infrastructure", "{25DAB9C9-28AF-4AEF-BA94-E5755685C545}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05 - UI", "05 - UI", "{6E0D882E-B99A-4D86-80ED-F88987EA821B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comeeting.Service.Interfaces", "Comeeting.Service.Interfaces\Comeeting.Service.Interfaces.csproj", "{2689F3F3-0CED-4107-9D64-0FA474E347FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comeeting.Domain.Interfaces", "Comeeting.Domain.Interfaces\Comeeting.Domain.Interfaces.csproj", "{3E4CD092-8D0C-45F9-A63D-512A48790E04}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comeeting.Data", "Comeeting.Data\Comeeting.Data.csproj", "{B525EA64-8AAF-467C-AA0B-CCBE9BF4DD29}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,8 +39,32 @@ Global
 		{3CB5B1D0-D636-4433-B4BE-52DB49409E0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3CB5B1D0-D636-4433-B4BE-52DB49409E0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3CB5B1D0-D636-4433-B4BE-52DB49409E0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EAF78F9-867A-4AD5-A83E-D6156073397F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EAF78F9-867A-4AD5-A83E-D6156073397F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EAF78F9-867A-4AD5-A83E-D6156073397F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EAF78F9-867A-4AD5-A83E-D6156073397F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2689F3F3-0CED-4107-9D64-0FA474E347FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2689F3F3-0CED-4107-9D64-0FA474E347FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2689F3F3-0CED-4107-9D64-0FA474E347FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2689F3F3-0CED-4107-9D64-0FA474E347FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E4CD092-8D0C-45F9-A63D-512A48790E04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E4CD092-8D0C-45F9-A63D-512A48790E04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E4CD092-8D0C-45F9-A63D-512A48790E04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E4CD092-8D0C-45F9-A63D-512A48790E04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B525EA64-8AAF-467C-AA0B-CCBE9BF4DD29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B525EA64-8AAF-467C-AA0B-CCBE9BF4DD29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B525EA64-8AAF-467C-AA0B-CCBE9BF4DD29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B525EA64-8AAF-467C-AA0B-CCBE9BF4DD29}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AB4E722F-3265-4068-9331-193C4D46A490} = {25DAB9C9-28AF-4AEF-BA94-E5755685C545}
+		{3CB5B1D0-D636-4433-B4BE-52DB49409E0B} = {302BFC0D-ADA8-486B-9C3E-92957485707F}
+		{4EAF78F9-867A-4AD5-A83E-D6156073397F} = {2F0138E5-4F5F-4B3A-ACD4-AA8DB32EBC56}
+		{2689F3F3-0CED-4107-9D64-0FA474E347FC} = {0306D7E8-F07B-45E8-977B-AA9181BAF7B4}
+		{3E4CD092-8D0C-45F9-A63D-512A48790E04} = {302BFC0D-ADA8-486B-9C3E-92957485707F}
+		{B525EA64-8AAF-467C-AA0B-CCBE9BF4DD29} = {25DAB9C9-28AF-4AEF-BA94-E5755685C545}
 	EndGlobalSection
 EndGlobal

@@ -18,12 +18,17 @@ namespace Comeeting.Api.Models.Coworkers
         public string PictureUrl { get; set; }
         [JsonProperty("summary")]
         public string Summary { get; set; }
+        [JsonProperty("headline")]
+        public string Headline { get; set; }
+
+        [JsonProperty("positions")]
+        public ICollection<PositionDto> Positions { get; set; }
 
         [JsonProperty("currentCoworkspace")]
-        public Guid CurrentCoworkspace { get; set; }
+        public Guid? CurrentCoworkspace { get; set; }
 
         [JsonProperty("favoriteCoworkspaces")]
-        public IEnumerable<Guid> FavoriteCoworkspaces { get; set; }
+        public ICollection<Guid> FavoriteCoworkspaces { get; set; }
 
 
     }

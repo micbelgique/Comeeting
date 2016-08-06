@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Comeeting.Domain;
 using Newtonsoft.Json;
 
 namespace Comeeting.Api.Models.Livefeed
@@ -17,7 +18,7 @@ namespace Comeeting.Api.Models.Livefeed
         [JsonProperty("pictureUrl")]
         public string PictureUrl { get; set; }
 
-        public ArrivalMessageDto():base(MessageType.Arrival)
+        public ArrivalMessageDto():base(LivefeedMessageType.Arrival)
         {
         }
     }

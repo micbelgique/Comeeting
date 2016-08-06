@@ -2,33 +2,29 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Comeeting.Domain;
 using Newtonsoft.Json;
 
 namespace Comeeting.Api.Models.Livefeed
 {
     public class MessageDto
     {
+        [JsonProperty("title")]
+        public string Title { get; set; }
+
         [JsonProperty("text")]
         public string Text { get; set; }
 
         [JsonProperty("type")]
-        public MessageType Type { get; private set; }
+        public LivefeedMessageType Type { get; private set; }
 
         [JsonProperty("dateTime")]
         public DateTime DateTime { get; set; }
 
-        public MessageDto(MessageType type)
+        public MessageDto(LivefeedMessageType type)
         {
             this.Type = type;
         }
 
-    }
-
-    public enum MessageType
-    {
-        Arrival = 0,
-        Twitter = 1,
-        Info = 2,
-        Closure = 3
     }
 }

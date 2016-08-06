@@ -13,21 +13,13 @@ namespace Comeeting.Domain
         public string LastName { get; set; }
         public string PictureUrl { get; set; }
         public string Summary { get; set; }
+        public string Headline { get; set; }
 
+        public Guid? CurrentCoworkspaceId { get; set; }
+        
+        public virtual ICollection<Coworkspace> FavoriteCoworkspaces { get; set; }
         public virtual Coworkspace CurrentCoworkspace { get; set; }
+        public virtual ICollection<Position> Positions { get; set; }
 
-        public void SignUpWithLinkedIn(string linkedInToken)
-        {
-
-        }
-
-        public void CheckInToWorkspace(Guid workspaceId)
-        {
-        }
-
-        public void CheckOutOfWorkspace()
-        {
-
-        }
     }
 }

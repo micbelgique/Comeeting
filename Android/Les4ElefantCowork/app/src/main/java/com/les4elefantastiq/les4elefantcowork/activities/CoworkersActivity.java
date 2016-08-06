@@ -1,5 +1,6 @@
 package com.les4elefantastiq.les4elefantcowork.activities;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -104,6 +105,7 @@ public class CoworkersActivity extends BaseActivity {
         private List<Coworker> coworkers;
 
         private class ObjectsHolder {
+            Coworker coworker;
             ImageView imageView;
             TextView textView_Name;
             TextView textView_Description;
@@ -155,8 +157,22 @@ public class CoworkersActivity extends BaseActivity {
             objectsHolder.textView_Name.setText(coworker.firstName + " " + coworker.lastName);
             objectsHolder.textView_Description.setText(coworker.summary);
 
+            objectsHolder.coworker = coworker;
+
+            convertView.setOnClickListener(onCoworkerClickListener);
+
             return convertView;
         }
+
+        private View.OnClickListener onCoworkerClickListener = new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Coworker coworker = ((ObjectsHolder) view.getTag()).coworker;
+                startActivity(new Intent(CoworkersActivity.this, CoworkerActivity.class).putExtra(CoworkerActivity.EXTRA_COWORKER_ID, coworker.linkedInId));
+            }
+
+        };
 
     }
 
