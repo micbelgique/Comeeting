@@ -1,6 +1,10 @@
 package com.les4elefantastiq.les4elefantcowork.activities;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -75,19 +79,18 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
     @Override
     public void onApiSuccess(ApiResponse apiResponse) {
         // Login coworker
-        new LinkedInAsyncTask().execute(apiResponse);
+        new LoginAsyncTask().execute(apiResponse);
     }
 
     @Override
     public void onApiError(LIApiError LIApiError) {
-        Log.d("Blop", "onApiError"); // Probablement une erreur de connection
+        showConnectionErrorAlertDialog();
     }
 
     @Override
     public void onAuthSuccess() {
         // Authentication was successful.
-
-        // Get profile data
+        // Now, get profile data
         String url = "https://api.linkedin.com/v1/people/~:(first-name,last-name,id,picture-urls::(original),positions,summary,headline)?format=json";
 
         APIHelper apiHelper = APIHelper.getInstance(this);
@@ -96,7 +99,7 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void onAuthError(LIAuthError error) {
-        Log.d("Blop", "onAuthError"); // Probablement une erreur de connection
+        showConnectionErrorAlertDialog();
     }
 
     // ------------------- Methods -------------------- //
@@ -105,10 +108,20 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
         return Scope.build(Scope.R_BASICPROFILE, Scope.W_SHARE);
     }
 
-    // ------------------ AsyncTasks ------------------ //
+    public void showConnectionErrorAlertDialog() {
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.Connection_error);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
     // ------------------ AsyncTasks ------------------ //
 
-    private class LinkedInAsyncTask extends AsyncTask<ApiResponse, Void, Boolean> {
+    private class LoginAsyncTask extends AsyncTask<ApiResponse, Void, Boolean> {
 
         @Override
         protected void onPreExecute() {
