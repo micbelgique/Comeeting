@@ -1,6 +1,8 @@
 package com.les4elefantastiq.les4elefantcowork.models;
 
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by Math on 05/08/16.

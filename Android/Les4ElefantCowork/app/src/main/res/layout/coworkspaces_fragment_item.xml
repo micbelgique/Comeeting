@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/imageview"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginBottom="10dp"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/textview_distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textview_coworkers_count"
+        android:layout_alignLeft="@+id/imageview"
+        android:layout_alignRight="@+id/textview_coworkers_count"
+        android:background="#aa000000"
+        android:gravity="right"
+        android:paddingBottom="5dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp"
+        android:text="@string/Lorem"
+        android:textColor="@android:color/white"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textview_coworkers_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageview"
+        android:layout_marginBottom="40dp"
+        android:background="#aa000000"
+        android:paddingBottom="5dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="5dp"
+        android:text="@string/Lorem"
+        android:textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/textview_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageview"
+        android:layout_marginBottom="5dp"
+        android:text="@string/Lorem"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textview_opening"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textview_name"
+        android:layout_marginBottom="5dp"
+        android:text="@string/Lorem"
+        android:textColor="#7ed321" />
+
+    <TextView
+        android:id="@+id/textview_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textview_opening"
+        android:text="@string/Lorem"
+        android:textColor="#4a4a4a" />
+
+</RelativeLayout>

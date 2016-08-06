@@ -1,5 +1,6 @@
 package com.les4elefantastiq.les4elefantcowork.activities;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,10 +11,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.les4elefantastiq.les4elefantcowork.R;
+import com.les4elefantastiq.les4elefantcowork.activities.utils.BaseActivity;
 import com.les4elefantastiq.les4elefantcowork.managers.CoworkspacesManager;
 import com.les4elefantastiq.les4elefantcowork.models.Coworkspace;
 import com.squareup.picasso.Picasso;
@@ -29,17 +32,22 @@ public class CoworkspacesFragment extends Fragment {
 
     // -------------------- Views --------------------- //
 
-    private ListView listView;
+    private ListView mListView;
+    private ProgressBar mProgressBar;
 
 
     // ------------------ LifeCycle ------------------- //
 
+    @SuppressWarnings("ConstantConditions")
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.coworkspaces_fragment, container, false);
 
-        listView = (ListView) view.findViewById(R.id.listview);
+        ((BaseActivity) getActivity()).getSupportActionBar().setTitle("Les coworkspaces");
+
+        mListView = (ListView) view.findViewById(R.id.listview);
+        mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
         mCoworkspacesAsyncTask = new CoworkspacesAsyncTask();
         mCoworkspacesAsyncTask.execute();
@@ -67,6 +75,8 @@ public class CoworkspacesFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+
+            mProgressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -78,11 +88,12 @@ public class CoworkspacesFragment extends Fragment {
         protected void onPostExecute(List<Coworkspace> coworkspaces) {
             super.onPostExecute(coworkspaces);
 
+            mProgressBar.setVisibility(View.GONE);
+
             if (coworkspaces != null)
-                listView.setAdapter(new Adapter(coworkspaces));
+                mListView.setAdapter(new Adapter(coworkspaces));
             else
                 Toast.makeText(getActivity(), R.string.Whoops_an_error_has_occured__Check_your_internet_connection, Toast.LENGTH_LONG).show();
-
         }
 
     }
@@ -97,7 +108,8 @@ public class CoworkspacesFragment extends Fragment {
         private class ObjectsHolder {
             Coworkspace coworkspace;
             ImageView imageView;
-            TextView textView_Name, textView_Distance, textView_CowerkersCount;
+            TextView textView_Name, textView_Distance, textView_CowerkersCount, textView_Address;
+            TextView textView_Opening;
         }
 
         public Adapter(List<Coworkspace> coworkspaces) {
@@ -125,12 +137,15 @@ public class CoworkspacesFragment extends Fragment {
             ObjectsHolder objectsHolder;
 
             if (convertView == null) {
-                convertView = getActivity().getLayoutInflater().inflate(R.layout.coworspaces_fragment_item, parent, false);
+                convertView = getActivity().getLayoutInflater().inflate(R.layout.coworkspaces_fragment_item, parent, false);
                 objectsHolder = new ObjectsHolder();
                 objectsHolder.imageView = (ImageView) convertView.findViewById(R.id.imageview);
                 objectsHolder.textView_Name = (TextView) convertView.findViewById(R.id.textview_name);
                 objectsHolder.textView_CowerkersCount = (TextView) convertView.findViewById(R.id.textview_coworkers_count);
                 objectsHolder.textView_Distance = (TextView) convertView.findViewById(R.id.textview_distance);
+                objectsHolder.textView_Address = (TextView) convertView.findViewById(R.id.textview_address);
+                objectsHolder.textView_Opening = (TextView) convertView.findViewById(R.id.textview_opening);
+
                 convertView.setTag(objectsHolder);
 
             } else
@@ -143,6 +158,12 @@ public class CoworkspacesFragment extends Fragment {
             objectsHolder.textView_Name.setText(coworkspace.name);
             objectsHolder.textView_CowerkersCount.setText(coworkspace.coworkers.size() + " coworkers actuellement");
             // objectsHolder.textView_Distance.setText(coworkspace.);
+            objectsHolder.textView_Opening.setText("Ouvert de 8h à 17h");
+            objectsHolder.textView_CowerkersCount.setText(coworkspace.coworkers.size() + " Coworkers");
+            objectsHolder.textView_Distance.setText("3 km");
+            objectsHolder.textView_Address.setText("Rue de Fer 48\n7000 Mons");
+
+            objectsHolder.coworkspace = coworkspace;
 
             convertView.setOnClickListener(onCoworkspaceClickListener);
 
@@ -153,8 +174,9 @@ public class CoworkspacesFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
-                Coworkspace coworkspace = ((ObjectsHolder) view.getTag()).coworkspace;
-                // Intent intent = new Intent(getActivity(), .class)
+                Intent intent = new Intent(getActivity(), CoworkspaceActivity.class)
+                        .putExtra(CoworkspaceFragment.EXTRA_COWORKSPACE_ID, ((ObjectsHolder) view.getTag()).coworkspace.id);
+                startActivity(intent);
             }
 
         };

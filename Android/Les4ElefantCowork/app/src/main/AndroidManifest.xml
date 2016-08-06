@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.les4elefantastiq.les4elefantcowork">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +11,7 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".activities.NavigationActivity" android:screenOrientation="nosensor" >
+        <activity android:name=".activities.NavigationActivity" android:screenOrientation="nosensor"  >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -17,9 +19,10 @@
         </activity>
 
         <activity android:name=".activities.SignInActivity" android:screenOrientation="nosensor" />
+        <activity android:name=".activities.CoworkersActivity" android:screenOrientation="nosensor" />
+        <activity android:name=".activities.CoworkspaceActivity" android:screenOrientation="nosensor" />
 
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

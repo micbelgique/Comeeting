@@ -1,6 +1,5 @@
 package com.les4elefantastiq.les4elefantcowork.activities;
 
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,11 +8,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.les4elefantastiq.les4elefantcowork.R;
 import com.les4elefantastiq.les4elefantcowork.activities.utils.BaseActivity;
+import com.les4elefantastiq.les4elefantcowork.managers.CoworkspacesManager;
+import com.les4elefantastiq.les4elefantcowork.managers.ProfileManager;
 import com.les4elefantastiq.les4elefantcowork.models.Coworker;
 import com.squareup.picasso.Picasso;
 
@@ -29,16 +31,23 @@ public class CoworkersActivity extends BaseActivity {
     // -------------------- Views --------------------- //
 
     private ListView mListView;
+    private ProgressBar mProgressBar;
 
 
     // ------------------ LifeCycle ------------------- //
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.coworkers_activity);
 
+        manageToolbar();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Coworkers");
+
         mListView = (ListView) findViewById(R.id.listview);
+        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         mCoworkersAsyncTask = new CoworkersAsyncTask();
         mCoworkersAsyncTask.execute();
@@ -61,25 +70,23 @@ public class CoworkersActivity extends BaseActivity {
 
     private class CoworkersAsyncTask extends AsyncTask<Void, Void, List<Coworker>> {
 
-        private ProgressDialog progressDialog;
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
 
-            progressDialog = ProgressDialog.show(CoworkersActivity.this, null, "Please wait ...", true, false);
+            mProgressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
         protected List<Coworker> doInBackground(Void... voids) {
-            return null;
+            return CoworkspacesManager.getCoworkers(ProfileManager.getCurrentCowerkspace());
         }
 
         @Override
         protected void onPostExecute(List<Coworker> coworkers) {
             super.onPostExecute(coworkers);
 
-            progressDialog.dismiss();
+            mProgressBar.setVisibility(View.GONE);
 
             if (coworkers != null)
                 mListView.setAdapter(new Adapter(coworkers));
@@ -137,12 +144,16 @@ public class CoworkersActivity extends BaseActivity {
             } else
                 objectsHolder = (ObjectsHolder) convertView.getTag();
 
-
                 Picasso.with(getBaseContext())
                         .load(coworker.pictureUrl)
                         .into(objectsHolder.imageView);
+                Picasso.with(getBaseContext())
+                        .load(coworker.pictureUrl)
+                        .placeholder(R.drawable.user)
+                        .into(objectsHolder.imageView);
 
             objectsHolder.textView_Name.setText(coworker.firstName + " " + coworker.lastName);
+            objectsHolder.textView_Description.setText(coworker.summary);
 
             return convertView;
         }

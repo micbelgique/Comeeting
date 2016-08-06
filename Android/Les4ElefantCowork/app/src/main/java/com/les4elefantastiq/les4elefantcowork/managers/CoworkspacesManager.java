@@ -13,6 +13,9 @@ public class CoworkspacesManager {
 
     // -------------- Objects, Variables -------------- //
 
+    private static List<Coworkspace> mCoworkspaces;
+
+
     // ---------------- Public Methods ---------------- //
 
     @Nullable
@@ -31,7 +34,9 @@ public class CoworkspacesManager {
     @Nullable
     @WorkerThread
     public static List<Coworkspace> getCoworkspaces() {
-        return CoworkspaceDataAccess.getAllCoworkspace();
+        loadCoworkspaces();
+
+        return mCoworkspaces;
     }
 
     @Nullable
@@ -54,5 +59,10 @@ public class CoworkspacesManager {
 
 
     // ---------------- Private Methods --------------- //
+
+    private static void loadCoworkspaces() {
+        if (mCoworkspaces == null)
+            mCoworkspaces = CoworkspaceDataAccess.getAllCoworkspace();
+    }
 
 }

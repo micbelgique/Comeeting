@@ -20,8 +20,8 @@ public class CoworkerManager {
 
     @Nullable
     @WorkerThread
-    public static void login(Coworker coworker) {
-        CoworkerDataAccess.login(coworker);
+    public static boolean login(Coworker coworker) {
+        return CoworkerDataAccess.login(coworker);
     }
 
 
