@@ -153,14 +153,11 @@ public class CoworkersActivity extends BaseActivity {
 
                 Picasso.with(getBaseContext())
                         .load(coworker.pictureUrl)
-                        .into(objectsHolder.imageView);
-                Picasso.with(getBaseContext())
-                        .load(coworker.pictureUrl)
                         .placeholder(R.drawable.user)
                         .into(objectsHolder.imageView);
 
             objectsHolder.textView_Name.setText(coworker.firstName + " " + coworker.lastName);
-            objectsHolder.textView_Description.setText(coworker.summary);
+            objectsHolder.textView_Description.setText(coworker.headline);
 
             objectsHolder.coworker = coworker;
 

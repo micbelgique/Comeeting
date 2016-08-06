@@ -8,7 +8,7 @@ namespace Comeeting.Domain.Interfaces
 {
     public interface ICoworkspaceRepository
     {
-        IEnumerable<Coworkspace> GetCoworkspaces();
+        Task<List<Coworkspace>> GetCoworkspacesAsync();
         void AddCoworkspace(Coworkspace coworkspace);
     }
 }

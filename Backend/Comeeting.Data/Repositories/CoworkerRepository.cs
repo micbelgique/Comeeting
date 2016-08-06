@@ -29,9 +29,9 @@ namespace Comeeting.Data.Repositories
             return await _comeetingDbContext.Coworkers.FirstOrDefaultAsync(c => c.LinkedInId == linkedInId);
         }
 
-        public async Task<IEnumerable<Coworker>> GetCoworkersAsync()
+        public Task<List<Coworker>> GetCoworkersAsync()
         {
-            return await _comeetingDbContext.Coworkers.ToListAsync();
+            return _comeetingDbContext.Coworkers.ToListAsync();
         }
     }
 }

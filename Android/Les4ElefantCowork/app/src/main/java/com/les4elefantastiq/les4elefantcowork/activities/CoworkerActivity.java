@@ -8,8 +8,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.les4elefantastiq.les4elefantcowork.R;
@@ -45,7 +45,6 @@ public class CoworkerActivity extends BaseActivity {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.parseColor("#00000000"));
         }
 
@@ -77,7 +76,7 @@ public class CoworkerActivity extends BaseActivity {
 
         @Override
         protected Coworker doInBackground(Void... voids) {
-            return CoworkerManager.getCoworker("MonSuperId");//getIntent().getStringExtra(EXTRA_COWORKER_ID));
+            return CoworkerManager.getCoworker(getIntent().getStringExtra(EXTRA_COWORKER_ID));
         }
 
         @SuppressWarnings("ConstantConditions")
@@ -87,6 +86,7 @@ public class CoworkerActivity extends BaseActivity {
 
             if (coworker != null) {
                 ((CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar)).setTitle(coworker.firstName + " " + coworker.lastName);
+                ((TextView) findViewById(R.id.textview)).setText(coworker.summary);
 
                 Picasso.with(getBaseContext())
                         .load(coworker.pictureUrl)

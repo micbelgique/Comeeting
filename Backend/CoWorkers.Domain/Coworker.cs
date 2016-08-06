@@ -14,6 +14,7 @@ namespace Comeeting.Domain
         public string PictureUrl { get; set; }
         public string Summary { get; set; }
         public string Headline { get; set; }
+        public bool IsPresent { get; set; }
 
         public Guid? CurrentCoworkspaceId { get; set; }
         

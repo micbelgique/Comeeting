@@ -3,77 +3,129 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using Comeeting.Api.Models.Coworkspaces;
+using Comeeting.Data;
 using Comeeting.Domain;
 
 namespace Comeeting.Api.Controllers
 {
     public class CoworkspaceController : ApiController
     {
+        private readonly UnitOfWork _uow;
+
+        public CoworkspaceController()
+        {
+            _uow = new UnitOfWork();
+        }
         [Route("api/coworkspaces")]
         [HttpGet]
-        public IHttpActionResult Get()
+        public async Task<IHttpActionResult> Get()
         {
-            return Ok(new List<CoworkspaceDto>()
+            var coworkspaces = await _uow.CoworkspaceRepository.GetCoworkspacesAsync();
+
+            var coworkspacesDto = new List<CoworkspaceDto>();
+
+            foreach (var coworkspace in coworkspaces)
             {
-                new CoworkspaceDto()
+                var coworkspaceDto = new CoworkspaceDto()
                 {
-                    Id = new Guid("6CA3598B-09D3-43A4-A74E-6EC2D9B0BE89"),
-                    Name = "MIC Mons",
-                    Description = "Microsoft Innovation Center",
-                    Address = "Boulevard Initialis 1",
-                    ZipCode = "7000",
-                    City = "Mons",
-                    GeolocationLatitude = 50.4611474,
-                    GeolocationLongitude = 3.9292573,
-                    GeofencingRadius = 50,
-                    PictureUrl = "http://www.regional-it.be/wp-content/uploads/2012/06/Microsoft-Innovation-Center-Mons-.jpg",
-                    Coworkers = new List<CoworkerDto>() { new CoworkerDto() { LinkedInId = "azazaz12214OIFD21og", FirstName = "Valentin", LastName = "Taleb",Summary = "The kung-fu fighter", PictureUrl = "https://cdn5.f-cdn.com/ppic/11626023/logo/13334637/Wz5KE/profile_logo_.png", IsPresent = true } }
-                },
-                new CoworkspaceDto()
-                {
-                    Id = new Guid("C9D16208-5DA0-4D51-BEB6-1B9F7944F1C8"),
-                    Name = "Betacowork",
-                    Description = "Coworkspace in Brussels",
-                    Address="Rue des Pères Blancs 4",
-                    ZipCode = "1040",
-                    City = "Bruxelles",
-                    GeolocationLatitude = 50.8267747,
-                    GeolocationLongitude = 4.3980635,
-                    GeofencingRadius = 200,
-                    PictureUrl = "http://www.betacowork.com/wp-content/uploads/2013/05/betacowork3-550x355.jpg",
+                    Id = coworkspace.Id,
+                    Name = coworkspace.Name,
+                    Description = coworkspace.Description,
+                    Address = coworkspace.Address,
+                    ZipCode = coworkspace.ZipCode,
+                    City = coworkspace.City,
+                    GeolocationLatitude = coworkspace.GeolocationLatitude,
+                    GeolocationLongitude = coworkspace.GeolocationLongitude,
+                    GeofencingRadius = coworkspace.GeofencingRadius,
+                    PictureUrl = coworkspace.PictureUrl,
                     Coworkers = new List<CoworkerDto>()
-                    {
-                        new CoworkerDto() { LinkedInId = "dza91jkelzale_azaz", FirstName = "Laurent", LastName = "Vandenbosch",Summary = "Ninjaaaa", PictureUrl = "https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAdqAAAAJDRmZGU3ZDBhLTNhNTYtNGUyZS04NjgzLWY1MjVhMDUwYWViNg.jpg", IsPresent=false },
-                        new CoworkerDto() { LinkedInId = "81920_aezan_aza", FirstName = "Mathias", LastName = "Biard",Summary = "The naked one", PictureUrl = "http://www.mathiasbiard.com/images/me.jpg", IsPresent = true }
-                    }
-                },
-            });
+                };
+                foreach (var coworker in coworkspace.Coworkers)
+                {
+                    coworkspaceDto.Coworkers.Add(
+                        new CoworkerDto()
+                        {
+                            LinkedInId = coworker.LinkedInId,
+                            FirstName = coworker.FirstName,
+                            LastName = coworker.LastName,
+                            Summary = coworker.Summary,
+                            PictureUrl = coworker.PictureUrl,
+                            IsPresent = coworker.IsPresent
+                        });
+                }
+                coworkspacesDto.Add(coworkspaceDto);
+            }
+
+            return Ok(coworkspacesDto);
         }
 
         [Route("api/coworkspace/{id}/coworkers")]
         [HttpGet]
-        public IHttpActionResult Get(string id)
+        public async Task<IHttpActionResult> Get(Guid id)
         {
-            return Ok(new List<CoworkerDto>()
+            var coworkspace = await _uow.CoworkspaceRepository.GetCoworkspaceAsync(id);
+            var coworkers = new List<CoworkerDto>();
+            foreach (var coworker in coworkspace.Coworkers)
+            {
+                coworkers.Add(
+                    new CoworkerDto()
                     {
-                        new CoworkerDto() { LinkedInId = "dza91jkelzale_azaz", FirstName = "Laurent", LastName = "Vandenbosch",Summary = "Ninjaaaa", PictureUrl = "https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAdqAAAAJDRmZGU3ZDBhLTNhNTYtNGUyZS04NjgzLWY1MjVhMDUwYWViNg.jpg", IsPresent = true },
-                        new CoworkerDto() { LinkedInId = "81920_aezan_aza", FirstName = "Mathias", LastName = "Biard",Summary = "The naked one", PictureUrl = "http://www.mathiasbiard.com/images/me.jpg", IsPresent=false }
+                        LinkedInId = coworker.LinkedInId,
+                        FirstName = coworker.FirstName,
+                        LastName = coworker.LastName,
+                        Summary = coworker.Summary,
+                        PictureUrl = coworker.PictureUrl,
+                        IsPresent = coworker.IsPresent
                     });
+            }
+
+            return Ok(coworkers);
         }
 
         [Route("api/coworkspace/{id}/coworker/{linkedInId}")]
         [HttpPost]
-        public IHttpActionResult Post(string id, string linkedInId)
+        public async Task<IHttpActionResult> Post(Guid id, string linkedInId)
         {
+            var coworker = await _uow.CoworkerRepository.GetCoworkerAsync(linkedInId);
+            var coworkspace = await _uow.CoworkspaceRepository.GetCoworkspaceAsync(id);
+
+            if (coworkspace == null)
+                return BadRequest("Coworkspace ID not found");
+            if (coworker == null)
+                return BadRequest("Coworker ID not found");
+
+            if (!coworker.FavoriteCoworkspaces.Any(c => c.Id == id))
+                coworker.FavoriteCoworkspaces.Add(coworkspace);
+
+            if (coworker.CurrentCoworkspaceId == id)
+                return Ok();
+
+            coworker.CurrentCoworkspaceId = id;
+
+            await _uow.SaveChangesAsync();
             return Ok();
         }
 
         [Route("api/coworkspace/{id}/coworker/{linkedInId}")]
         [HttpDelete]
-        public IHttpActionResult Delete(string id, string linkedInId)
+        public async Task<IHttpActionResult> Delete(Guid id, string linkedInId)
         {
+            var coworkspace = await _uow.CoworkspaceRepository.GetCoworkspaceAsync(id);
+            var coworker = await _uow.CoworkerRepository.GetCoworkerAsync(linkedInId);
+
+            if (coworkspace == null)
+                return BadRequest("Coworkspace ID not found");
+            if (coworker == null)
+                return BadRequest("Coworker ID not found");
+            if(coworker.CurrentCoworkspaceId == id)
+            { 
+                coworker.CurrentCoworkspaceId = null;
+                await _uow.SaveChangesAsync();
+            }
+            
             return Ok();
         }
 

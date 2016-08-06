@@ -20,6 +20,8 @@ namespace Comeeting.Api.Models.Coworkers
         public string Summary { get; set; }
         [JsonProperty("headline")]
         public string Headline { get; set; }
+        [JsonProperty("isPresent")]
+        public bool IsPresent { get; set; }
 
         [JsonProperty("positions")]
         public ICollection<PositionDto> Positions { get; set; }

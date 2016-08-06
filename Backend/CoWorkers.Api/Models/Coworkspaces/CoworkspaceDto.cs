@@ -30,6 +30,6 @@ namespace Comeeting.Api.Models.Coworkspaces
         public int GeofencingRadius { get; set; }
 
         [JsonProperty("coworkers")]
-        public IEnumerable<CoworkerDto> Coworkers { get; set; }
+        public ICollection<CoworkerDto> Coworkers { get; set; }
     }
 }
