@@ -141,7 +141,7 @@ public class CoworkspacesFragment extends Fragment {
                     .into(objectsHolder.imageView);
 
             objectsHolder.textView_Name.setText(coworkspace.name);
-            objectsHolder.textView_CowerkersCount.setText(coworkspace.coworkers.length + " coworkers actuellement");
+            objectsHolder.textView_CowerkersCount.setText(coworkspace.coworkers.size() + " coworkers actuellement");
             // objectsHolder.textView_Distance.setText(coworkspace.);
 
             convertView.setOnClickListener(onCoworkspaceClickListener);

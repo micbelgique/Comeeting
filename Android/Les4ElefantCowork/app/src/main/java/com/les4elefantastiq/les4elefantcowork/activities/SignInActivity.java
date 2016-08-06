@@ -11,8 +11,13 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.les4elefantastiq.les4elefantcowork.R;
 import com.les4elefantastiq.les4elefantcowork.activities.utils.BaseActivity;
+import com.les4elefantastiq.les4elefantcowork.dataaccess.CoworkerDataAccess;
+import com.les4elefantastiq.les4elefantcowork.dataaccess.CoworkspaceDataAccess;
+import com.les4elefantastiq.les4elefantcowork.dataaccess.LivefeedDataAccess;
+import com.les4elefantastiq.les4elefantcowork.managers.CoworkerManager;
 import com.les4elefantastiq.les4elefantcowork.managers.ProfileManager;
 import com.les4elefantastiq.les4elefantcowork.models.Coworker;
+import com.les4elefantastiq.les4elefantcowork.models.Coworkspace;
 import com.les4elefantastiq.les4elefantcowork.models.linkedinmodels.LinkedInCoworker;
 import com.linkedin.platform.APIHelper;
 import com.linkedin.platform.LISessionManager;
@@ -22,6 +27,8 @@ import com.linkedin.platform.listeners.ApiListener;
 import com.linkedin.platform.listeners.ApiResponse;
 import com.linkedin.platform.listeners.AuthListener;
 import com.linkedin.platform.utils.Scope;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -55,11 +62,9 @@ public class SignInActivity extends BaseActivity {
         LISessionManager.getInstance(getApplicationContext()).init(thisActivity, buildScope(), new AuthListener() {
             @Override
             public void onAuthSuccess() {
-                // Authentication was successful.  You can now do
-                // other calls with the SDK.
+                // Authentication was successful.
 
-                Log.d("Blop", "onAuthSuccess");
-
+                // Get profile data
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -68,18 +73,20 @@ public class SignInActivity extends BaseActivity {
                         APIHelper apiHelper = APIHelper.getInstance(getApplicationContext());
                         apiHelper.getRequest(thisActivity, url, new ApiListener() {
                             @Override
-                            public void onApiSuccess(ApiResponse apiResponse) {
-                                // Success!
-
-                                LinkedInCoworker coworker = new Gson().fromJson(apiResponse.getResponseDataAsString(), LinkedInCoworker.class);
-
-                                Log.d("Blop", "onApiSuccess");
+                            public void onApiSuccess(final ApiResponse apiResponse) {
+                                // Login coworker
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        LinkedInCoworker linkedInCoworker = new Gson().fromJson(apiResponse.getResponseDataAsString(), LinkedInCoworker.class);
+                                        CoworkerManager.login(linkedInCoworker.getCoworker());
+                                    }
+                                }).start();
                             }
 
                             @Override
                             public void onApiError(LIApiError liApiError) {
-                                // Error making GET request!
-                                Log.d("Blop", "onApiError");
+                                Log.d("Blop", "onApiError"); // Probablement une erreur de connection
                             }
                         });
                     }
@@ -88,8 +95,7 @@ public class SignInActivity extends BaseActivity {
 
             @Override
             public void onAuthError(LIAuthError error) {
-                // Handle authentication errors
-                Log.d("Blop", "onAuthError");
+                Log.d("Blop", "onAuthError"); // Probablement une erreur de connection
             }
         }, true);
     }

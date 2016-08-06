@@ -18,6 +18,12 @@ public class CoworkerManager {
         return CoworkerDataAccess.getCoworker(linkedInId);
     }
 
+    @Nullable
+    @WorkerThread
+    public static void login(Coworker coworker) {
+        CoworkerDataAccess.login(coworker);
+    }
+
 
     // ---------------- Private Methods --------------- //
 

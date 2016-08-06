@@ -19,7 +19,7 @@ import retrofit2.http.Path;
  */
 public class CoworkspaceDataAccess {
 
-    private static final String API_URL = "http://comeetingapi.azurewebsites.net";
+    private static final String API_URL = "http://comeeting-api.azurewebsites.net";
     private static Retrofit retrofit;
 
     public static List<Coworkspace> getAllCoworkspace() {

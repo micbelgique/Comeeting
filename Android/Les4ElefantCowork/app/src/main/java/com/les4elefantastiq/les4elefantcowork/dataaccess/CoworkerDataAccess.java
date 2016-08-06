@@ -7,6 +7,7 @@ import java.io.IOException;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -16,7 +17,7 @@ import retrofit2.http.Path;
  */
 public class CoworkerDataAccess {
 
-    public static final String API_URL = "http://comeetingapi.azurewebsites.net";
+    public static final String API_URL = "http://comeeting-api.azurewebsites.net";
 
     public static Coworker getCoworker(String linkedInId) {
         Retrofit retrofit = new Retrofit.Builder()
@@ -55,7 +56,7 @@ public class CoworkerDataAccess {
 
     public interface CoworkerInterface {
         @POST("/api/coworker")
-        Call<Void> login(@Path("coworker") Coworker coworker);
+        Call<Void> login(@Body Coworker coworker);
 
         @GET("/api/coworker/{linkedInId}")
         Call<Coworker> getProfile(@Path("linkedInId") String linkedInId);
