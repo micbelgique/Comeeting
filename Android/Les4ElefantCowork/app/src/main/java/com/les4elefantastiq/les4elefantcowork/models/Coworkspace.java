@@ -1,5 +1,8 @@
 package com.les4elefantastiq.les4elefantcowork.models;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * Created by Math on 05/08/16.
  */
@@ -14,7 +17,8 @@ public class Coworkspace {
     public Double geolocationLongitude; // TODO: Create a Location object ?
     public Double geolocationLatitude;
     public int geofancingRadius;
-    public Coworker[] coworkers;
+    public ArrayList<Coworker> coworkers;
+
 
     // ----------------- Constructor ------------------ //
 
@@ -26,7 +30,7 @@ public class Coworkspace {
         this.geolocationLatitude = geolocationLatitude;
         this.geolocationLongitude = geolocationLongitude;
         this.geofancingRadius = geofancingRadius;
-        this.coworkers = coworkers;
+        this.coworkers = new ArrayList<>(Arrays.asList(coworkers));
     }
 
     // ---------------- Public Methods ---------------- //

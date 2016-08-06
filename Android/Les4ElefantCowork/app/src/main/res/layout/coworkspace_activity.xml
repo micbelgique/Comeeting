@@ -6,10 +6,14 @@
 
     <include layout="@layout/toolbar" />
 
-    <fragment
-        android:id="@+id/fragment_coworkspace"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:name="com.les4elefantastiq.les4elefantcowork.activities.CoworkspaceFragment" />
-
+        android:id="@+id/layout_content"
+        android:layout_height="match_parent" />
+    <!--<fragment-->
+        <!--android:id="@+id/fragment_coworkspace"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--/>-->
+    <!--class="com.les4elefantastiq.les4elefantcowork.activities.CoworkspaceFragment"-->
 </LinearLayout>

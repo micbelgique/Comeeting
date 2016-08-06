@@ -35,6 +35,7 @@ public class CoworkersActivity extends BaseActivity {
 
     // ------------------ LifeCycle ------------------- //
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +43,7 @@ public class CoworkersActivity extends BaseActivity {
 
         manageToolbar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Coworkers");
 
         mListView = (ListView) findViewById(R.id.listview);
 
@@ -144,9 +146,11 @@ public class CoworkersActivity extends BaseActivity {
 
             Picasso.with(getBaseContext())
                     .load(coworker.pictureUrl)
+                    .placeholder(R.drawable.user)
                     .into(objectsHolder.imageView);
 
             objectsHolder.textView_Name.setText(coworker.firstName + " " + coworker.lastName);
+            objectsHolder.textView_Description.setText(coworker.summary);
 
             return convertView;
         }

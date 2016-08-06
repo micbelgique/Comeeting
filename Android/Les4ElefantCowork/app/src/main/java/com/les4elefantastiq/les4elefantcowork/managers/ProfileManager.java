@@ -11,7 +11,7 @@ public class ProfileManager {
 
     // -------------- Objects, Variables -------------- //
 
-    private static String linkedInId;
+    private static String linkedInId = "ji";
     private static Coworker mCoworker;
 
 
@@ -46,12 +46,6 @@ public class ProfileManager {
     private static void loadCoworker() {
         if (mCoworker == null)
             mCoworker = CoworkerDataAccess.getCoworker(linkedInId);
-    }
-
-
-    // TODO : à virer, c'est naz
-    public static void setCurrentCowerkspace(Coworkspace currentCowerkspace) {
-        ProfileManager.mCoworker.currentCoworkspaceId = currentCowerkspace.id;
     }
 
 }

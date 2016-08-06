@@ -17,7 +17,6 @@ import android.widget.Toast;
 import com.les4elefantastiq.les4elefantcowork.R;
 import com.les4elefantastiq.les4elefantcowork.activities.utils.BaseActivity;
 import com.les4elefantastiq.les4elefantcowork.managers.CoworkspacesManager;
-import com.les4elefantastiq.les4elefantcowork.managers.ProfileManager;
 import com.les4elefantastiq.les4elefantcowork.models.Coworkspace;
 import com.squareup.picasso.Picasso;
 
@@ -102,7 +101,8 @@ public class CoworkspacesFragment extends Fragment {
         private class ObjectsHolder {
             Coworkspace coworkspace;
             ImageView imageView;
-            TextView textView_Name, textView_Distance, textView_CowerkersCount;
+            TextView textView_Name, textView_Distance, textView_CowerkersCount, textView_Address;
+            TextView textView_Opening;
         }
 
         public Adapter(List<Coworkspace> coworkspaces) {
@@ -136,6 +136,9 @@ public class CoworkspacesFragment extends Fragment {
                 objectsHolder.textView_Name = (TextView) convertView.findViewById(R.id.textview_name);
                 objectsHolder.textView_CowerkersCount = (TextView) convertView.findViewById(R.id.textview_coworkers_count);
                 objectsHolder.textView_Distance = (TextView) convertView.findViewById(R.id.textview_distance);
+                objectsHolder.textView_Address = (TextView) convertView.findViewById(R.id.textview_address);
+                objectsHolder.textView_Opening = (TextView) convertView.findViewById(R.id.textview_opening);
+
                 convertView.setTag(objectsHolder);
 
             } else
@@ -146,8 +149,12 @@ public class CoworkspacesFragment extends Fragment {
                     .into(objectsHolder.imageView);
 
             objectsHolder.textView_Name.setText(coworkspace.name);
-            objectsHolder.textView_CowerkersCount.setText(coworkspace.coworkers.length + " coworkers actuellement");
-            // objectsHolder.textView_Distance.setText(coworkspace.);
+            objectsHolder.textView_Opening.setText("Ouvert de 8h à 17h");
+            objectsHolder.textView_CowerkersCount.setText(coworkspace.coworkers.size() + " Coworkers");
+            objectsHolder.textView_Distance.setText("3 km");
+            objectsHolder.textView_Address.setText("Rue de Fer 48\n7000 Mons");
+
+            objectsHolder.coworkspace = coworkspace;
 
             convertView.setOnClickListener(onCoworkspaceClickListener);
 
@@ -158,8 +165,9 @@ public class CoworkspacesFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
-                ProfileManager.setCurrentCowerkspace(((ObjectsHolder) view.getTag()).coworkspace);
-                startActivity(new Intent(getActivity(), CoworkspaceActivity.class));
+                Intent intent = new Intent(getActivity(), CoworkspaceActivity.class)
+                        .putExtra(CoworkspaceFragment.EXTRA_COWORKSPACE_ID, ((ObjectsHolder) view.getTag()).coworkspace.id);
+                startActivity(intent);
             }
 
         };

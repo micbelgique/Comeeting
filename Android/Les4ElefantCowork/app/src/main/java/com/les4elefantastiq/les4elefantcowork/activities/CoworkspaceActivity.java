@@ -2,6 +2,7 @@ package com.les4elefantastiq.les4elefantcowork.activities;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 
 import com.les4elefantastiq.les4elefantcowork.R;
 import com.les4elefantastiq.les4elefantcowork.activities.utils.BaseActivity;
@@ -22,6 +23,18 @@ public class CoworkspaceActivity extends BaseActivity {
 
         manageToolbar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // Create the fragment
+        CoworkspaceFragment coworkspaceFragment = new CoworkspaceFragment();
+
+        // Pass the CoworkspaceId to the Fragment
+        Bundle bundle = new Bundle();
+        bundle.putString(CoworkspaceFragment.EXTRA_COWORKSPACE_ID, getIntent().getStringExtra(CoworkspaceFragment.EXTRA_COWORKSPACE_ID));
+        coworkspaceFragment.setArguments(bundle);
+
+        // Display the fragment
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.add(R.id.layout_content, coworkspaceFragment).commit();
     }
 
 
