@@ -3,37 +3,96 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using Comeeting.Api.Models;
 using Comeeting.Api.Models.Coworkers;
+using Comeeting.Data;
+using Comeeting.Domain;
 
 namespace Comeeting.Api.Controllers
 {
     public class CoworkerController : ApiController
     {
+        private readonly UnitOfWork _uow;
+
+        public CoworkerController()
+        {
+            _uow = new UnitOfWork();
+        }
         [Route("api/coworker")]
         [HttpPost]
-        public IHttpActionResult Post([FromBody] CoworkerDto coworker)
+        public async Task<IHttpActionResult> Post([FromBody] CoworkerSignUpDto coworker)
         {
             if (ModelState.IsValid)
+            {
+                var newCoworker = new Coworker()
+                {
+                    FirstName = coworker.FirstName,
+                    LastName = coworker.LastName,
+                    LinkedInId = coworker.LinkedInId,
+                    PictureUrl = coworker.PictureUrl,
+                    Summary = coworker.Summary,
+                    Headline = coworker.Headline,
+                    Positions = new List<Position>()
+                };
+                foreach (var position in coworker.Positions)
+                {
+                    newCoworker.Positions.Add(
+                        new Position()
+                        {
+                            Id = position.Id,
+                            CompanyName = position.CompanyName,
+                            StartDate = position.StartDate,
+                            EndDate = position.EndDate,
+                            IsCurrent = position.IsCurrent,
+                            Title = position.Title
+                        });
+                }
+                _uow.CoworkerRepository.AddCoworker(newCoworker);
+                await _uow.SaveChangesAsync();
+
                 return Ok();
+            }
             else return BadRequest();
         }
 
         [Route("api/coworker/{linkedInId}")]
         [HttpGet]
-        public IHttpActionResult Get(string linkedInId)
+        public async Task<IHttpActionResult> Get(string linkedInId)
         {
-            return Ok(new CoworkerDto()
+            var coworker = await _uow.CoworkerRepository.GetCoworkerAsync(linkedInId);
+
+            var coworkerDto = new CoworkerDto()
             {
-                LinkedInId = "81920_aezan_aza",
-                FirstName = "Mathias",
-                LastName = "Biard",
-                Summary = "The naked one",
-                PictureUrl = "http://www.mathiasbiard.com/images/me.jpg",
-                CurrentCoworkspace = new Guid("6CA3598B-09D3-43A4-A74E-6EC2D9B0BE89"),
-                FavoriteCoworkspaces = new List<Guid>() { new Guid("6CA3598B-09D3-43A4-A74E-6EC2D9B0BE89")}
-            });
+                LinkedInId = coworker.LinkedInId,
+                FirstName = coworker.FirstName,
+                LastName = coworker.LastName,
+                Summary = coworker.Summary,
+                PictureUrl = coworker.PictureUrl,
+                Headline = coworker.Headline,
+                Positions = new List<PositionDto>(),
+                CurrentCoworkspace = coworker.CurrentCoworkspaceId,
+                FavoriteCoworkspaces = new List<Guid>()
+            };
+            foreach (var position in coworker.Positions)
+            {
+                coworkerDto.Positions.Add(new PositionDto()
+                {
+                    Id = position.Id,
+                    CompanyName = position.CompanyName,
+                    IsCurrent = position.IsCurrent,
+                    StartDate = position.StartDate,
+                    EndDate = position.EndDate,
+                    Title = position.Title
+                });
+            }
+            foreach (var workspace in coworker.FavoriteCoworkspaces)
+            {
+                coworkerDto.FavoriteCoworkspaces.Add(workspace.Id);
+            }
+
+            return Ok(coworkerDto);
         }
 
 

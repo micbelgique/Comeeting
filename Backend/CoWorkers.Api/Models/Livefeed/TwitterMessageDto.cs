@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Comeeting.Domain;
 using Newtonsoft.Json;
 
 namespace Comeeting.Api.Models.Livefeed
@@ -11,10 +12,7 @@ namespace Comeeting.Api.Models.Livefeed
         [JsonProperty("tweetLink")]
         public string TweetLink { get; set; }
 
-        [JsonProperty("sender")]
-        public string Sender { get; set; }
-
-        public TwitterMessageDto() : base(MessageType.Twitter)
+        public TwitterMessageDto() : base(LivefeedMessageType.Twitter)
         {
         }
     }
