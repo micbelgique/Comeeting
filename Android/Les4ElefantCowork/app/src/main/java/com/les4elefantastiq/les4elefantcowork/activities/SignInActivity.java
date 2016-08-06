@@ -30,6 +30,8 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
 
     // -------------- Objects, Variables -------------- //
 
+    private ProgressDialog progressDialog;
+
     // -------------------- Views --------------------- //
 
     // ------------------ LifeCycle ------------------- //
@@ -66,13 +68,14 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void onClick(View view) {
+        progressDialog = ProgressDialog.show(SignInActivity.this, null, "Please wait ...", true, false);
         ProfileManager.signWithLinkedIn(SignInActivity.this);
     }
 
     @Override
-    public void onApiSuccess(final ApiResponse apiResponse) {
+    public void onApiSuccess(ApiResponse apiResponse) {
         // Login coworker
-
+        new LinkedInAsyncTask().execute(apiResponse);
     }
 
     @Override
@@ -105,33 +108,31 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
     // ------------------ AsyncTasks ------------------ //
     // ------------------ AsyncTasks ------------------ //
 
-    private class LinkedInAsyncTask extends AsyncTask<Void, Void, Void> {
-
-        private ProgressDialog progressDialog;
+    private class LinkedInAsyncTask extends AsyncTask<ApiResponse, Void, Boolean> {
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = ProgressDialog.show(SignInActivity.this, null, "Please wait ...", true, false);
         }
 
         @Override
-        protected Void doInBackground(Void... voids) {
-            LinkedInCoworker linkedInCoworker = new Gson().fromJson(apiResponse.getResponseDataAsString(), LinkedInCoworker.class);
+        protected Boolean doInBackground(ApiResponse... apiResponses) {
+            LinkedInCoworker linkedInCoworker = new Gson().fromJson(apiResponses[0].getResponseDataAsString(), LinkedInCoworker.class);
             ProfileManager.linkedInId = linkedInCoworker.linkedInId;
             Boolean success = CoworkerManager.login(linkedInCoworker.getCoworker());
-            Log.d("Blop", "Done ! " + ProfileManager.linkedInId);
 
-            return null;
+            return success;
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
+        protected void onPostExecute(Boolean success) {
+            super.onPostExecute(success);
             progressDialog.dismiss();
-            // TODO : if (success)
-            startActivity(new Intent(SignInActivity.this, NavigationActivity.class));
-            finish();
+
+            if (success) {
+                startActivity(new Intent(SignInActivity.this, NavigationActivity.class));
+                finish();
+            }
         }
     }
 }
