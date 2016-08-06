@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace Comeeting.Api.Models.Coworkers
 {
-    public class CoworkerDto
+    public class CoworkerSignUpDto
     {
         [JsonProperty("linkedInId")]
         public string LinkedInId { get; set; }
@@ -22,13 +22,7 @@ namespace Comeeting.Api.Models.Coworkers
         public string Headline { get; set; }
 
         [JsonProperty("positions")]
-        public ICollection<PositionDto> Positions { get; set; }
-
-        [JsonProperty("currentCoworkspace")]
-        public Guid? CurrentCoworkspace { get; set; }
-
-        [JsonProperty("favoriteCoworkspaces")]
-        public ICollection<Guid> FavoriteCoworkspaces { get; set; }
+        public IEnumerable<PositionDto> Positions { get; set; }
 
 
     }

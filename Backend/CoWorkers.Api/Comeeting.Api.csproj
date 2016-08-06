@@ -171,8 +171,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Coworkers\CoworkerDto.cs" />
+    <Compile Include="Models\Coworkers\CoworkerSignUpDto.cs" />
     <Compile Include="Models\Coworkspaces\CoworkerDto.cs" />
     <Compile Include="Models\Coworkspaces\CoworkspaceDto.cs" />
+    <Compile Include="Models\Coworkers\PositionDto.cs" />
     <Compile Include="Models\Livefeed\ArrivalMessageDto.cs" />
     <Compile Include="Models\Livefeed\MessageDto.cs" />
     <Compile Include="Models\Livefeed\TwitterMessageDto.cs" />
@@ -192,6 +194,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Comeeting.Data\Comeeting.Data.csproj">
+      <Project>{B525EA64-8AAF-467C-AA0B-CCBE9BF4DD29}</Project>
+      <Name>Comeeting.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CoWorkers.Domain\Comeeting.Domain.csproj">
       <Project>{3cb5b1d0-d636-4433-b4be-52db49409e0b}</Project>
       <Name>Comeeting.Domain</Name>
@@ -201,7 +207,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\PublishProfiles\comeetingapi - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\comeeting-api - Web Deploy %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\comeeting-api - Web Deploy.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

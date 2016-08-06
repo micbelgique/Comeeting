@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3CB5B1D0-D636-4433-B4BE-52DB49409E0B}</ProjectGuid>
+    <ProjectGuid>{3E4CD092-8D0C-45F9-A63D-512A48790E04}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Comeeting.Domain</RootNamespace>
-    <AssemblyName>Comeeting.Domain</AssemblyName>
+    <RootNamespace>Comeeting.Domain.Interfaces</RootNamespace>
+    <AssemblyName>Comeeting.Domain.Interfaces</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,12 +40,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Coworker.cs" />
-    <Compile Include="Coworkspace.cs" />
-    <Compile Include="LivefeedMessage.cs" />
-    <Compile Include="LivefeedMessageType.cs" />
-    <Compile Include="Position.cs" />
+    <Compile Include="ICoworkerRepository.cs" />
+    <Compile Include="ICoworkspaceRepository.cs" />
+    <Compile Include="ILivefeedMessageRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CoWorkers.Domain\Comeeting.Domain.csproj">
+      <Project>{3cb5b1d0-d636-4433-b4be-52db49409e0b}</Project>
+      <Name>Comeeting.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -16,6 +16,12 @@ namespace Comeeting.Api.Models.Coworkspaces
         public string PictureUrl { get; set; }
         [JsonProperty("description")]
         public string Description { get; set; }
+        [JsonProperty("address")]
+        public string Address { get; set; }
+        [JsonProperty("zipCode")]
+        public string ZipCode { get; set; }
+        [JsonProperty("city")]
+        public string City { get; set; }
         [JsonProperty("geolocationLongitude")]
         public double GeolocationLongitude { get; set; }
         [JsonProperty("geolocationLatitude")]

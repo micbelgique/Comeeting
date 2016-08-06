@@ -22,25 +22,31 @@ namespace Comeeting.Api.Controllers
                     Id = new Guid("6CA3598B-09D3-43A4-A74E-6EC2D9B0BE89"),
                     Name = "MIC Mons",
                     Description = "Microsoft Innovation Center",
+                    Address = "Boulevard Initialis 1",
+                    ZipCode = "7000",
+                    City = "Mons",
                     GeolocationLatitude = 50.4611474,
                     GeolocationLongitude = 3.9292573,
                     GeofencingRadius = 50,
                     PictureUrl = "http://www.regional-it.be/wp-content/uploads/2012/06/Microsoft-Innovation-Center-Mons-.jpg",
-                    Coworkers = new List<CoworkerDto>() { new CoworkerDto() { LinkedInId = "azazaz12214OIFD21og", FirstName = "Valentin", LastName = "Taleb",Summary = "The kung-fu fighter", PictureUrl = "https://cdn5.f-cdn.com/ppic/11626023/logo/13334637/Wz5KE/profile_logo_.png" } }
+                    Coworkers = new List<CoworkerDto>() { new CoworkerDto() { LinkedInId = "azazaz12214OIFD21og", FirstName = "Valentin", LastName = "Taleb",Summary = "The kung-fu fighter", PictureUrl = "https://cdn5.f-cdn.com/ppic/11626023/logo/13334637/Wz5KE/profile_logo_.png", IsPresent = true } }
                 },
                 new CoworkspaceDto()
                 {
                     Id = new Guid("C9D16208-5DA0-4D51-BEB6-1B9F7944F1C8"),
                     Name = "Betacowork",
                     Description = "Coworkspace in Brussels",
+                    Address="Rue des Pères Blancs 4",
+                    ZipCode = "1040",
+                    City = "Bruxelles",
                     GeolocationLatitude = 50.8267747,
                     GeolocationLongitude = 4.3980635,
                     GeofencingRadius = 200,
                     PictureUrl = "http://www.betacowork.com/wp-content/uploads/2013/05/betacowork3-550x355.jpg",
                     Coworkers = new List<CoworkerDto>()
                     {
-                        new CoworkerDto() { LinkedInId = "dza91jkelzale_azaz", FirstName = "Laurent", LastName = "Vandenbosch",Summary = "Ninjaaaa", PictureUrl = "https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAdqAAAAJDRmZGU3ZDBhLTNhNTYtNGUyZS04NjgzLWY1MjVhMDUwYWViNg.jpg" },
-                        new CoworkerDto() { LinkedInId = "81920_aezan_aza", FirstName = "Mathias", LastName = "Biard",Summary = "The naked one", PictureUrl = "http://www.mathiasbiard.com/images/me.jpg" }
+                        new CoworkerDto() { LinkedInId = "dza91jkelzale_azaz", FirstName = "Laurent", LastName = "Vandenbosch",Summary = "Ninjaaaa", PictureUrl = "https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAdqAAAAJDRmZGU3ZDBhLTNhNTYtNGUyZS04NjgzLWY1MjVhMDUwYWViNg.jpg", IsPresent=false },
+                        new CoworkerDto() { LinkedInId = "81920_aezan_aza", FirstName = "Mathias", LastName = "Biard",Summary = "The naked one", PictureUrl = "http://www.mathiasbiard.com/images/me.jpg", IsPresent = true }
                     }
                 },
             });
@@ -52,8 +58,8 @@ namespace Comeeting.Api.Controllers
         {
             return Ok(new List<CoworkerDto>()
                     {
-                        new CoworkerDto() { LinkedInId = "dza91jkelzale_azaz", FirstName = "Laurent", LastName = "Vandenbosch",Summary = "Ninjaaaa", PictureUrl = "https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAdqAAAAJDRmZGU3ZDBhLTNhNTYtNGUyZS04NjgzLWY1MjVhMDUwYWViNg.jpg" },
-                        new CoworkerDto() { LinkedInId = "81920_aezan_aza", FirstName = "Mathias", LastName = "Biard",Summary = "The naked one", PictureUrl = "http://www.mathiasbiard.com/images/me.jpg" }
+                        new CoworkerDto() { LinkedInId = "dza91jkelzale_azaz", FirstName = "Laurent", LastName = "Vandenbosch",Summary = "Ninjaaaa", PictureUrl = "https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAdqAAAAJDRmZGU3ZDBhLTNhNTYtNGUyZS04NjgzLWY1MjVhMDUwYWViNg.jpg", IsPresent = true },
+                        new CoworkerDto() { LinkedInId = "81920_aezan_aza", FirstName = "Mathias", LastName = "Biard",Summary = "The naked one", PictureUrl = "http://www.mathiasbiard.com/images/me.jpg", IsPresent=false }
                     });
         }
 

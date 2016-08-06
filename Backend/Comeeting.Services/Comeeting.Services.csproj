@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3CB5B1D0-D636-4433-B4BE-52DB49409E0B}</ProjectGuid>
+    <ProjectGuid>{4EAF78F9-867A-4AD5-A83E-D6156073397F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Comeeting.Domain</RootNamespace>
-    <AssemblyName>Comeeting.Domain</AssemblyName>
+    <RootNamespace>Comeeting.Services</RootNamespace>
+    <AssemblyName>Comeeting.Services</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,12 +40,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Coworker.cs" />
-    <Compile Include="Coworkspace.cs" />
-    <Compile Include="LivefeedMessage.cs" />
-    <Compile Include="LivefeedMessageType.cs" />
-    <Compile Include="Position.cs" />
+    <Compile Include="CoworkerService.cs" />
+    <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Comeeting.Domain.Interfaces\Comeeting.Domain.Interfaces.csproj">
+      <Project>{3E4CD092-8D0C-45F9-A63D-512A48790E04}</Project>
+      <Name>Comeeting.Domain.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Comeeting.Service.Interfaces\Comeeting.Service.Interfaces.csproj">
+      <Project>{2689F3F3-0CED-4107-9D64-0FA474E347FC}</Project>
+      <Name>Comeeting.Service.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CoWorkers.Domain\Comeeting.Domain.csproj">
+      <Project>{3CB5B1D0-D636-4433-B4BE-52DB49409E0B}</Project>
+      <Name>Comeeting.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
