@@ -97,6 +97,9 @@ namespace Comeeting.Api.Controllers
             if (coworker == null)
                 return BadRequest("Coworker ID not found");
 
+            if (!coworker.FavoriteCoworkspaces.Any(c => c.Id == id))
+                coworker.FavoriteCoworkspaces.Add(coworkspace);
+
             if (coworker.CurrentCoworkspaceId == id)
                 return Ok();
 
