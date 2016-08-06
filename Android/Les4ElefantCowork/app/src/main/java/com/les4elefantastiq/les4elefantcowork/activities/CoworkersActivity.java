@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import com.les4elefantastiq.les4elefantcowork.R;
 import com.les4elefantastiq.les4elefantcowork.activities.utils.BaseActivity;
+import com.les4elefantastiq.les4elefantcowork.managers.CoworkspacesManager;
+import com.les4elefantastiq.les4elefantcowork.managers.ProfileManager;
 import com.les4elefantastiq.les4elefantcowork.models.Coworker;
 import com.squareup.picasso.Picasso;
 
@@ -37,6 +39,9 @@ public class CoworkersActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.coworkers_activity);
+
+        manageToolbar();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mListView = (ListView) findViewById(R.id.listview);
 
@@ -72,7 +77,7 @@ public class CoworkersActivity extends BaseActivity {
 
         @Override
         protected List<Coworker> doInBackground(Void... voids) {
-            return null;
+            return CoworkspacesManager.getCoworkers(ProfileManager.getCurrentCowerkspace());
         }
 
         @Override

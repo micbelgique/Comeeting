@@ -1,5 +1,6 @@
 package com.les4elefantastiq.les4elefantcowork.activities;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -153,8 +154,7 @@ public class CoworkspacesFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
-                Coworkspace coworkspace = ((ObjectsHolder) view.getTag()).coworkspace;
-                // Intent intent = new Intent(getActivity(), .class)
+                startActivity(new Intent(getActivity(), CoworkspaceActivity.class));
             }
 
         };

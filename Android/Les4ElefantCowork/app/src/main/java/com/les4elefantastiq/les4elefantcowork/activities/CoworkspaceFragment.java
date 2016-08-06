@@ -1,6 +1,7 @@
 package com.les4elefantastiq.les4elefantcowork.activities;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,7 +22,7 @@ import com.les4elefantastiq.les4elefantcowork.models.LiveFeedMessage;
 
 import java.util.List;
 
-public class LiveFeedFragment extends Fragment {
+public class CoworkspaceFragment extends Fragment {
 
     // -------------- Objects, Variables -------------- //
 
@@ -87,7 +88,6 @@ public class LiveFeedFragment extends Fragment {
                 listView.setAdapter(new Adapter(liveFeedMessages));
             else
                 Toast.makeText(getActivity(), R.string.Whoops_an_error_has_occured__Check_your_internet_connection, Toast.LENGTH_LONG).show();
-
         }
 
     }
@@ -110,12 +110,15 @@ public class LiveFeedFragment extends Fragment {
 
         @Override
         public int getCount() {
-            return liveFeedMessages.size();
+            return liveFeedMessages.size() + 1;
         }
 
         @Override
         public LiveFeedMessage getItem(int position) {
-            return liveFeedMessages.get(position);
+            if (position == 0)
+                return null;
+            else
+                return liveFeedMessages.get(position - 1);
         }
 
         @Override
@@ -151,6 +154,7 @@ public class LiveFeedFragment extends Fragment {
                 convertView = getActivity().getLayoutInflater().inflate(R.layout.live_feed_fragment_coworkers, parent, false);
 
             // TODO : set the cowerkers and clicklistener
+            convertView.setOnClickListener(onViewMoreCowerkerClickListener);
 
             return convertView;
         }
@@ -172,8 +176,21 @@ public class LiveFeedFragment extends Fragment {
 
             // TODO : set values to views
 
+
+            objectsHolder.textView_Name.setText(liveFeedMessage.text);
+            objectsHolder.textView_Date.setText(liveFeedMessage.dateTime);
+
             return convertView;
         }
+
+        private View.OnClickListener onViewMoreCowerkerClickListener = new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), CoworkersActivity.class));
+            }
+
+        };
 
     }
 

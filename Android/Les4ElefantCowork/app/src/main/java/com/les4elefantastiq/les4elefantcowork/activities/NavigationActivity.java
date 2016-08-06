@@ -89,7 +89,7 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
 
         switch (menuItem.getItemId()) {
             case MENU_CURRENT_COWORKSPACE:
-                fragment = new LiveFeedFragment();
+                fragment = new CoworkspaceFragment();
                 break;
             case MENU_MORE_COWORKSPACE:
                 fragment = new CoworkspacesFragment();
