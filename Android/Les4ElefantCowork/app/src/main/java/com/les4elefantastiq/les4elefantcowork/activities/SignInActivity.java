@@ -1,19 +1,15 @@
 package com.les4elefantastiq.les4elefantcowork.activities;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.les4elefantastiq.les4elefantcowork.R;
@@ -113,10 +109,7 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
             progressDialog.dismiss();
         }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(R.string.Connection_error);
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        Toast.makeText(this, R.string.Whoops_an_error_has_occured__Check_your_internet_connection, Toast.LENGTH_LONG).show();
     }
 
     // ------------------ AsyncTasks ------------------ //
