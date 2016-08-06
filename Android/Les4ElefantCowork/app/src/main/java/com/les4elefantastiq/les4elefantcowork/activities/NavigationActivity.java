@@ -46,7 +46,7 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_activity);
 
-        if (ProfileManager.isLogged()) {
+        if (ProfileManager.isLogged(this)) {
             mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
             // Manage Toolbar/ActionBar
@@ -193,7 +193,7 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
 
         @Override
         protected Coworkspace doInBackground(Void... voids) {
-            return ProfileManager.getCurrentCowerkspace();
+            return ProfileManager.getCurrentCowerkspace(NavigationActivity.this);
         }
 
         @Override

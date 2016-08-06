@@ -1,5 +1,6 @@
 package com.les4elefantastiq.les4elefantcowork.managers;
 
+import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.annotation.WorkerThread;
 
@@ -13,14 +14,13 @@ public class ProfileManager {
 
     // -------------- Objects, Variables -------------- //
 
-    public static String linkedInId;
     private static Coworker mCoworker;
 
 
     // ---------------- Public Methods ---------------- //
 
-    public static boolean isLogged() {
-        return linkedInId != null;
+    public static boolean isLogged(Context context) {
+        return SharedPreferencesManager.getLinkedInId(context) != null;
     }
 
     public static void signWithLinkedIn(final SignInActivity context) {
@@ -29,8 +29,8 @@ public class ProfileManager {
 
     @Nullable
     @WorkerThread
-    public static Coworkspace getCurrentCowerkspace() {
-        loadCoworker();
+    public static Coworkspace getCurrentCowerkspace(Context context) {
+        loadCoworker(context);
 
         if (mCoworker != null && mCoworker.currentCoworkspaceId != null)
             return CoworkspacesManager.getCoworkspace(mCoworker.currentCoworkspaceId);
@@ -41,8 +41,9 @@ public class ProfileManager {
 
     // ---------------- Private Methods --------------- //
 
-    private static void loadCoworker() {
-        if (mCoworker == null)
+    private static void loadCoworker(Context context) {
+        String linkedInId = SharedPreferencesManager.getLinkedInId(context);
+        if (mCoworker == null && linkedInId != null)
             mCoworker = CoworkerDataAccess.getCoworker(linkedInId);
     }
 

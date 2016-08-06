@@ -51,11 +51,6 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
         }
 
         findViewById(R.id.button_linked_in).setOnClickListener(this);
-
-        // If already login we just open the next screen
-        if (SharedPreferencesManager.getLinkedInId(this) != null) {
-            showNavigationActivity();
-        }
     }
 
     @Override
@@ -135,7 +130,6 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
         @Override
         protected Boolean doInBackground(ApiResponse... apiResponses) {
             LinkedInCoworker linkedInCoworker = new Gson().fromJson(apiResponses[0].getResponseDataAsString(), LinkedInCoworker.class);
-            ProfileManager.linkedInId = linkedInCoworker.linkedInId;
             SharedPreferencesManager.setLinkedInId(SignInActivity.this, linkedInCoworker.linkedInId);
             Boolean success = CoworkerManager.login(linkedInCoworker.getCoworker());
 
