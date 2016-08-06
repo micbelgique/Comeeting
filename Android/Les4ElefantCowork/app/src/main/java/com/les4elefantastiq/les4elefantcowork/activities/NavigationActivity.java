@@ -15,13 +15,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
-import android.widget.Toast;
 
 import com.les4elefantastiq.les4elefantcowork.R;
 import com.les4elefantastiq.les4elefantcowork.activities.utils.BaseActivity;
-import com.les4elefantastiq.les4elefantcowork.managers.CoworkspacesManager;
 import com.les4elefantastiq.les4elefantcowork.managers.ProfileManager;
 import com.les4elefantastiq.les4elefantcowork.models.Coworkspace;
+
+import java.util.HashMap;
 
 public class NavigationActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -76,12 +76,14 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
     protected void onDestroy() {
         super.onDestroy();
 
-        if(mCurrentCoworkspaceAsynctask != null)
+        if (mCurrentCoworkspaceAsynctask != null)
             mCurrentCoworkspaceAsynctask.cancel(false);
     }
 
 
     // ------------------ Listeners ------------------- //
+
+    private HashMap<Integer, String> coworkspacesIdMap;
 
     @Override
     public void onBackPressed() {
@@ -106,7 +108,7 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
 
                 // Pass the CoworkspaceId to the Fragment
                 Bundle bundle = new Bundle();
-                bundle.putString(CoworkspaceFragment.EXTRA_COWORKSPACE_ID, getIntent().getStringExtra(CoworkspaceFragment.EXTRA_COWORKSPACE_ID));
+                bundle.putString(CoworkspaceFragment.EXTRA_COWORKSPACE_ID,"" );
                 fragment.setArguments(bundle);
                 break;
 
@@ -154,14 +156,15 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
 
         // If currently in a coworkspace
         menu.add(0, MENU_CURRENT_COWORKSPACE, 0, "Super coworkspace");
+        //coworkspacesIdMap.put(MENU_CURRENT_COWORKSPACE, ProfileManager.getCurrentCowerkspace())
 
         // If favorites cowordspaces
         // SubMenu subMenu2 = menu.addSubMenu("Mes coworkings");
         // subMenu2.add(0, 0, 0, "blablabla");
 
         // More coworkspaces
-        SubMenu subMenu3 = menu.addSubMenu("Plus de coworkings");
-        subMenu3.add(0, MENU_MORE_COWORKSPACE, 0, "Voir les autres coworkings");
+        SubMenu subMenu3 = menu.addSubMenu("Plus de coworkspaces");
+        subMenu3.add(0, MENU_MORE_COWORKSPACE, 0, "Voir les autres coworkspaces");
     }
 
     private void showFragment(Fragment fragment) {
@@ -189,7 +192,7 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
 
         @Override
         protected Coworkspace doInBackground(Void... voids) {
-            return CoworkspacesManager.getCoworkspaces().get(0);
+            return ProfileManager.getCurrentCowerkspace();
         }
 
         @Override
@@ -200,9 +203,18 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
 
             if (coworkspace != null) {
                 manageNavigationDrawerMenu();
+
+                CoworkspaceFragment coworkspaceFragment = new CoworkspaceFragment();
+
+                // Pass the CoworkspaceId to the Fragment
+                Bundle bundle = new Bundle();
+                bundle.putString(CoworkspaceFragment.EXTRA_COWORKSPACE_ID, coworkspace.id);
+                coworkspaceFragment.setArguments(bundle);
+
+                showFragment(coworkspaceFragment);
+            } else {
                 showFragment(new CoworkspacesFragment());
-            } else
-                Toast.makeText(NavigationActivity.this, R.string.Whoops_an_error_has_occured__Check_your_internet_connection, Toast.LENGTH_LONG).show();
+            }
         }
     }
 

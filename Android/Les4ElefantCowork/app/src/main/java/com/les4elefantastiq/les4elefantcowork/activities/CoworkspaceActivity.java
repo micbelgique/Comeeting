@@ -2,7 +2,6 @@ package com.les4elefantastiq.les4elefantcowork.activities;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentTransaction;
 
 import com.les4elefantastiq.les4elefantcowork.R;
 import com.les4elefantastiq.les4elefantcowork.activities.utils.BaseActivity;
@@ -33,8 +32,7 @@ public class CoworkspaceActivity extends BaseActivity {
         coworkspaceFragment.setArguments(bundle);
 
         // Display the fragment
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.layout_content, coworkspaceFragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.layout_content, coworkspaceFragment).commit();
     }
 
 

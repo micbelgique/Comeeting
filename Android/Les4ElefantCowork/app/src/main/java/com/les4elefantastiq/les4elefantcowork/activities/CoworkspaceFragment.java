@@ -1,6 +1,5 @@
 package com.les4elefantastiq.les4elefantcowork.activities;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,7 +41,7 @@ public class CoworkspaceFragment extends Fragment {
     // -------------------- Views --------------------- //
 
     private ListView mListView;
-    private ProgressDialog mProgressDialog;
+    private ProgressBar mProgressBar;
 
 
     // ------------------ LifeCycle ------------------- //
@@ -50,11 +50,12 @@ public class CoworkspaceFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.live_feed_fragment, container, false);
-
-        mListView = (ListView) view.findViewById(R.id.listview);
+        View view = inflater.inflate(R.layout.coworkspace_fragment, container, false);
 
         ((BaseActivity) getActivity()).getSupportActionBar().setTitle("Coworkspace");
+
+        mListView = (ListView) view.findViewById(R.id.listview);
+        mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
         mCoworkspaceAsyncTask = new CoworkspaceAsyncTask();
         mCoworkspaceAsyncTask.execute();
@@ -85,7 +86,7 @@ public class CoworkspaceFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            mProgressDialog = ProgressDialog.show(getActivity(), null, "Please wait", true, false);
+            mProgressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -98,7 +99,6 @@ public class CoworkspaceFragment extends Fragment {
         protected void onPostExecute(Coworkspace coworkspace) {
             super.onPostExecute(coworkspace);
 
-
             if (coworkspace != null) {
                 mCoworkspace = coworkspace;
 
@@ -110,7 +110,7 @@ public class CoworkspaceFragment extends Fragment {
                 mLiveFeedmessagesAsyncTaks = new LiveFeedMessagesAsyncTask();
                 mLiveFeedmessagesAsyncTaks.execute();
             } else {
-                mProgressDialog.dismiss();
+                mProgressBar.setVisibility(View.GONE);
                 Toast.makeText(getActivity(), R.string.Whoops_an_error_has_occured__Check_your_internet_connection, Toast.LENGTH_LONG).show();
             }
         }
@@ -128,7 +128,7 @@ public class CoworkspaceFragment extends Fragment {
         protected void onPostExecute(List<LiveFeedMessage> liveFeedMessages) {
             super.onPostExecute(liveFeedMessages);
 
-            mProgressDialog.dismiss();
+            mProgressBar.setVisibility(View.GONE);
 
             if (liveFeedMessages != null)
                 mListView.setAdapter(new Adapter(liveFeedMessages));

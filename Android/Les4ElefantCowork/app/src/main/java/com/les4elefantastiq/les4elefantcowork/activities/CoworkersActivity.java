@@ -1,6 +1,5 @@
 package com.les4elefantastiq.les4elefantcowork.activities;
 
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +31,7 @@ public class CoworkersActivity extends BaseActivity {
     // -------------------- Views --------------------- //
 
     private ListView mListView;
+    private ProgressBar mProgressBar;
 
 
     // ------------------ LifeCycle ------------------- //
@@ -46,6 +47,7 @@ public class CoworkersActivity extends BaseActivity {
         getSupportActionBar().setTitle("Coworkers");
 
         mListView = (ListView) findViewById(R.id.listview);
+        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         mCoworkersAsyncTask = new CoworkersAsyncTask();
         mCoworkersAsyncTask.execute();
@@ -68,13 +70,11 @@ public class CoworkersActivity extends BaseActivity {
 
     private class CoworkersAsyncTask extends AsyncTask<Void, Void, List<Coworker>> {
 
-        private ProgressDialog progressDialog;
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
 
-            progressDialog = ProgressDialog.show(CoworkersActivity.this, null, "Please wait ...", true, false);
+            mProgressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -86,7 +86,7 @@ public class CoworkersActivity extends BaseActivity {
         protected void onPostExecute(List<Coworker> coworkers) {
             super.onPostExecute(coworkers);
 
-            progressDialog.dismiss();
+            mProgressBar.setVisibility(View.GONE);
 
             if (coworkers != null)
                 mListView.setAdapter(new Adapter(coworkers));

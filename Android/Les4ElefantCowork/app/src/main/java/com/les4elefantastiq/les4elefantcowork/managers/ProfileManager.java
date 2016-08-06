@@ -37,7 +37,11 @@ public class ProfileManager {
     @WorkerThread
     public static Coworkspace getCurrentCowerkspace() {
         loadCoworker();
-        return CoworkspacesManager.getCoworkspace(mCoworker.currentCoworkspaceId);
+
+        if (mCoworker != null && mCoworker.currentCoworkspaceId != null)
+            return CoworkspacesManager.getCoworkspace(mCoworker.currentCoworkspaceId);
+        else
+            return null;
     }
 
 

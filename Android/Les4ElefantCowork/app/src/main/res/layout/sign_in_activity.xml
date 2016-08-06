@@ -20,20 +20,33 @@
         android:text="Coworking goes social"
         android:textColor="#AAFFFFFF" />
 
-    <TextView
+    <LinearLayout
         android:id="@+id/button_linked_in"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="40dp"
-        android:background="@drawable/bt_blue_linked_in"
-        android:drawableLeft="@drawable/ic_linked_in"
-        android:drawablePadding="10dp"
         android:gravity="center"
-        android:paddingLeft="50dp"
-        android:paddingRight="50dp"
-        android:text="Connexion avec LinkedIn"
-        android:textColor="@android:color/white"
-        android:textSize="14sp" />
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginBottom="90dp"
+        android:orientation="horizontal"
+        android:background="@drawable/bt_blue_linked_in">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_linked_in"
+            android:layout_marginRight="10dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Connexion avec LinkedIn"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
 
 </RelativeLayout>

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ public class CoworkspacesFragment extends Fragment {
     // -------------------- Views --------------------- //
 
     private ListView mListView;
+    private ProgressBar mProgressBar;
 
 
     // ------------------ LifeCycle ------------------- //
@@ -45,6 +47,7 @@ public class CoworkspacesFragment extends Fragment {
         ((BaseActivity) getActivity()).getSupportActionBar().setTitle("Les coworkspaces");
 
         mListView = (ListView) view.findViewById(R.id.listview);
+        mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
         mCoworkspacesAsyncTask = new CoworkspacesAsyncTask();
         mCoworkspacesAsyncTask.execute();
@@ -72,6 +75,8 @@ public class CoworkspacesFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+
+            mProgressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -82,6 +87,8 @@ public class CoworkspacesFragment extends Fragment {
         @Override
         protected void onPostExecute(List<Coworkspace> coworkspaces) {
             super.onPostExecute(coworkspaces);
+
+            mProgressBar.setVisibility(View.GONE);
 
             if (coworkspaces != null)
                 mListView.setAdapter(new Adapter(coworkspaces));
@@ -130,7 +137,7 @@ public class CoworkspacesFragment extends Fragment {
             ObjectsHolder objectsHolder;
 
             if (convertView == null) {
-                convertView = getActivity().getLayoutInflater().inflate(R.layout.coworspaces_fragment_item, parent, false);
+                convertView = getActivity().getLayoutInflater().inflate(R.layout.coworkspaces_fragment_item, parent, false);
                 objectsHolder = new ObjectsHolder();
                 objectsHolder.imageView = (ImageView) convertView.findViewById(R.id.imageview);
                 objectsHolder.textView_Name = (TextView) convertView.findViewById(R.id.textview_name);

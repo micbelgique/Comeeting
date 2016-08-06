@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -19,13 +17,8 @@ import retrofit2.http.Path;
  */
 public class CoworkspaceDataAccess {
 
-    private static final String API_URL = "http://comeetingapi.azurewebsites.net";
-    private static Retrofit retrofit;
-
     public static List<Coworkspace> getAllCoworkspace() {
-        loadRetrofit();
-
-        Call<List<Coworkspace>> coworkspaces = retrofit.create(CoworkspacesInterface.class).coworkspaces();
+        Call<List<Coworkspace>> coworkspaces = CommonDataAccess.getRetrofit().create(CoworkspacesInterface.class).coworkspaces();
 
         try {
             return coworkspaces.execute().body();
@@ -36,9 +29,7 @@ public class CoworkspaceDataAccess {
     }
 
     public static List<Coworker> getCoworkers(Coworkspace coworkspace) {
-        loadRetrofit();
-
-        Call<List<Coworker>> coworkers = retrofit.create(CoworkspaceInterface.class).cowokers(coworkspace.id);
+        Call<List<Coworker>> coworkers = CommonDataAccess.getRetrofit().create(CoworkspaceInterface.class).cowokers(coworkspace.id);
 
         try {
             return coworkers.execute().body();
@@ -49,9 +40,7 @@ public class CoworkspaceDataAccess {
     }
 
     public static void setCheckIn(Coworkspace coworkspace, Coworker coworker, Boolean checkIn) {
-        loadRetrofit();
-
-        CoworkspaceCheckInCheckOutInterface checkInInterface = retrofit.create(CoworkspaceCheckInCheckOutInterface.class);
+        CoworkspaceCheckInCheckOutInterface checkInInterface = CommonDataAccess.getRetrofit().create(CoworkspaceCheckInCheckOutInterface.class);
 
         Call<Void> checkInRequest;
         if (checkIn) {
@@ -87,13 +76,6 @@ public class CoworkspaceDataAccess {
         Call<Void> checkin(
                 @Path("coworkspaceId") String coworkspaceId,
                 @Path("linkedInId") String linkedInId);
-    }
-
-    private static void loadRetrofit() {
-        retrofit = new Retrofit.Builder()
-                .baseUrl(API_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
     }
 
 }
