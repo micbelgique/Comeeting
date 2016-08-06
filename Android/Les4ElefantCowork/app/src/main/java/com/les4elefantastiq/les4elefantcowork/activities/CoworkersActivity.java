@@ -16,8 +16,8 @@ import android.widget.Toast;
 import com.les4elefantastiq.les4elefantcowork.R;
 import com.les4elefantastiq.les4elefantcowork.activities.utils.BaseActivity;
 import com.les4elefantastiq.les4elefantcowork.managers.CoworkspacesManager;
-import com.les4elefantastiq.les4elefantcowork.managers.ProfileManager;
 import com.les4elefantastiq.les4elefantcowork.models.Coworker;
+import com.les4elefantastiq.les4elefantcowork.models.Coworkspace;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -80,7 +80,12 @@ public class CoworkersActivity extends BaseActivity {
 
         @Override
         protected List<Coworker> doInBackground(Void... voids) {
-            return CoworkspacesManager.getCoworkers(ProfileManager.getCurrentCowerkspace());
+            Coworkspace coworkspace = CoworkspacesManager.getCoworkspace(getIntent().getStringExtra(CoworkspaceFragment.EXTRA_COWORKSPACE_ID));
+
+            if (coworkspace != null)
+                return CoworkspacesManager.getCoworkers(coworkspace);
+            else
+                return null;
         }
 
         @Override

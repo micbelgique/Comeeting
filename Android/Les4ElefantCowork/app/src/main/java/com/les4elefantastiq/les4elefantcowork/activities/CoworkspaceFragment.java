@@ -38,7 +38,6 @@ public class CoworkspaceFragment extends Fragment {
     public static final String EXTRA_COWORKSPACE_ID = "EXTRA_COWORKSPACE_ID";
 
     private LiveFeedMessagesAsyncTask mLiveFeedmessagesAsyncTaks;
-    private CoworkspaceAsyncTask mCoworkspaceAsyncTask;
 
     private Coworkspace mCoworkspace;
 
@@ -62,8 +61,8 @@ public class CoworkspaceFragment extends Fragment {
         mListView = (ListView) view.findViewById(R.id.listview);
         mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
-        mCoworkspaceAsyncTask = new CoworkspaceAsyncTask();
-        mCoworkspaceAsyncTask.execute();
+        mLiveFeedmessagesAsyncTaks = new LiveFeedMessagesAsyncTask();
+        mLiveFeedmessagesAsyncTaks.execute();
 
         return view;
     }
@@ -71,9 +70,6 @@ public class CoworkspaceFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
-        if (mCoworkspaceAsyncTask != null)
-            mCoworkspaceAsyncTask.cancel(false);
 
         if (mLiveFeedmessagesAsyncTaks != null)
             mLiveFeedmessagesAsyncTaks.cancel(false);
@@ -86,54 +82,33 @@ public class CoworkspaceFragment extends Fragment {
 
     // ------------------ AsyncTasks ------------------ //
 
-    private class CoworkspaceAsyncTask extends AsyncTask<Void, Void, Coworkspace> {
+    private class LiveFeedMessagesAsyncTask extends AsyncTask<Void, Void, List<LiveFeedMessage>> {
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+
             mProgressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
-        protected Coworkspace doInBackground(Void... voids) {
-            return CoworkspacesManager.getCoworkspace(getArguments().getString(EXTRA_COWORKSPACE_ID));
+        protected List<LiveFeedMessage> doInBackground(Void... voids) {
+            mCoworkspace = CoworkspacesManager.getCoworkspace(getArguments().getString(EXTRA_COWORKSPACE_ID));
+
+            if (mCoworkspace != null)
+                return LivefeedManager.getLiveFeedMessages(mCoworkspace);
+            else
+                return null;
         }
 
         @SuppressWarnings("ConstantConditions")
-        @Override
-        protected void onPostExecute(Coworkspace coworkspace) {
-            super.onPostExecute(coworkspace);
-
-            if (coworkspace != null) {
-                mCoworkspace = coworkspace;
-
-                ((BaseActivity) getActivity()).getSupportActionBar().setTitle(coworkspace.name);
-
-                if (mLiveFeedmessagesAsyncTaks != null)
-                    mLiveFeedmessagesAsyncTaks.cancel(false);
-
-                mLiveFeedmessagesAsyncTaks = new LiveFeedMessagesAsyncTask();
-                mLiveFeedmessagesAsyncTaks.execute();
-            } else {
-                mProgressBar.setVisibility(View.GONE);
-                Toast.makeText(getActivity(), R.string.Whoops_an_error_has_occured__Check_your_internet_connection, Toast.LENGTH_LONG).show();
-            }
-        }
-
-    }
-
-    private class LiveFeedMessagesAsyncTask extends AsyncTask<Void, Void, List<LiveFeedMessage>> {
-
-        @Override
-        protected List<LiveFeedMessage> doInBackground(Void... voids) {
-            return LivefeedManager.getLiveFeedMessages(mCoworkspace);
-        }
-
         @Override
         protected void onPostExecute(List<LiveFeedMessage> liveFeedMessages) {
             super.onPostExecute(liveFeedMessages);
 
             mProgressBar.setVisibility(View.GONE);
+
+            ((BaseActivity) getActivity()).getSupportActionBar().setTitle(mCoworkspace.name);
 
             if (liveFeedMessages != null)
                 mListView.setAdapter(new Adapter(liveFeedMessages));
@@ -317,7 +292,7 @@ public class CoworkspaceFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), CoworkersActivity.class));
+                startActivity(new Intent(getActivity(), CoworkersActivity.class).putExtra(EXTRA_COWORKSPACE_ID, getArguments().getString(EXTRA_COWORKSPACE_ID)));
             }
 
         };
