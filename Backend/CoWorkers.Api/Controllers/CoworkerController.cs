@@ -26,6 +26,10 @@ namespace Comeeting.Api.Controllers
         {
             if (ModelState.IsValid)
             {
+                var existingCoworker = await _uow.CoworkerRepository.GetCoworkerAsync(coworker.LinkedInId);
+                if (existingCoworker != null)
+                    return Ok();
+
                 var newCoworker = new Coworker()
                 {
                     FirstName = coworker.FirstName,
@@ -34,6 +38,7 @@ namespace Comeeting.Api.Controllers
                     PictureUrl = coworker.PictureUrl,
                     Summary = coworker.Summary,
                     Headline = coworker.Headline,
+                    IsPresent = false,
                     Positions = new List<Position>()
                 };
                 foreach (var position in coworker.Positions)
@@ -63,6 +68,9 @@ namespace Comeeting.Api.Controllers
         {
             var coworker = await _uow.CoworkerRepository.GetCoworkerAsync(linkedInId);
 
+            if (coworker == null)
+                return NotFound();
+
             var coworkerDto = new CoworkerDto()
             {
                 LinkedInId = coworker.LinkedInId,
@@ -71,9 +79,11 @@ namespace Comeeting.Api.Controllers
                 Summary = coworker.Summary,
                 PictureUrl = coworker.PictureUrl,
                 Headline = coworker.Headline,
+                IsPresent = coworker.IsPresent,
                 Positions = new List<PositionDto>(),
                 CurrentCoworkspace = coworker.CurrentCoworkspaceId,
                 FavoriteCoworkspaces = new List<Guid>()
+                
             };
             foreach (var position in coworker.Positions)
             {

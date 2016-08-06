@@ -8,7 +8,7 @@ namespace Comeeting.Domain.Interfaces
 {
     public interface ICoworkerRepository
     {
-        Task<IEnumerable<Coworker>> GetCoworkersAsync();
+        Task<List<Coworker>> GetCoworkersAsync();
         Task<Coworker> GetCoworkerAsync(string linkedInId);
         void AddCoworker(Coworker coworker);
     }

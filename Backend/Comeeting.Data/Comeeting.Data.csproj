@@ -59,9 +59,14 @@
     <Compile Include="Migrations\201608061932530_addedFields.Designer.cs">
       <DependentUpon>201608061932530_addedFields.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608062110275_IsPresent.cs" />
+    <Compile Include="Migrations\201608062110275_IsPresent.Designer.cs">
+      <DependentUpon>201608062110275_IsPresent.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CoworkerRepository.cs" />
+    <Compile Include="Repositories\CoworkspaceRepository.cs" />
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -84,6 +89,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608061932530_addedFields.resx">
       <DependentUpon>201608061932530_addedFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608062110275_IsPresent.resx">
+      <DependentUpon>201608062110275_IsPresent.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
