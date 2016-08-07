@@ -57,6 +57,20 @@ public class CoworkspacesManager {
         CoworkspaceDataAccess.setCheckIn(coworkspace, coworker, false);
     }
 
+    @Nullable
+    @WorkerThread
+    public static Coworkspace getCoworkspaceWithName(String name) {
+        loadCoworkspaces();
+
+        for (Coworkspace coworkspace : mCoworkspaces) {
+            if (coworkspace.name.equals(name)) {
+                return coworkspace;
+            }
+        }
+
+        return null;
+    }
+
 
     // ---------------- Private Methods --------------- //
 

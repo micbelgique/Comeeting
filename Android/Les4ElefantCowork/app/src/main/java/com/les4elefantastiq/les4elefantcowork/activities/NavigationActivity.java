@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.les4elefantastiq.les4elefantcowork.R;
 import com.les4elefantastiq.les4elefantcowork.activities.utils.BaseActivity;
+import com.les4elefantastiq.les4elefantcowork.managers.CoworkspacesManager;
 import com.les4elefantastiq.les4elefantcowork.managers.ProfileManager;
 import com.les4elefantastiq.les4elefantcowork.managers.SharedPreferencesManager;
 import com.les4elefantastiq.les4elefantcowork.models.Coworker;
@@ -109,13 +110,13 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
         getSupportActionBar().setTitle(menuItem.getTitle());
 
         Fragment fragment = null;
+        Bundle bundle = new Bundle();
 
         switch (menuItem.getItemId()) {
             case MENU_CURRENT_COWORKSPACE:
                 fragment = new CoworkspaceFragment();
 
                 // Pass the CoworkspaceId to the Fragment
-                Bundle bundle = new Bundle();
                 bundle.putString(CoworkspaceFragment.EXTRA_COWORKSPACE_ID, mMenuIdCoworkspaceIdMap.get(MENU_CURRENT_COWORKSPACE));
                 fragment.setArguments(bundle);
                 break;
@@ -123,6 +124,18 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
             case MENU_MORE_COWORKSPACE:
                 fragment = new CoworkspacesFragment();
                 break;
+
+            case MENU_SPECIFIC_COWORKSPACE:
+                fragment = new CoworkspaceFragment();
+
+                // Pass the CoworkspaceId to the Fragment
+                Coworkspace selectedCoworkspace = CoworkspacesManager.getCoworkspaceWithName(menuItem.getTitle().toString());
+                if (selectedCoworkspace != null) {
+                    bundle.putString(CoworkspaceFragment.EXTRA_COWORKSPACE_ID, selectedCoworkspace.id);
+                    fragment.setArguments(bundle);
+                    break;
+                }
+                return true;
         }
 
         showFragment(fragment);
@@ -135,6 +148,7 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
 
     private static final int MENU_CURRENT_COWORKSPACE = 1;
     private static final int MENU_MORE_COWORKSPACE = 2;
+    private static final int MENU_SPECIFIC_COWORKSPACE = 3;
 
     private void manageNavigationDrawer() {
         // Manage DrawerLayout and his toggle
@@ -157,22 +171,25 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
         mNavigationView.setNavigationItemSelectedListener(this);
     }
 
-    private void manageNavigationDrawerMenu(Coworkspace currentCoworkspace) {
+    private void manageNavigationDrawerMenu(Coworkspace currentCoworkspace, Coworkspace[] favoriteCoworkspace) {
         mMenuIdCoworkspaceIdMap = new HashMap<>();
 
         Menu menu = mNavigationView.getMenu();
 
         // If currently in a coworkspace
-        menu.add(0, MENU_CURRENT_COWORKSPACE, 0, "Super coworkspace");
+        SubMenu currentSubMenu = menu.addSubMenu("Coworking actuel");
+        currentSubMenu.add(0, MENU_CURRENT_COWORKSPACE, 0, currentCoworkspace.name);
         mMenuIdCoworkspaceIdMap.put(MENU_CURRENT_COWORKSPACE, currentCoworkspace.id);
 
-        // If favorites cowordspaces
-        // SubMenu subMenu2 = menu.addSubMenu("Mes coworkings");
-        // subMenu2.add(0, 0, 0, "blablabla");
+        // Fav
+        SubMenu favSubMenu = menu.addSubMenu("Coworking Favoris");
 
-        // More coworkspaces
-        SubMenu subMenu3 = menu.addSubMenu("Plus de coworkspaces");
-        subMenu3.add(0, MENU_MORE_COWORKSPACE, 0, "Voir les autres coworkspaces");
+        for (Coworkspace coworkspace: favoriteCoworkspace) {
+            favSubMenu.add(0, MENU_SPECIFIC_COWORKSPACE, 0, coworkspace.name);
+        }
+
+        // More
+        favSubMenu.add(0, MENU_MORE_COWORKSPACE, 0, "Voir les autres coworkspaces");
     }
 
     private void showFragment(Fragment fragment) {
@@ -202,7 +219,7 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
 
     // ------------------ AsyncTasks ------------------ //
 
-    private class CurrentCoworkspaceAsynctask extends AsyncTask<Void, Void, Coworkspace> {
+    private class CurrentCoworkspaceAsynctask extends AsyncTask<Void, Void, Coworkspace[][]> {
 
         private ProgressDialog progressDialog;
 
@@ -214,24 +231,31 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
         }
 
         @Override
-        protected Coworkspace doInBackground(Void... voids) {
-            return ProfileManager.getCurrentCowerkspace(NavigationActivity.this);
+        protected Coworkspace[][] doInBackground(Void... voids) {
+            Coworkspace[][] coworkspaces =
+                    {{ProfileManager.getCurrentCowerkspace(NavigationActivity.this)},
+                        ProfileManager.getFavoriteCowerkspaces(NavigationActivity.this)};
+
+            return coworkspaces;
         }
 
         @Override
-        protected void onPostExecute(Coworkspace coworkspace) {
-            super.onPostExecute(coworkspace);
+        protected void onPostExecute(Coworkspace[][] coworkspaces) {
+            super.onPostExecute(coworkspaces);
+
+            Coworkspace currentCoworkspace = coworkspaces[0][0]; // On est d'accord, c'est plutôt horrible, mais à 3h07 j'accepte de vivre avec.
+            Coworkspace[] favoriteCoworkspace = coworkspaces[1];
 
             progressDialog.dismiss();
 
-            if (coworkspace != null) {
-                manageNavigationDrawerMenu(coworkspace);
+            if (currentCoworkspace != null && favoriteCoworkspace != null) {
+                manageNavigationDrawerMenu(currentCoworkspace, favoriteCoworkspace);
 
                 CoworkspaceFragment coworkspaceFragment = new CoworkspaceFragment();
 
                 // Pass the CoworkspaceId to the Fragment
                 Bundle bundle = new Bundle();
-                bundle.putString(CoworkspaceFragment.EXTRA_COWORKSPACE_ID, coworkspace.id);
+                bundle.putString(CoworkspaceFragment.EXTRA_COWORKSPACE_ID, currentCoworkspace.id);
                 coworkspaceFragment.setArguments(bundle);
 
                 showFragment(coworkspaceFragment);
