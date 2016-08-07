@@ -87,6 +87,7 @@ public class CoworkerActivity extends BaseActivity {
             if (coworker != null) {
                 ((CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar)).setTitle(coworker.firstName + " " + coworker.lastName);
                 ((TextView) findViewById(R.id.textview_summary)).setText(coworker.summary);
+                ((TextView) findViewById(R.id.textview_linked_in_title)).setText("Profil LinkedIn de " + coworker.firstName);
 
                 Picasso.with(getBaseContext())
                         .load(coworker.pictureUrl)
