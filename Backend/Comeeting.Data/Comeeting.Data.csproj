@@ -63,10 +63,19 @@
     <Compile Include="Migrations\201608062110275_IsPresent.Designer.cs">
       <DependentUpon>201608062110275_IsPresent.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608070830426_AddedTitleToLivefeedMessage.cs" />
+    <Compile Include="Migrations\201608070830426_AddedTitleToLivefeedMessage.Designer.cs">
+      <DependentUpon>201608070830426_AddedTitleToLivefeedMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608070917173_DeletedSenderFromLivefeed.cs" />
+    <Compile Include="Migrations\201608070917173_DeletedSenderFromLivefeed.Designer.cs">
+      <DependentUpon>201608070917173_DeletedSenderFromLivefeed.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CoworkerRepository.cs" />
     <Compile Include="Repositories\CoworkspaceRepository.cs" />
+    <Compile Include="Repositories\LivefeedMessageRepository.cs" />
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -92,6 +101,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608062110275_IsPresent.resx">
       <DependentUpon>201608062110275_IsPresent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608070830426_AddedTitleToLivefeedMessage.resx">
+      <DependentUpon>201608070830426_AddedTitleToLivefeedMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608070917173_DeletedSenderFromLivefeed.resx">
+      <DependentUpon>201608070917173_DeletedSenderFromLivefeed.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

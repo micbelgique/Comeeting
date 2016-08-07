@@ -1,6 +1,12 @@
 package com.les4elefantastiq.les4elefantcowork.models;
 
-public class LiveFeedMessage {
+import android.support.annotation.NonNull;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class LiveFeedMessage implements Comparable<LiveFeedMessage> {
 
     // -------------- Objects, Variables -------------- //
 
@@ -37,8 +43,23 @@ public class LiveFeedMessage {
 
     // ---------------- Public Methods ---------------- //
 
+    public Date getDate() {
+        try {
+            return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(dateTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
     // ---------------- Private Methods --------------- //
 
     // ----------------- Miscellaneous ---------------- //
+
+    @Override
+    public int compareTo(@NonNull LiveFeedMessage liveFeedMessage) {
+        return - getDate().compareTo(liveFeedMessage.getDate());
+    }
 
 }
