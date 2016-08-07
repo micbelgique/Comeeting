@@ -129,6 +129,7 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
         protected Boolean doInBackground(ApiResponse... apiResponses) {
             LinkedInCoworker linkedInCoworker = new Gson().fromJson(apiResponses[0].getResponseDataAsString(), LinkedInCoworker.class);
             SharedPreferencesManager.setLinkedInId(SignInActivity.this, linkedInCoworker.linkedInId);
+            SharedPreferencesManager.saveProfile(SignInActivity.this, linkedInCoworker.getCoworker());
             Boolean success = CoworkerManager.login(linkedInCoworker.getCoworker());
 
             return success;

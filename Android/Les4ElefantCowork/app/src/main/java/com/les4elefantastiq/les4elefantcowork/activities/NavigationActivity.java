@@ -15,13 +15,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
+import android.widget.TextView;
 
 import com.les4elefantastiq.les4elefantcowork.R;
 import com.les4elefantastiq.les4elefantcowork.activities.utils.BaseActivity;
 import com.les4elefantastiq.les4elefantcowork.managers.ProfileManager;
+import com.les4elefantastiq.les4elefantcowork.managers.SharedPreferencesManager;
+import com.les4elefantastiq.les4elefantcowork.models.Coworker;
 import com.les4elefantastiq.les4elefantcowork.models.Coworkspace;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class NavigationActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -45,9 +51,11 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_activity);
+        mNavigationView = ((NavigationView) findViewById(R.id.navigationView));
 
         if (ProfileManager.isLogged(this)) {
             mToolbar = (Toolbar) findViewById(R.id.toolbar);
+            loadProfile();
 
             // Manage Toolbar/ActionBar
             setSupportActionBar(mToolbar);
@@ -146,7 +154,6 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
         };
         mDrawerLayout.addDrawerListener(mDrawerToggle);
 
-        mNavigationView = ((NavigationView) findViewById(R.id.navigationView));
         mNavigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -177,6 +184,21 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
         mDrawerLayout.closeDrawers();
     }
 
+    private void loadProfile() {
+        Coworker coworkerProfile = SharedPreferencesManager.getProfile(this);
+        if (coworkerProfile == null) { return; }
+
+        View navigationViewHeader = mNavigationView.getHeaderView(0);
+
+        CircleImageView userPictureImageView = (CircleImageView) navigationViewHeader.findViewById(R.id.imageView_UserPicture);
+        Picasso.with(this).load(coworkerProfile.pictureUrl).into(userPictureImageView);
+
+        TextView userNameTextView = (TextView) navigationViewHeader.findViewById(R.id.textView_UserName);
+        userNameTextView.setText(coworkerProfile.firstName + " " + coworkerProfile.lastName);
+
+        TextView emailTextView = (TextView) navigationViewHeader.findViewById(R.id.textView_Email);
+        emailTextView.setText(coworkerProfile.headline);
+    }
 
     // ------------------ AsyncTasks ------------------ //
 
