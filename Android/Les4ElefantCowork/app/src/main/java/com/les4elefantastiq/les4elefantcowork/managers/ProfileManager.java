@@ -10,7 +10,6 @@ import com.les4elefantastiq.les4elefantcowork.models.Coworker;
 import com.les4elefantastiq.les4elefantcowork.models.Coworkspace;
 import com.linkedin.platform.LISessionManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProfileManager {
@@ -46,26 +45,30 @@ public class ProfileManager {
     public static Coworkspace[] getFavoriteCowerkspaces(Context context) {
         loadCoworker(context);
 
-        List<String> favoriteCoworkspacesId = mCoworker.favoriteCoworkspacesId;
+        if (mCoworker != null) {
+            List<String> favoriteCoworkspacesId = mCoworker.favoriteCoworkspacesId;
+            
+            if (mCoworker != null && mCoworker.favoriteCoworkspacesId != null) {
+                Coworkspace[] favoriteCoworkspaces = new Coworkspace[mCoworker.favoriteCoworkspacesId.size()];
 
-        if (mCoworker != null && mCoworker.favoriteCoworkspacesId != null) {
-            Coworkspace[] favoriteCoworkspaces = new Coworkspace[mCoworker.favoriteCoworkspacesId.size()];
+                List<Coworkspace> coworkspaces = CoworkspacesManager.getCoworkspaces();
 
-            List<Coworkspace> coworkspaces = CoworkspacesManager.getCoworkspaces();
-
-            for (int i = 0; i < favoriteCoworkspacesId.size(); i++) {
-                for (Coworkspace coworkspace: coworkspaces) {
-                    if (favoriteCoworkspacesId.get(i).equals(coworkspace.id)) {
-                        favoriteCoworkspaces[i] = coworkspace;
-                        break;
+                if (coworkspaces != null)
+                    for (int i = 0; i < favoriteCoworkspacesId.size(); i++) {
+                        for (Coworkspace coworkspace : coworkspaces) {
+                            if (favoriteCoworkspacesId.get(i).equals(coworkspace.id)) {
+                                favoriteCoworkspaces[i] = coworkspace;
+                                break;
+                            }
+                        }
                     }
-                }
-            }
 
-            return favoriteCoworkspaces;
-        } else {
+                return favoriteCoworkspaces;
+            } else {
+                return null;
+            }
+        } else
             return null;
-        }
     }
 
     // ---------------- Private Methods --------------- //
