@@ -4,6 +4,8 @@ import com.les4elefantastiq.les4elefantcowork.dataaccess.LivefeedDataAccess;
 import com.les4elefantastiq.les4elefantcowork.models.Coworkspace;
 import com.les4elefantastiq.les4elefantcowork.models.LiveFeedMessage;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -13,13 +15,29 @@ public class LivefeedManager {
 
     // -------------- Objects, Variables -------------- //
 
+    private static HashMap<Coworkspace, List<LiveFeedMessage>> mLiveFeedMessagesMap = new HashMap<>();
+
+
     // ---------------- Public Methods ---------------- //
 
-    public static List<LiveFeedMessage> getLiveFeedMessages(Coworkspace coworkspace){
-        return LivefeedDataAccess.getLivefeedMessages(coworkspace);
+    public static List<LiveFeedMessage> getLiveFeedMessages(Coworkspace coworkspace) {
+        loadLiveFeedMessages(coworkspace);
+        return mLiveFeedMessagesMap.get(coworkspace);
     }
 
 
     // ---------------- Private Methods --------------- //
+
+    private static synchronized void loadLiveFeedMessages(Coworkspace coworkspace) {
+        if (mLiveFeedMessagesMap.get(coworkspace) == null) {
+            List<LiveFeedMessage> liveFeedMessages = LivefeedDataAccess.getLivefeedMessages(coworkspace);
+
+            if (liveFeedMessages != null) {
+                Collections.sort(liveFeedMessages);
+                mLiveFeedMessagesMap.put(coworkspace, liveFeedMessages);
+            }
+        }
+    }
+
 }
 
