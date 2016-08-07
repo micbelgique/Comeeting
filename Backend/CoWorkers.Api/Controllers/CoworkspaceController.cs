@@ -105,6 +105,7 @@ namespace Comeeting.Api.Controllers
                 return Ok();
 
             coworker.CurrentCoworkspaceId = id;
+            coworker.IsPresent = true;
             AddArrivalToLiveFeed(coworker);
 
             await _uow.SaveChangesAsync();
@@ -144,6 +145,7 @@ namespace Comeeting.Api.Controllers
             if(coworker.CurrentCoworkspaceId == id)
             { 
                 coworker.CurrentCoworkspaceId = null;
+                coworker.IsPresent = false;
                 await _uow.SaveChangesAsync();
             }
             

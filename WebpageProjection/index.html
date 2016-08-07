@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags always come first -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/css/bootstrap.min.css" integrity="sha384-MIwDKRSSImVFAZCVLtU0LMDdON6KVCrZHyVQQj6e8wIEJkW4tvwqXrbMIya1vriY" crossorigin="anonymous">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300,100' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>
+    <!-- JS -->
+    <script type="text/javascript" src="script/date_heure.js"></script>
+</head>
+
+<body>
+    <div class="container-fluid tile">
+        <div class="row">
+            <div id="header" class="col-lg-12">
+                <div class="col-lg-9 logo">
+                    <img style="height:45px;" src="images/Comeeting.svg">
+                </div>
+                <span id="date_heure" class="col-lg-3 hours"></span>
+                <script type="text/javascript">
+                    window.onload = date_heure('date_heure');
+                </script>
+            </div>
+        </div>
+        <div class="row">
+            <div id="content" class="col-lg-8 offset-lg-2">
+                <div class="col-lg-10 offset-lg-2 titles">
+                    Saviez-vous que...
+                </div>
+            </div>
+        </div>
+        <!-- coworker Valentin -->
+        <div class="row content-slider">
+            <div class="slider slider-content col-lg-8 offset-lg-2">
+                <div>
+                    <div class="col-lg-1 offset-lg-2 circle-persona valentin">
+                    </div>
+                    <div class="col-lg-6 verticard">
+                        <div class="Name">Valentin Taleb</div>
+                        <div class="job">Senior Android Developer</div>
+                    </div>
+                    <div class="col-lg-10 offset-lg-2 titles">
+                        a travaillé chez <strong id="job-name"> Agilys</strong>
+                    </div>
+                </div>
+                <div >
+                    <div class="col-lg-1 offset-lg-2 circle-persona laurent">
+                    </div>
+                    <div class="col-lg-6 verticard">
+                        <div class="Name">Laurent Vandenbosch</div>
+                        <div class="job">.Net developer</div>
+                    </div>
+                    <div class="col-lg-10 offset-lg-2 titles">
+                        a travaillé chez <strong id="job-name">Partenamut</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /coworker -->
+
+        <!-- coworker Laurent -->
+        <div id="content-slider" class="row hidden-xs-up">
+            <div id="content" class="col-lg-8 offset-lg-2">
+                <div class="col-lg-10 offset-lg-2 titles">
+                    Saviez-vous que...
+                </div>
+
+                <div class="col-lg-1 offset-lg-2 circle-persona">
+                </div>
+                <div class="col-lg-6 verticard">
+                    <div class="Name">Laurent Vandenbosch</div>
+                    <div class="job">.Net developer</div>
+                </div>
+                <div class="col-lg-10 offset-lg-2 titles">
+                    a travaillé chez <strong id="job-name">Partena Mut</strong>
+                </div>
+            </div>
+        </div>
+        <!-- /coworker Laurent-->
+
+        <!-- coworker Mathias -->
+        <div id="content-slider" class="row hidden-xs-up">
+            <div id="content" class="col-lg-8 offset-lg-2">
+                <div class="col-lg-10 offset-lg-2 titles">
+                    Saviez-vous que...
+                </div>
+
+                <div class="col-lg-1 offset-lg-2 circle-persona">
+                </div>
+                <div class="col-lg-6 verticard">
+                    <div class="Name">Mathias Biard</div>
+                    <div class="job">iOS developer</div>
+                </div>
+                <div class="col-lg-10 offset-lg-2 titles">
+                    a travaillé chez <strong id="job-name">Ta mere SPRL</strong>
+                </div>
+            </div>
+        </div>
+        <!-- /coworker Mathias-->
+
+        <!-- coworker François -->
+        <div id="content-slider-template" class="row" style="display:none">
+            <div id="content" class="col-lg-8 offset-lg-2">
+                <div class="col-lg-10 offset-lg-2 titles">
+                    Saviez-vous que...
+                </div>
+
+                <div class="col-lg-1 offset-lg-2 circle-persona">
+                </div>
+                <div class="col-lg-6 verticard">
+                    <div class="Name">François Stefany</div>
+                    <div class="job">Android/iOS developer</div>
+                </div>
+                <div class="col-lg-10 offset-lg-2 titles">
+                    a travaillé chez <strong id="job-name">Ta mere SPRL</strong>
+                </div>
+            </div>
+        </div>
+        <!-- /coworker François-->
+
+        <!-- coworker Adrien -->
+        <div id="content-slider slider-content" class="row hidden-xs-up">
+            <div class="col-lg-8 offset-lg-2">
+                <div class="col-lg-10 offset-lg-2 titles">
+                    Saviez-vous que...
+                </div>
+
+                <div class="col-lg-1 offset-lg-2 circle-persona">
+                </div>
+                <div class="col-lg-6 verticard">
+                    <div class="Name">Adrien Clerbois</div>
+                    <div class="job">.NET developer</div>
+                </div>
+                <div class="col-lg-10 offset-lg-2 titles">
+                    a travaillé chez <strong id="job-name">NRB</strong>
+                </div>
+            </div>
+        </div>
+        <!-- /coworker Adrien-->
+
+
+        <div class="row">
+            <div id="footer" class="col-lg-12">
+                <div class="active-coworker">
+                    <div>
+                        <div>
+                            <div id="coworker-number">8 coworkers</div> sont présents
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr class="separator" />
+        <div class="row" id="footer">
+            <div class="col-lg-4">
+                <div class="circle-coworker">
+                </div>
+                <div class="active-coworker-name">Mathias Biard</div>
+                <div class="active-coworker-job">iOS developer</div>
+            </div>
+            <div class="col-lg-4">
+            </div>
+            <div class="col-lg-4 coworker-checkedin">
+                <div>17 coworkers</div>
+                <div>sont venu aujourd'hui</div>
+            </div>
+
+        </div>
+    </div>
+    <!-- jQuery first, then Tether, then Bootstrap JS. -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/js/bootstrap.min.js" integrity="sha384-ux8v3A6CPtOTqOzMKiuo3d/DomGaaClxFYdCu2HPMBEkf6x2xiDyJ7gkXU0MWwaD" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.js"></script>
+    <script src="script/animation.js"></script>
+
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
+</body>
+
+</html>
