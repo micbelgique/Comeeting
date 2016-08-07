@@ -204,7 +204,7 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
         }
 
         // More
-        favSubMenu.add(0, MENU_MORE_COWORKSPACE, 0, "Voir les autres coworkspaces");
+        menu.add(1, MENU_MORE_COWORKSPACE, 0, "Voir les autres coworkspaces");
     }
 
     private void showFragment(Fragment fragment) {
