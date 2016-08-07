@@ -21,7 +21,7 @@
         android:layout_marginTop="6dp"
         android:layout_below="@+id/imageview"
         android:layout_marginRight="@dimen/default_margin"
-        android:src="@drawable/ic_favorite" />
+        android:src="@drawable/ic_favorite_grey" />
 
     <TextView
         android:id="@+id/textview_distance"

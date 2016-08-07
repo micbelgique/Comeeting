@@ -7,6 +7,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -57,6 +60,8 @@ public class CoworkspaceFragment extends Fragment {
         View view = inflater.inflate(R.layout.coworkspace_fragment, container, false);
 
         ((BaseActivity) getActivity()).getSupportActionBar().setTitle("Coworkspace");
+
+        setHasOptionsMenu(true);
 
         mListView = (ListView) view.findViewById(R.id.listview);
         mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
@@ -301,5 +306,35 @@ public class CoworkspaceFragment extends Fragment {
 
 
     // --------------------- Menu --------------------- //
+
+    private final int MENU_FAVORITE = 1;
+    private final int MENU_INFORMATION = 2;
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        MenuItem menuItemInformation = menu.add(0, MENU_INFORMATION, 0, "Information");
+        menuItemInformation.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        menuItemInformation.setIcon(R.drawable.ic_info_outline);
+
+        MenuItem menuItemFavorite = menu.add(0, MENU_FAVORITE, 0, "Favoris");
+        menuItemFavorite.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        menuItemFavorite.setIcon(R.drawable.ic_favorite);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case MENU_FAVORITE:
+                break;
+
+            case MENU_INFORMATION:
+                break;
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
 }
