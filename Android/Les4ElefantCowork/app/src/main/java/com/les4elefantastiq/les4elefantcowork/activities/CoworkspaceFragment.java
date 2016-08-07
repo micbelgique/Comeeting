@@ -330,6 +330,9 @@ public class CoworkspaceFragment extends Fragment {
                 break;
 
             case MENU_INFORMATION:
+                Intent intent = new Intent(getContext(), CoworkspaceDetailsActivity.class);
+                intent.putExtra(CoworkspaceDetailsActivity.EXTRA_COWORKSPACE_ID, mCoworkspace.id);
+                startActivity(intent);
                 break;
 
         }
