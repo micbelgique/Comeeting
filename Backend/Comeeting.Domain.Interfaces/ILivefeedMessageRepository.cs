@@ -8,7 +8,7 @@ namespace Comeeting.Domain.Interfaces
 {
     public interface ILivefeedMessageRepository
     {
-        IEnumerable<LivefeedMessage> GetLivefeed();
+        Task<List<LivefeedMessage>> GetLivefeedAsync();
         void AddLivefeedMessage(LivefeedMessage livefeedMessage);
     }
 }
