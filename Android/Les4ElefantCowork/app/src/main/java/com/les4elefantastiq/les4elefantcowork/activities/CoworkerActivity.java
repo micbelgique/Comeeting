@@ -6,9 +6,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +32,9 @@ public class CoworkerActivity extends BaseActivity {
 
     // -------------------- Views --------------------- //
 
-    private ImageView imageView;
+    private ImageView mImageView;
+    private ProgressBar mProgressBar;
+    private NestedScrollView mNestedScrollView;
 
 
     // ------------------ LifeCycle ------------------- //
@@ -49,9 +54,11 @@ public class CoworkerActivity extends BaseActivity {
         }
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Coworker");
+        getSupportActionBar().setTitle("");
 
-        imageView = (ImageView) findViewById(R.id.imageview);
+        mImageView = (ImageView) findViewById(R.id.imageview);
+        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
+        mNestedScrollView = (NestedScrollView) findViewById(R.id.nested_scroll_view);
 
         mCoworkerAsyncTask = new CoworkerAsyncTask();
         mCoworkerAsyncTask.execute();
@@ -75,6 +82,13 @@ public class CoworkerActivity extends BaseActivity {
     private class CoworkerAsyncTask extends AsyncTask<Void, Void, Coworker> {
 
         @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mNestedScrollView.setVisibility(View.GONE);
+            mProgressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
         protected Coworker doInBackground(Void... voids) {
             return CoworkerManager.getCoworker(getIntent().getStringExtra(EXTRA_COWORKER_ID));
         }
@@ -84,6 +98,9 @@ public class CoworkerActivity extends BaseActivity {
         protected void onPostExecute(Coworker coworker) {
             super.onPostExecute(coworker);
 
+            mProgressBar.setVisibility(View.GONE);
+            mNestedScrollView.setVisibility(View.VISIBLE);
+
             if (coworker != null) {
                 ((CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar)).setTitle(coworker.firstName + " " + coworker.lastName);
                 ((TextView) findViewById(R.id.textview_summary)).setText(coworker.summary);
@@ -92,7 +109,7 @@ public class CoworkerActivity extends BaseActivity {
                 Picasso.with(getBaseContext())
                         .load(coworker.pictureUrl)
                         .placeholder(R.drawable.user)
-                        .into(imageView);
+                        .into(mImageView);
 
             } else
                 Toast.makeText(CoworkerActivity.this, R.string.Whoops_an_error_has_occured__Check_your_internet_connection, Toast.LENGTH_LONG).show();

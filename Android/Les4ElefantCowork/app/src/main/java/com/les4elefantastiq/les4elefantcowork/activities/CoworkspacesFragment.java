@@ -163,7 +163,7 @@ public class CoworkspacesFragment extends Fragment {
             objectsHolder.textView_Opening.setText("Ouvert de 8h à 17h");
             objectsHolder.textView_CowerkersCount.setText(coworkspace.coworkers.size() + " Coworkers");
             objectsHolder.textView_Distance.setText("3 km");
-            objectsHolder.textView_Address.setText("Rue de Fer 48\n7000 Mons");
+            objectsHolder.textView_Address.setText(coworkspace.address + "\n" + coworkspace.zipCode + " " + coworkspace.city);
 
             objectsHolder.coworkspace = coworkspace;
 
