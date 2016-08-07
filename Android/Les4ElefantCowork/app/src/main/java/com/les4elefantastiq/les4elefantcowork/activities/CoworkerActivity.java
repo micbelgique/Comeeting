@@ -1,5 +1,6 @@
 package com.les4elefantastiq.les4elefantcowork.activities;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,9 +21,11 @@ import com.les4elefantastiq.les4elefantcowork.R;
 import com.les4elefantastiq.les4elefantcowork.activities.utils.BaseActivity;
 import com.les4elefantastiq.les4elefantcowork.managers.CoworkerManager;
 import com.les4elefantastiq.les4elefantcowork.models.Coworker;
+import com.linkedin.platform.DeepLinkHelper;
 import com.squareup.picasso.Picasso;
 
-public class CoworkerActivity extends BaseActivity {
+
+public class CoworkerActivity extends BaseActivity implements View.OnClickListener {
 
     // -------------- Objects, Variables -------------- //
 
@@ -35,6 +39,7 @@ public class CoworkerActivity extends BaseActivity {
     private ImageView mImageView;
     private ProgressBar mProgressBar;
     private NestedScrollView mNestedScrollView;
+    private RelativeLayout linkedInView;
 
 
     // ------------------ LifeCycle ------------------- //
@@ -62,6 +67,9 @@ public class CoworkerActivity extends BaseActivity {
 
         mCoworkerAsyncTask = new CoworkerAsyncTask();
         mCoworkerAsyncTask.execute();
+
+        linkedInView = (RelativeLayout) findViewById(R.id.layout_linked_in);
+        linkedInView.setOnClickListener(this);
     }
 
     @Override
@@ -74,6 +82,28 @@ public class CoworkerActivity extends BaseActivity {
 
 
     // ------------------ Listeners ------------------- //
+
+    @Override
+    public void onClick(View view) {
+        final Activity thisActivity = this;
+
+        /*
+        DeepLinkHelper deepLinkHelper = DeepLinkHelper.getInstance();
+
+        // Open the current user's profile
+        deepLinkHelper.openCurrentProfile(thisActivity, new DeeplinkListener() {
+            @Override
+            public void onDeepLinkSuccess() {
+                // Successfully sent user to LinkedIn app
+            }
+
+            @Override
+            public void onDeepLinkError(LiDeepLinkError error) {
+                // Error sending user to LinkedIn app
+            }
+        });
+        */
+    }
 
     // ------------------- Methods -------------------- //
 

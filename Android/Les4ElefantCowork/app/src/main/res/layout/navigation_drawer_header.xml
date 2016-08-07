@@ -33,7 +33,6 @@
         android:layout_below="@+id/imageView_UserPicture"
         android:layout_marginBottom="0dp"
         android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
         android:singleLine="true"
         android:text="@string/Lorem"
         android:textColor="#EEFFFFFF"
@@ -47,7 +46,6 @@
         android:layout_alignLeft="@+id/imageView_UserPicture"
         android:layout_below="@+id/textView_UserName"
         android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
         android:singleLine="true"
         android:textColor="#EEFFFFFF"
         android:text="@string/Lorem" />
