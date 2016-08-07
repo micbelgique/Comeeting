@@ -136,6 +136,8 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
                     break;
                 }
                 return true;
+            case MENU_NO_ACTION:
+                return true;
         }
 
         showFragment(fragment);
@@ -149,6 +151,7 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
     private static final int MENU_CURRENT_COWORKSPACE = 1;
     private static final int MENU_MORE_COWORKSPACE = 2;
     private static final int MENU_SPECIFIC_COWORKSPACE = 3;
+    private static final int MENU_NO_ACTION = 4;
 
     private void manageNavigationDrawer() {
         // Manage DrawerLayout and his toggle
@@ -176,16 +179,28 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
 
         Menu menu = mNavigationView.getMenu();
 
-        // If currently in a coworkspace
+
         SubMenu currentSubMenu = menu.addSubMenu("Coworking actuel");
-        currentSubMenu.add(0, MENU_CURRENT_COWORKSPACE, 0, currentCoworkspace.name);
-        mMenuIdCoworkspaceIdMap.put(MENU_CURRENT_COWORKSPACE, currentCoworkspace.id);
+        if (currentCoworkspace != null) {
+            // If currently in a coworkspace
+            currentSubMenu.add(0, MENU_CURRENT_COWORKSPACE, 0, currentCoworkspace.name);
+            mMenuIdCoworkspaceIdMap.put(MENU_CURRENT_COWORKSPACE, currentCoworkspace.id);
+        } else {
+            // If not in a coworkspace
+            currentSubMenu.add(0, MENU_NO_ACTION, 0, "Pas dans un coworking");
+        }
 
         // Fav
         SubMenu favSubMenu = menu.addSubMenu("Coworking Favoris");
 
-        for (Coworkspace coworkspace: favoriteCoworkspace) {
-            favSubMenu.add(0, MENU_SPECIFIC_COWORKSPACE, 0, coworkspace.name);
+        if (favoriteCoworkspace != null && favoriteCoworkspace.length > 0) {
+            // If have some favorite(s) coworkspace
+            for (Coworkspace coworkspace : favoriteCoworkspace) {
+                favSubMenu.add(0, MENU_SPECIFIC_COWORKSPACE, 0, coworkspace.name);
+            }
+        } else {
+            // If don't have favorite(s) coworkspace
+            favSubMenu.add(0, MENU_NO_ACTION, 0, "Pas de favoris");
         }
 
         // More
@@ -248,9 +263,9 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
 
             progressDialog.dismiss();
 
-            if (currentCoworkspace != null && favoriteCoworkspace != null) {
-                manageNavigationDrawerMenu(currentCoworkspace, favoriteCoworkspace);
+            manageNavigationDrawerMenu(currentCoworkspace, favoriteCoworkspace);
 
+            if (currentCoworkspace != null) {
                 CoworkspaceFragment coworkspaceFragment = new CoworkspaceFragment();
 
                 // Pass the CoworkspaceId to the Fragment
