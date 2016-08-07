@@ -78,7 +78,8 @@ namespace Comeeting.Api.Controllers
                         LastName = coworker.LastName,
                         Summary = coworker.Summary,
                         PictureUrl = coworker.PictureUrl,
-                        IsPresent = coworker.IsPresent
+                        IsPresent = coworker.IsPresent,
+                        Headline = coworker.Headline
                     });
             }
 
@@ -104,9 +105,29 @@ namespace Comeeting.Api.Controllers
                 return Ok();
 
             coworker.CurrentCoworkspaceId = id;
+            AddArrivalToLiveFeed(coworker);
 
             await _uow.SaveChangesAsync();
             return Ok();
+        }
+
+        private void AddArrivalToLiveFeed(Coworker coworker)
+        {
+            var random = new Random();
+
+            _uow.LivefeedMessageRepository.AddLivefeedMessage(
+                new LivefeedMessage()
+                {
+                    Id = Guid.NewGuid(),
+                    IsBirthday = random.Next(0, 1) == 0,
+                    CoworkerLinkedInId = coworker.LinkedInId,
+                    DateTime = DateTime.Now,
+                    CoworkspaceId = coworker.CurrentCoworkspaceId.Value,
+                    PictureUrl = coworker.PictureUrl,
+                    Text = $"{coworker.FirstName} {coworker.LastName} has arrived at the coworkspace.",
+                    Title = $"{coworker.FirstName} {coworker.LastName}",
+                    Type = LivefeedMessageType.Arrival
+                });
         }
 
         [Route("api/coworkspace/{id}/coworker/{linkedInId}")]

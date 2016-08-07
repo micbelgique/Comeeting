@@ -8,22 +8,25 @@ namespace Comeeting.Domain
 {
     public class LivefeedMessage
     {
+        public LivefeedMessage()
+        {
+        }
         public LivefeedMessage(LivefeedMessageType type)
         {
             this.Type = type;
         }
 
         public Guid Id { get; set; }
+        public string Title { get; set; }
         public string Text { get; set; }
-        public LivefeedMessageType Type { get; private set; }
+        public LivefeedMessageType Type { get; set; }
         public DateTime DateTime { get; set; }
         
         public string CoworkerLinkedInId { get; set; }
-        public bool IsBirthday { get; set; }
+        public bool? IsBirthday { get; set; }
         public string PictureUrl { get; set; }
 
         public string TweetLink { get; set; }
-        public string Sender { get; set; }
 
         public Guid CoworkspaceId { get; set; }
 

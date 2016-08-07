@@ -12,12 +12,14 @@ namespace Comeeting.Data
         private readonly ComeetingDbContext _context;
         public CoworkerRepository CoworkerRepository { get; private set; }
         public CoworkspaceRepository CoworkspaceRepository { get; private set; }
+        public LivefeedMessageRepository LivefeedMessageRepository { get; set; }
 
         public UnitOfWork()
         {
             _context = new ComeetingDbContext();
             CoworkerRepository = new CoworkerRepository(_context);
             CoworkspaceRepository = new CoworkspaceRepository(_context);
+            LivefeedMessageRepository = new LivefeedMessageRepository(_context);
         }
 
         public Task<int> SaveChangesAsync()
