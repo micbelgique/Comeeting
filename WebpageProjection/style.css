@@ -42,6 +42,18 @@
     .laurent{
          background-image: url(https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAdqAAAAJDRmZGU3ZDBhLTNhNTYtNGUyZS04NjgzLWY1MjVhMDUwYWViNg.jpg)
     }
+    .mathias{
+         background-image: url(http://www.mathiasbiard.com/images/me.jpg)
+    }
+    .martine{
+        background-image: url(https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAcTAAAAJDY1YjkzYjc1LWZjMTYtNDdkOC05MjQwLTY1MzYwYzczZDY3OA.jpg)
+    }
+    .thomas{
+        background-image: url(https://mir-s3-cdn-cf.behance.net/user/138/1993643.53b7242407703.png)
+    }
+    .kevin{
+        background-image: url(https://media.licdn.com/media/p/4/000/17d/31c/159f591.jpg)
+    }
     #header {
         background: rgba(0, 112, 127, 0.15);
     }
