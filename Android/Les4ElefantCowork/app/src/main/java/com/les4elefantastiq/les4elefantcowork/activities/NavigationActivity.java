@@ -178,8 +178,7 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
         mMenuIdCoworkspaceIdMap = new HashMap<>();
 
         Menu menu = mNavigationView.getMenu();
-
-
+        
         SubMenu currentSubMenu = menu.addSubMenu("Coworking actuel");
         if (currentCoworkspace != null) {
             // If currently in a coworkspace
