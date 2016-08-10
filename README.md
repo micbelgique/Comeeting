@@ -19,7 +19,7 @@ Technos utilisées :
 - Microsoft Azure pour la partie Serveur et website
 
 
-<img src="/Screenshots/Screenshot_1.png" width="480">
-<img src="/Screenshots/Screenshot_2.png" width="480">
-<img src="/Screenshots/Screenshot_3.png" width="480">
-<img src="/Screenshots/Screenshot_4.png" width="480">
+<img src="/Screenshots/Screenshot_1.png" width="400">
+<img src="/Screenshots/Screenshot_2.png" width="400">
+<img src="/Screenshots/Screenshot_3.png" width="400">
+<img src="/Screenshots/Screenshot_4.png" width="400">
