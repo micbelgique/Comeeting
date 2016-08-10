@@ -19,7 +19,7 @@ Technos utilisées :
 - Microsoft Azure pour la partie Serveur et website
 
 
-![Alt text](/Screenshots/Screenshot_1.png?raw=true =450x)
-![Alt text](/Screenshots/Screenshot_2.png?raw=true =450x)
-![Alt text](/Screenshots/Screenshot_3.png?raw=true =450x)
-![Alt text](/Screenshots/Screenshot_4.png?raw=true =450x)
+<img src="/Screenshots/Screenshot_1.png" width="480">
+<img src="/Screenshots/Screenshot_2.png" width="480">
+<img src="/Screenshots/Screenshot_3.png" width="480">
+<img src="/Screenshots/Screenshot_4.png" width="480">
