@@ -32,4 +32,4 @@ Technos utilisées :
 <img src="/Screenshots/Screenshot_2.png" width="400">
 <img src="/Screenshots/Screenshot_3.png" width="400">
 <img src="/Screenshots/Screenshot_4.png" width="400">
-<img src="/Screenshots/Screenshot_5.png" width="800">
+<img src="/Screenshots/Screenshot_5.png" width="810">
